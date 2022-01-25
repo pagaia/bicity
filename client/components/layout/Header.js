@@ -29,9 +29,20 @@ const Header = (props) => {
           type="text/javascript"
           src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"
         ></script>
+
+        {/* <!--  markercluster --> */}
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet/dist/leaflet.css"
+        />
+
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/react-leaflet-markercluster/dist/styles.min.css"
+        />
       </Head>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="container-fluid">
           <Link href="/" className="navbar-brand">
             <a>Home</a>
           </Link>

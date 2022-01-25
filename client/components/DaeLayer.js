@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import L from "leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const {
   LayersControl,
@@ -55,33 +56,35 @@ const DaeLayer = (props) => {
   return (
     <LayersControl.Overlay name="Defibrillators">
       <LayerGroup>
-        {daes.map((dae) => {
-          const lat = dae.geometry.coordinates[1];
-          const long = dae.geometry.coordinates[0];
-          const { properties } = dae;
+        <MarkerClusterGroup>
+          {daes.map((dae) => {
+            const lat = dae.geometry.coordinates[1];
+            const long = dae.geometry.coordinates[0];
+            const { properties } = dae;
 
-          return (
-            <Marker position={[lat, long]} key={dae._id}>
-              <Popup>
-                {Object.keys(properties).map((item, idx) => {
-                  return (
-                    <div key={idx}>
-                      <label className="fw-bold">{item}</label>:{" "}
-                      <span className="txt">
-                        {properties[item].toLowerCase()}
-                      </span>
-                    </div>
-                  );
-                })}
-                {/* <ExternalLink
+            return (
+              <Marker position={[lat, long]} key={dae._id}>
+                <Popup>
+                  {Object.keys(properties).map((item, idx) => {
+                    return (
+                      <div key={idx}>
+                        <label className="fw-bold">{item}</label>:{" "}
+                        <span className="txt">
+                          {properties[item].toLowerCase()}
+                        </span>
+                      </div>
+                    );
+                  })}
+                  {/* <ExternalLink
                   url={`https://www.google.com/maps/dir/?api=1&origin=${position.lat},${position.lng}&destination=${lat},${long}&travelmode=bicycling`}
                 >
                   Get directions
                 </ExternalLink> */}
-              </Popup>
-            </Marker>
-          );
-        })}
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MarkerClusterGroup>
       </LayerGroup>
     </LayersControl.Overlay>
   );

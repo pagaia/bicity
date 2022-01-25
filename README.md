@@ -43,7 +43,7 @@ Go now into `server` directory and run:
 
 ```shell
 npm install
-npm run dev
+npm run start
 ```
 
 The server should start and initialise the DB
@@ -60,7 +60,7 @@ After placed the 2 files under `https_cert` folder, go into `client` folder and 
 
 ```shell
 npm install
-node start-next.js <-- this command will
+node start-next.js
 ```
 
 You can start playing with the application.
