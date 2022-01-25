@@ -35,3 +35,43 @@ For the database, I have been using mongoose with a model for each entity, but I
 ```
 
 This will allow to run easily queries to retrieve data nearby.
+
+## How to start
+
+In order to start the application you need to have mongodb installed locally first.
+Go now into `server` directory and run:
+
+```shell
+npm install
+npm run dev
+```
+
+The server should start and initialise the DB
+
+To start the Frontend application , first you need to have installed the public and private key which will be used to open a secure connection https. 
+Modify the `start-next.js` file selecting the correct path for both private and public keys:
+
+```shell
+  key: fs.readFileSync("./https_cert/localhost-key.pem"),
+  cert: fs.readFileSync("./https_cert/localhost.pem")
+```
+
+After placed the 2 files under `https_cert` folder, go into `client` folder and run:
+
+```shell
+npm install
+node start-next.js <-- this command will
+```
+
+You can start playing with the application.
+No data are availalbe yet.
+
+## TODO
+
+- start adding tests
+- finalise authentication
+- create page to add manually new categories
+- create page to add manually new documents/point of interest
+- add details page per single feature
+- add like page per single feature
+- add comment per single feature
