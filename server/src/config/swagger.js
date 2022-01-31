@@ -18,8 +18,6 @@ exports.options = {
     },
     host: "localhost:8081",
     schemes: ["http"],
-    // host: "www.bicity.cf",
-    // schemes: ["https"],
     consumes: ["application/json"],
     produces: ["application/json"],
     definitions: {

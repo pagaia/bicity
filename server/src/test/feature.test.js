@@ -3,59 +3,78 @@
 const { test } = require("tap");
 const { build, config } = require("./prepareTest");
 
-let deviceId;
-
-const payload = {
-  name: "Nomentana",
-  location: {
-    coordinates: [40, 5],
-    type: "Point"
-  },
-  description: "This is my description"
-};
-
-const changedPayload = {
-  name: "Roma centro",
-  location: {
-    coordinates: [40, 5],
-    type: "Point"
-  },
-  description: "Changed description"
-};
-
-const payloadFeed = {
-  hourly: 10,
-  hourlyDay: 20,
-  daily: 30,
-  battery: 40,
-  gmsErrorNumber: 50,
-  htmlErrorNumber: 60,
-  sendErrorNumber: 70,
-  yesterday: 80
-};
-
-test('should requests the "/" route', async (t) => {
+test("should test all feature endpoints", async (t) => {
   const app = build(t);
 
-  // close fastify after each test
-  t.tearDown(() => app.close());
+  let feature = {};
 
-  const response = await app.inject({
-    method: "GET",
-    url: "/"
+  // close fastify after each test
+  t.teardown(() => app.close());
+
+  // only to test error path
+  t.test("GET / root", async (t) => {
+    const response = await app.inject({
+      method: "GET",
+      url: "/"
+    });
+
+    const json = response.json();
+    t.equal(response.statusCode, 200, " - Get 200");
+    t.equal(
+      response.headers["content-type"],
+      "application/json; charset=utf-8",
+      " - get content type"
+    );
+    t.deepEqual(
+      json,
+      {
+        message:
+          "Hello, welcome to BiCity, the bikers platform for locale information"
+      },
+      "- get hello"
+    );
   });
 
-  t.strictEqual(response.statusCode, 200, " - Get 200");
-  t.strictEqual(
-    response.headers["content-type"],
-    "application/json; charset=utf-8",
-    " - get content type"
-  );
-  t.deepEqual(
-    response.json(),
-    { hello: "This is the CiCO server" },
-    "- get hello CICO"
-  );
+  t.test("POST new feature", async (t) => {
+    const payload = {
+      type: "Feature",
+      properties: {
+        name: "NAME",
+        url: "URL",
+        phone: "123",
+        country: "COUNTRY",
+        address: "ADDRESS",
+        city: "CITY",
+        category: "bar",
+        capacity: 10,
+        description: "simple description"
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [10, 20]
+      }
+    };
+
+    const response = await app.inject({
+      method: "POST",
+      url: "/api/feature",
+      payload: feature
+    });
+
+    const json = response.json();
+    t.equal(response.statusCode, 201, " - Get 201");
+
+    t.deepEqual(
+      json,
+      {
+        message:
+          "Hello, welcome to BiCity, the bikers platform for locale information"
+      },
+      "- get hello"
+    );
+
+    feature = json;
+  });
 });
 
 // test("should get an empty device list", async (t) => {
@@ -70,26 +89,26 @@ test('should requests the "/" route', async (t) => {
 //     url: "/api/devices",
 //   });
 
-test("should get an empty device list", async (t) => {
-  const app = build(t);
+// test("should get an empty device list", async (t) => {
+//   const app = build(t);
 
-  const conf = config();
-  // close fastify after each test
-  t.tearDown(() => app.close());
+//   const conf = config();
+//   // close fastify after each test
+//   t.tearDown(() => app.close());
 
-  const response = await app.inject({
-    method: "GET",
-    url: "/api/devices"
-  });
+//   const response = await app.inject({
+//     method: "GET",
+//     url: "/api/devices"
+//   });
 
-  t.strictEqual(response.statusCode, 200, " - get 200");
-  t.strictEqual(
-    response.headers["content-type"],
-    "application/json; charset=utf-8",
-    "- get Json/application"
-  );
-  t.deepEqual(response.json(), [], " - get empty array");
-});
+//   t.strictEqual(response.statusCode, 200, " - get 200");
+//   t.strictEqual(
+//     response.headers["content-type"],
+//     "application/json; charset=utf-8",
+//     "- get Json/application"
+//   );
+//   t.deepEqual(response.json(), [], " - get empty array");
+// });
 
 // test("should insert a device", async (t) => {
 //   const app = build(t);

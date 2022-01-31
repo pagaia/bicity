@@ -38,8 +38,9 @@
   },
   "devDependencies": {
     "fastify-plugin": "^3.0.0",
+    "mongo-clean": "^2.0.0",
     "nodemon": "^2.0.7",
     "standard": "^16.0.3",
-    "tap": "^14.11.0"
+    "tap": "^15.1.6"
   }
 }

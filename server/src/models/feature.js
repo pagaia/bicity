@@ -1,25 +1,18 @@
 // External Dependancies
 const mongoose = require("mongoose");
-
-/**
- * Define category model
- */
-const Category = new mongoose.Schema(
-  {
-    name: String,
-    description: String
-  },
-  { timestamps: true }
-);
+const Category = require("./category");
 
 /**
  * validate function to check that the category inserted is already defined in the Category collection
  */
 const validateCategory = async (name) => {
-  return !!(await Category.findOne({
-    name,
-    deleted: false // in case I want to delete a category, I set it as deleted
+  console.log({name})
+  const found = !!(await Category.findOne({
+    name: name
+    // deleted: false // in case I want to delete a category, I set it as deleted
   }));
+  console.log({found})
+  return found;
 };
 
 const pointSchema = new mongoose.Schema({
@@ -44,11 +37,15 @@ const featureSchema = new mongoose.Schema(
       country: "string",
       address: "string",
       city: "string",
+      country: "string",
       category: {
         type: "string",
-        validate: validateCategory
+        validate: validateCategory,
+        required: true
       },
-      description: "string"
+      capacity: Number,
+      description: "string",
+      additionalProperties: "string"
     },
     geometry: {
       type: pointSchema,

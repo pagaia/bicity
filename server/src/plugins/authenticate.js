@@ -1,11 +1,12 @@
 const fp = require("fastify-plugin");
-const config = require("../config/config");
+// const config = require("../config/config");
 
 const LOCALHOST_REGEX = new RegExp("localhost");
 
 module.exports = fp(async function (fastify, opts) {
+  console.log({opts})
   fastify.register(require("fastify-jwt"), {
-    secret: config.jwt.secret
+    secret: opts.config.jwt.secret
   });
 
   fastify.decorate("authenticate", async function (request, reply) {

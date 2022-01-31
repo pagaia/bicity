@@ -1,6 +1,5 @@
 const featureRoutes = require("./routes/feature");
 const userRoutes = require("./routes/user");
-const config = require("./config/config");
 
 // Import Swagger Options
 const swagger = require("./config/swagger");
@@ -29,7 +28,7 @@ function build(opts = {}) {
   fastify.register(require("./plugins/googleAuth"), {});
 
   // plugin to verify JWT
-  fastify.register(require("./plugins/authenticate"), {});
+  fastify.register(require("./plugins/authenticate"), opts);
 
   fastify.decorate("validateToken", validateToken);
 
@@ -51,7 +50,6 @@ function build(opts = {}) {
           "Hello, welcome to BiCity, the bikers platform for locale information"
       };
     });
-
 
     // Configure routes for Feature
     featureRoutes(fastify).forEach((route, index) => {

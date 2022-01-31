@@ -12,6 +12,7 @@ mongoose
   .catch((err) => console.log(err));
 
 const server = require("./app")({
+  config,
   logger: {
     level: "info",
     prettyPrint: true

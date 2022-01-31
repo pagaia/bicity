@@ -14,7 +14,15 @@ const featureProperties = {
       address: { type: "string" },
       city: { type: "string" },
       category: { type: "string" },
-      description: { type: "string" }
+      description: { type: "string" },
+      capacity: { type: "number" },
+      hours: {
+        type: "object",
+        properties: {
+          start: { type: "string" },
+          end: { type: "string" }
+        }
+      }
     }
   },
   geometry: {
@@ -26,7 +34,8 @@ const featureProperties = {
         items: { type: "number" }
       }
     }
-  }
+  },
+  updatedAt: { type: "string" }
 };
 
 const routes = (fastify) => [
@@ -41,7 +50,9 @@ const routes = (fastify) => [
       summary: "Returns list of features near me in about 500mt",
       querystring: {
         lat: { type: "number" },
-        long: { type: "number" }
+        lng: { type: "number" },
+        category: { type: "string" },
+        maxDistance: { type: "number" }
       },
       response: {
         200: {
@@ -79,7 +90,7 @@ const routes = (fastify) => [
     handler: featureController.getAllFeatures(fastify),
     schema: {
       description: "Get list of Features",
-      tags: ["dae"],
+      tags: ["feature", "bike"],
       summary: "Returns list of Features",
       response: {
         200: {
@@ -100,6 +111,54 @@ const routes = (fastify) => [
           type: "object",
           content: {
             message: "No Authorization was found in request.headers"
+          }
+        }
+      }
+    },
+    security: [
+      {
+        apiKey: []
+      }
+    ]
+  },
+  {
+    method: "GET",
+    url: "/api/feature/:id",
+    // preValidation: [fastify.authenticate],
+    handler: featureController.getFeatureById(fastify),
+    schema: {
+      description: "Get Feature details",
+      tags: ["feature", "bike", "details"],
+      summary: "Returns Feature details",
+      params: {
+        type: "object",
+        properties: {
+          id: { type: "string" }
+        }
+      },
+      response: {
+        200: {
+          description: "Successful response",
+          type: "object",
+          properties: featureProperties
+        },
+        400: {
+          description: "Invalid tag value",
+          type: "object",
+          content: {}
+        },
+        401: {
+          description: "Authorization error",
+          type: "object",
+          content: {
+            message: "No Authorization was found in request.headers"
+          }
+        },
+        404: {
+          description: "Feature not found",
+          type: "object",
+          content: {
+            message: "The feature is not here. It's around riding a bike :)"
           }
         }
       }
