@@ -48,7 +48,7 @@ npm run start
 
 The server should start and initialise the DB
 
-To start the Frontend application , first you need to have installed the public and private key which will be used to open a secure connection https. 
+To start the Frontend application , first you need to have installed the public and private key which will be used to open a secure connection https.
 Modify the `start-next.js` file selecting the correct path for both private and public keys:
 
 ```shell
@@ -71,7 +71,7 @@ No data are availalbe yet.
 - start adding tests
 - finalise authentication
 - create page to add manually new categories
-- create page to add manually new documents/point of interest
+- create page to add manually new documents/point of interest ✅
 - add details page per single feature
 - add like page per single feature
 - add comment per single feature

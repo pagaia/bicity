@@ -1,16 +1,41 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+        Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.image-container {
+    width: 100%;
+    height: 30vh;
+    position: relative;
+}
+.image-container .image {
+    width: 100%;
+    height: 100%;
+    position: relative !important;
+    object-fit: cover;
+}
+
+.card-title,
+dt,
+dd {
+    text-transform: capitalize;
+}
+
+figcaption {
+    font-size: small;
+    text-align: center;
 }
