@@ -1,14 +1,17 @@
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import ExternalLink from '../../components/ExternalLink';
 import RandomPicture from '../../components/ui/RandomPicture';
 import Spinner from '../../components/ui/Spinner';
+import { useAuth } from '../../hooks/useAuth';
 import { usePosition } from '../../hooks/usePosition';
 
 const FeatureDetails = () => {
     const router = useRouter();
     const { featureId } = router.query;
 
+    const { user } = useAuth();
     const [feature, setFeature] = useState(null);
     const [error, setError] = useState(null);
     const [fetching, setFetching] = useState(true);
@@ -18,15 +21,11 @@ const FeatureDetails = () => {
     useEffect(async () => {
         console.log({ featureId });
         if (featureId) {
-            const response = await fetch(`/api/feature/${featureId}`, {
-                headers: { 'Content-Type': 'application/json' },
+             const response = await axios(`/api/feature/${featureId}`, {
+                headers: { Authorization: user?.authorization },
             });
-            const data = await response.json();
-            if (response.ok) {
-                setFeature(data);
-            } else {
-                setError(data);
-            }
+            const { data } = response;
+            setFeature(data);
             setFetching(false);
         }
     }, [featureId]);

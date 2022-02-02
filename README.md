@@ -70,8 +70,15 @@ No data are availalbe yet.
 
 - start adding tests
 - finalise authentication
-- create page to add manually new categories
+- integrate Google authorisation ✅
+- create page to add manually new categories ✅
 - create page to add manually new documents/point of interest ✅
-- add details page per single feature
+- add details page per single feature ✅
 - add like page per single feature
 - add comment per single feature
+
+## Dataset
+
+Find open data to be added to the database:
+
+- Parking place in Rome. Normally in these parking place there are also places for bike, and can be usefull for people who just starts to use the bike and wants to leave the car parked  for https://dati.comune.roma.it/catalog/dataset/atac-002/resource/113d22e4-d2e4-48dc-9726-d254dd160b5f

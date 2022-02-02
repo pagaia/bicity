@@ -34,16 +34,6 @@ const Header = (props) => {
                     rel="stylesheet"
                     href="https://unpkg.com/react-leaflet-markercluster/dist/styles.min.css"
                 />
-
-                {/* <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css"
-          rel="stylesheet"
-        />
-
-        <script
-          type="text/javascript"
-          src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"
-        ></script> */}
             </Head>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
@@ -52,6 +42,9 @@ const Header = (props) => {
                     </Link>
                     <Link href="/features/new-feature">
                         <a>Add new feature</a>
+                    </Link>
+                    <Link href="/admin/user">
+                        <a>User</a>
                     </Link>
                     <Link href="/credits">
                         <a>Credits</a>

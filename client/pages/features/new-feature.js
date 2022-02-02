@@ -8,7 +8,7 @@ import ErrorMessage from '../../components/ErrorMessage';
 import TextAreaField from '../../components/form/TextAreaField';
 import Link from 'next/link';
 
-const validateNexFeature = (values) => {
+const validateNewFeature = (values) => {
     const errors = {};
     const { address, city, country, cap, name, category } = values;
 
@@ -115,7 +115,7 @@ const NewFeature = () => {
             <ErrorMessage message={error} />
             <Formik
                 initialValues={{ name: 'Hay Biker' }}
-                validate={validateNexFeature}
+                validate={validateNewFeature}
                 onSubmit={async (values, { setSubmitting }) => {
                     setWasValidated?.(true);
                     await submit(values);

@@ -1,0 +1,14 @@
+[
+    {
+        "name": "bike-parking",
+        "description": "A place to park a bike"
+    },
+    {
+        "name": "bike-reseller",
+        "description": "A bike shop"
+    },
+    {
+        "name": "bar",
+        "description": "A bike friendly bar"
+    }
+]
