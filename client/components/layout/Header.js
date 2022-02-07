@@ -35,22 +35,24 @@ const Header = (props) => {
                     href="https://unpkg.com/react-leaflet-markercluster/dist/styles.min.css"
                 />
             </Head>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container-fluid">
-                    <Link href="/" className="navbar-brand">
-                        <a>Home</a>
-                    </Link>
-                    <Link href="/features/new-feature">
-                        <a>Add new feature</a>
-                    </Link>
-                    <Link href="/admin/user">
-                        <a>User</a>
-                    </Link>
-                    <Link href="/credits">
-                        <a>Credits</a>
-                    </Link>
-                </div>
-            </nav>
+            <div className="container">
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <div className="container-fluid">
+                        <Link href="/" className="navbar-brand">
+                            <a>Home</a>
+                        </Link>
+                        <Link href="/features/new-feature">
+                            <a>Add new feature</a>
+                        </Link>
+                        <Link href="/user">
+                            <a>User</a>
+                        </Link>
+                        <Link href="/credits">
+                            <a>Credits</a>
+                        </Link>
+                    </div>
+                </nav>
+            </div>
         </>
     );
 };

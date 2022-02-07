@@ -15,24 +15,24 @@ const FeaturesManager = ({ children }) => {
 
     useEffect(() => {
         map.locate({ setView: true, maxZoom: 16 });
+        // map.locate({  maxZoom: 16 });
 
         map.on('locationfound', handleOnLocationFound);
-        map.on('movestart', handleMoveEventStart);
-        map.on('moveend', handleMoveEventEnd);
+        map.on('locationerror', handleOnLocationError);
+        // map.on('movestart', handleMoveEventStart);
+        // map.on('moveend', handleMoveEventEnd);
 
         return () => {
             map.off('locationfound', handleOnLocationFound);
-            map.off('movestart', handleMoveEventStart);
-            map.off('moveend', handleMoveEventEnd);
+            map.off('locationerror', handleOnLocationError);
+            // map.off('movestart', handleMoveEventStart);
+            // map.off('moveend', handleMoveEventEnd);
         };
     }, [map]);
 
     const fetchFeatures = async (position) => {
         const response = await axios(
-            `/api/feature/nearme?lat=${position?.lat}&lng=${position?.lng}`,
-            {
-                headers: { Authorization: user?.authorization },
-            }
+            `/api/feature/nearme?lat=${position?.lat}&lng=${position?.lng}`
         );
         const { data } = response;
         setData(data);
@@ -43,6 +43,7 @@ const FeaturesManager = ({ children }) => {
         const { latlng } = e;
         // map.flyTo(latlng, 15);
         if (latlng) {
+            console.log({ latlng });
             setPosition(latlng);
             // const circle = L.circle(e.latlng, 500);
             // circle.addTo(map);
@@ -50,6 +51,10 @@ const FeaturesManager = ({ children }) => {
         } else {
             console.error({ latlng: 'NOT DEFINED' });
         }
+    }
+
+    function handleOnLocationError(e) {
+        console.log({ e });
     }
 
     function handleMoveEventEnd(e) {

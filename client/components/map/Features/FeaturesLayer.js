@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { LayerGroup, LayersControl, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { FeatureContext } from '../../../context/FeatureContext';
-import ExternalLink from '../../ExternalLink';
+// import ExternalLink from '../../ExternalLink';
 
 const FeaturesLayer = ({ category }) => {
     const { data, position } = useContext(FeatureContext);

@@ -48,12 +48,11 @@ function oauthSignIn() {
         client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
         redirect_uri: process.env.NEXT_PUBLIC_AUTH_REDIRECTION,
         response_type: 'token',
-        scope: 'https://www.googleapis.com/auth/userinfo.profile',
+        scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
         include_granted_scopes: 'true',
         state: 'TheBestBiCityInTheWorld',
     };
 
-    console.log({ params: JSON.stringify(params), redirect_uri: process.env.NEXT_PUBLIC_AUTH_REDIRECTION });
     // Add form parameters as hidden input values.
     for (var p in params) {
         var input = document.createElement('input');
@@ -99,7 +98,7 @@ function useProvideAuth() {
             // save the user into the state
             setUser(data);
             // remove the google information from the url
-            Router.push('/admin/user');
+            Router.push('/user');
         }
     }, [code, prevCode]);
 
@@ -115,5 +114,6 @@ function useProvideAuth() {
         user,
         signIn,
         signOut,
+        setUser
     };
 }

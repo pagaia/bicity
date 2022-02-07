@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-const { format, utcToZonedTime } = require("date-fns-tz");
-const boom = require("boom");
+const { format, utcToZonedTime } = require('date-fns-tz');
+const boom = require('boom');
 
 /**
  * Compare 2 object based on created_at property
@@ -10,13 +10,13 @@ const boom = require("boom");
  * @returns
  */
 exports.compareCreatedAt = (a, b) => {
-  if (a.created_at < b.created_at) {
-    return -1;
-  }
-  if (a.created_at > b.created_at) {
-    return 1;
-  }
-  return 0;
+    if (a.created_at < b.created_at) {
+        return -1;
+    }
+    if (a.created_at > b.created_at) {
+        return 1;
+    }
+    return 0;
 };
 
 /**
@@ -26,30 +26,27 @@ exports.compareCreatedAt = (a, b) => {
  * @returns {String}
  */
 exports.formatTimeZone = (date, tzString) => {
-  // console.log({ date, tzString });
-  if (!date) {
-    return null;
-  }
-  return format(utcToZonedTime(date, tzString), "yyyy-MM-dd HH:mm:ssXXX", {
-    timeZone: tzString
-  });
+    // console.log({ date, tzString });
+    if (!date) {
+        return null;
+    }
+    return format(utcToZonedTime(date, tzString), 'yyyy-MM-dd HH:mm:ssXXX', {
+        timeZone: tzString,
+    });
 };
 
 exports.getLastDayPreviousMonth = () => {
-  const currentDate = new Date();
-  return new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 31);
+    const currentDate = new Date();
+    return new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 31);
 };
 
 // generate JWT temporary token per selected user
 exports.generateJWT = (fastify) => async (req, reply) => {
-  try {
-    const token = fastify.jwt.sign(
-      { message: "Welcome" },
-      { expiresIn: "15m" }
-    );
-    console.log({ token });
-    return reply.send({ token });
-  } catch (err) {
-    throw boom.boomify(err);
-  }
+    try {
+        const token = fastify.jwt.sign({ message: 'Welcome' }, { expiresIn: '15m' });
+        console.log({ token });
+        return reply.send({ token });
+    } catch (err) {
+        throw boom.boomify(err);
+    }
 };

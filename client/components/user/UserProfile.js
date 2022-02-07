@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
-const UserProfile = ({ user }) => {
+const UserProfile = ({ user, signOut }) => {
     const { profile } = user;
-
+    console.log({ user });
     return (
         <div className="text-center card-box">
             <div className="member-card pt-2 pb-2">
@@ -61,6 +61,12 @@ const UserProfile = ({ user }) => {
                         </a>
                     </li>
                 </ul> */}
+                <button
+                    type="button"
+                    onClick={signOut}
+                    className="btn btn-danger mt-3 btn-rounded waves-effect w-md waves-light">
+                    Logout
+                </button>
                 <button
                     type="button"
                     className="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light">

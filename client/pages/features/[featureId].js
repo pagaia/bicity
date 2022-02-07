@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from 'react';
 import ExternalLink from '../../components/ExternalLink';
 import RandomPicture from '../../components/ui/RandomPicture';
 import Spinner from '../../components/ui/Spinner';
+import Vote from '../../components/Vote';
 import { useAuth } from '../../hooks/useAuth';
 import { usePosition } from '../../hooks/usePosition';
 
@@ -21,9 +22,7 @@ const FeatureDetails = () => {
     useEffect(async () => {
         console.log({ featureId });
         if (featureId) {
-             const response = await axios(`/api/feature/${featureId}`, {
-                headers: { Authorization: user?.authorization },
-            });
+            const response = await axios(`/api/feature/${featureId}`);
             const { data } = response;
             setFeature(data);
             setFetching(false);
@@ -78,6 +77,7 @@ const FeatureDetails = () => {
                                     Get directions
                                 </ExternalLink>
                             </div>
+                            <Vote featureId={featureId} user={user} />
                         </dl>
                     </div>
                 </div>

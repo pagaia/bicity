@@ -68,17 +68,21 @@ No data are availalbe yet.
 
 ## TODO
 
-- start adding tests
-- finalise authentication
-- integrate Google authorisation ✅
+- start to add tests
+- finalise authentication ✅
+- add username&password authentication ✅
+- integrate Google authentication ✅
 - create page to add manually new categories ✅
 - create page to add manually new documents/point of interest ✅
 - add details page per single feature ✅
+- add vote feature
 - add like page per single feature
 - add comment per single feature
+- add custom icons [https://mapicons.mapsmarker.com/](https://mapicons.mapsmarker.com/)
+- set cookie to keep login
 
-## Dataset
+## Datasets
 
 Find open data to be added to the database:
 
-- Parking place in Rome. Normally in these parking place there are also places for bike, and can be usefull for people who just starts to use the bike and wants to leave the car parked  for https://dati.comune.roma.it/catalog/dataset/atac-002/resource/113d22e4-d2e4-48dc-9726-d254dd160b5f
+- Parking place in Rome. Normally in these parking place there are also places for bike, and can be usefull for people who just starts to use the bike and wants to leave the car parked  for [dati.comune.rome](https://dati.comune.roma.it/catalog/dataset/atac-002/resource/113d22e4-d2e4-48dc-9726-d254dd160b5f)

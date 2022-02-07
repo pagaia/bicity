@@ -43,9 +43,16 @@ figcaption {
 .login-section {
     min-height: 100vh;
     background-size: cover;
-    background-image: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1920&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=c0d43804e2c7c93143fe8ff65398c8e9');
+    /* background-image: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb&amp;w=1920&amp;fit=max&amp;ixid=eyJhcHBfaWQiOjMyMDc0fQ&amp;s=c0d43804e2c7c93143fe8ff65398c8e9'); */
 }
 
+.login-section .form-outline {
+    min-width: 250px;
+}
+
+.login-section .form-group.input-group {
+    justify-content: center;
+}
 .login-button {
     margin-bottom: 1em;
     min-width: 200px;
@@ -61,39 +68,39 @@ figcaption {
 
 .social-links li a {
     border-radius: 50%;
-    color: rgba(121, 121, 121, .8);
+    color: rgba(121, 121, 121, 0.8);
     display: inline-block;
     height: 30px;
     line-height: 27px;
-    border: 2px solid rgba(121, 121, 121, .5);
+    border: 2px solid rgba(121, 121, 121, 0.5);
     text-align: center;
-    width: 30px
+    width: 30px;
 }
 
 .social-links li a:hover {
     color: #797979;
-    border: 2px solid #797979
+    border: 2px solid #797979;
 }
 .thumb-lg {
     height: 88px;
     width: 88px;
 }
 .img-thumbnail {
-    padding: .25rem;
+    padding: 0.25rem;
     background-color: #fff;
     border: 1px solid #dee2e6;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     max-width: 100%;
     height: auto;
 }
 .text-pink {
-    color: #ff679b!important;
+    color: #ff679b !important;
 }
 .btn-rounded {
     border-radius: 2em;
 }
 .text-muted {
-    color: #98a6ad!important;
+    color: #98a6ad !important;
 }
 h4 {
     line-height: 22px;

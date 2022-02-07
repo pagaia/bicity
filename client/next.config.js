@@ -8,6 +8,6 @@ module.exports = {
         ];
     },
     images: {
-        domains: ['images.pexels.com', 'lh3.googleusercontent.com'],
+        domains: ['images.pexels.com', 'lh3.googleusercontent.com', 'api.multiavatar.com'],
     },
 };
