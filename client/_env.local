@@ -1,2 +1,5 @@
 NEXT_PUBLIC_PEXEL_TOKEN=PEXEL token to get random images
 NEXT_PUBLIC_MAPQUEST_KEY=MAPQUEST Toke to use geolocalisation
+NEXT_PUBLIC_GOOGLE_CLIENT_ID="google client id"
+NEXT_PUBLIC_GOOGLE_SECRET="google secret id"
+NEXT_PUBLIC_AUTH_REDIRECTION=https://localhost:3000/user

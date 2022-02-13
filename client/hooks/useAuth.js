@@ -34,7 +34,7 @@ export const useAuth = () => {
 /*
  * Create form to request access token from Google's OAuth 2.0 server.
  */
-function oauthSignIn() {
+function oauthGoogleSignIn() {
     // Google's OAuth 2.0 endpoint for requesting an access token
     var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
 
@@ -50,7 +50,72 @@ function oauthSignIn() {
         response_type: 'token',
         scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
         include_granted_scopes: 'true',
-        state: 'TheBestBiCityInTheWorld',
+        state: 'google-state-test',
+    };
+
+    // Add form parameters as hidden input values.
+    for (var p in params) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', p);
+        input.setAttribute('value', params[p]);
+        form.appendChild(input);
+    }
+
+    // Add form to page and submit it to open the OAuth 2.0 endpoint.
+    document.body.appendChild(form);
+    form.submit();
+}
+
+/*
+ * Create form to request access token from Facebook OAuth  server.
+ */
+function oauthFacebookSignIn() {
+    var oauth2Endpoint = 'https://www.facebook.com/v13.0/dialog/oauth';
+
+    // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+    var form = document.createElement('form');
+    form.setAttribute('method', 'GET'); // Send as a GET request.
+    form.setAttribute('action', oauth2Endpoint);
+
+    // Parameters to pass to OAuth 2.0 endpoint.
+    var params = {
+        client_id: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID,
+        redirect_uri: process.env.NEXT_PUBLIC_AUTH_REDIRECTION,
+        response_type: 'token',
+        scope: 'public_profile',
+        state: 'facebook-state-test',
+    };
+
+    // Add form parameters as hidden input values.
+    for (var p in params) {
+        var input = document.createElement('input');
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('name', p);
+        input.setAttribute('value', params[p]);
+        form.appendChild(input);
+    }
+
+    // Add form to page and submit it to open the OAuth 2.0 endpoint.
+    document.body.appendChild(form);
+    form.submit();
+}
+
+/*
+ * Create form to request access token from Facebook OAuth  server.
+ */
+function oauthTwitterSignIn() {
+    var oauth2Endpoint = `https://api.twitter.com/oauth/request_token`;
+
+    // Create <form> element to submit parameters to OAuth 2.0 endpoint.
+    var form = document.createElement('form');
+    form.setAttribute('method', 'POST'); // Send as a GET request.
+    form.setAttribute('action', oauth2Endpoint);
+
+    // Parameters to pass to OAuth 2.0 endpoint.
+    var params = {
+        oauth_callback: process.env.NEXT_PUBLIC_AUTH_REDIRECTION,
+        oauth_consumer_key: process.env.NEXT_PUBLIC_TWITTER_API_KEY,
     };
 
     // Add form parameters as hidden input values.
@@ -75,11 +140,17 @@ function useProvideAuth() {
     const authorization = user?.authorization;
 
     const [code, setCode] = useState(null);
+    const [state, setState] = useState(null);
+
     useEffect(() => {
         let hash = useHash();
-        const code = hash.get('access_token');
-        console.log({ code });
+        const state = hash.get('state') || hash.get('#state');
+
+        const code = hash.get('access_token') || hash.get('#access_token');
+
+        console.log({ code, state });
         setCode(code);
+        setState(state);
     });
     const prevCode = usePrevious(code);
 
@@ -94,16 +165,16 @@ function useProvideAuth() {
     useEffect(async () => {
         if (code && prevCode !== code) {
             // call the api to authenticate the user
-            const data = await verifyUserLogin({ code });
+            const data = await verifyUserLogin({ code, state });
             // save the user into the state
             setUser(data);
             // remove the google information from the url
             Router.push('/user');
         }
-    }, [code, prevCode]);
+    }, [code, prevCode, state]);
 
     // call the oauthSignIn method which redirect to Google OAuth page
-    const signIn = oauthSignIn;
+    const googleSignIn = oauthGoogleSignIn;
 
     const signOut = () => {
         setUser(null);
@@ -112,8 +183,10 @@ function useProvideAuth() {
     // Return the user object and auth methods
     return {
         user,
-        signIn,
+        googleSignIn,
+        oauthFacebookSignIn,
+        oauthTwitterSignIn,
         signOut,
-        setUser
+        setUser,
     };
 }

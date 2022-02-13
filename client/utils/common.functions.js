@@ -1,11 +1,9 @@
 // A custom hook that builds on useLocation to parse
 
-import axios from "axios";
+import axios from 'axios';
 
 // the hash string for you.
 export function useHash() {
-    console.log({ hash: window?.location?.hash });
-
     return new URLSearchParams(window?.location?.hash);
 }
 
@@ -14,8 +12,11 @@ export function useHash() {
  * @param {code} param0
  * @returns
  */
-export const verifyUserLogin = async ({ code }) => {
-    const response = await axios('/api/users/verify', {
+export const verifyUserLogin = async ({ code, state }) => {
+    if (!code || !state) {
+        throw new Error('Code or state not defined');
+    }
+    const response = await axios(`/api/users/verify/${state}`, {
         headers: { code },
     });
 

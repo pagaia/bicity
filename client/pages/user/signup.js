@@ -33,7 +33,6 @@ const validateNewUser = (values) => {
 
 const SignUp = () => {
     const [wasValidated, setWasValidated] = useState(false);
-    const { user, signIn, signOut } = useAuth();
 
     const [submitted, setSubmitted] = useState(null);
     const [error, setError] = useState(null);

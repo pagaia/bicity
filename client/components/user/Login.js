@@ -24,32 +24,24 @@ const validateNewUser = (values) => {
 
 const Login = () => {
     const [wasValidated, setWasValidated] = useState(false);
-    const { user, signIn, signOut } = useAuth();
+    const { user, googleSignIn, oauthFacebookSignIn, oauthTwitterSignIn, signOut } = useAuth();
 
     const [submitted, setSubmitted] = useState(null);
     const [error, setError] = useState(null);
     const { setUser } = useAuth();
 
     const submit = async (values) => {
-        // Simple POST request with a JSON body using fetch
-        // const requestOptions = {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        // };
         const body = JSON.stringify(values);
         const headers = { 'Content-Type': 'application/json' };
         const response = await axios.post('/api/users/login', body, { headers });
-        // if (response.ok) {
+
         // get the authorization from the header
         const { authorization } = response.headers;
         // get the user profile from the body
         const { data } = response;
-        console.log({ response });
+
         // store user profile and JWT for future calls
         setUser({ profile: data, authorization });
-        // } else {
-        //     setError(data);
-        // }
         setSubmitted(response);
     };
 
@@ -67,17 +59,21 @@ const Login = () => {
                                 <h4 className="card-title mt-3 text-center">Login</h4>
                                 <p className="text-center">Get started with your free account</p>
                                 <p className="d-flex flex-column ">
-                                    <a href="" className="btn btn-block btn-info login-button">
-                                        <i className="fab fa-twitter me-2"></i>Login via Twitter
-                                    </a>
                                     <button
-                                        onClick={signIn}
+                                        onClick={oauthTwitterSignIn}
+                                        className="btn btn-block btn-info login-button">
+                                        <i className="fab fa-twitter me-2"></i>Login via Twitter
+                                    </button>
+                                    <button
+                                        onClick={googleSignIn}
                                         className="btn btn-block btn-warning login-button">
                                         <i className="fab fa-google me-2"></i>Login via Google
                                     </button>
-                                    <a href="" className="btn btn-block btn-primary login-button">
+                                    <button
+                                        onClick={oauthFacebookSignIn}
+                                        className="btn btn-block btn-primary login-button">
                                         <i className="fab fa-facebook-f me-2"></i>Login via facebook
-                                    </a>
+                                    </button>
                                 </p>
                                 <p className="text-muted font-weight-bold ">
                                     <span>OR</span>

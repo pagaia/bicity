@@ -14,6 +14,26 @@ const getGoogleUserInfo = async (access_token) => {
     return data;
 };
 
+const getFacebookUserInfo = async (access_token) => {
+    const url = `https://graph.facebook.com/me?fields=first_name,last_name,picture,email,locale&access_token=${access_token}`;
+    console.log({ url });
+    try {
+        const { data } = await axios({
+            url,
+            method: 'GET',
+        });
+        console.log(data); // { id, email, given_name, family_name }
+        return {
+            ...data,
+            given_name: data?.first_name,
+            family_name: data?.last_name,
+            picture: data?.picture?.data?.url,
+        };
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 module.exports = function (fastify, options, done) {
     const verifyUser = async (reply, profile) => {
         const email = profile.email;
@@ -49,7 +69,7 @@ module.exports = function (fastify, options, done) {
     };
 
     fastify.get(
-        '/api/users/verify',
+        '/api/users/verify/:provider',
         {
             schema: {
                 description:
@@ -57,6 +77,12 @@ module.exports = function (fastify, options, done) {
                 tags: ['user'],
                 summary:
                     'Verify the Google JWT token and return a new JWT token with user information ',
+                params: {
+                    type: 'object',
+                    properties: {
+                        provider: { type: 'string' },
+                    },
+                },
                 response: {
                     200: {
                         description: 'Successful token created',
@@ -76,8 +102,13 @@ module.exports = function (fastify, options, done) {
         },
         async (request, reply) => {
             const code = request.headers.code;
-            console.log({ code });
-            const profile = await getGoogleUserInfo(code);
+            const provider = request.params.provider;
+            console.log({ code, provider });
+            let profile =
+                provider === 'google-state-test'
+                    ? await getGoogleUserInfo(code)
+                    : await getFacebookUserInfo(code);
+
             await verifyUser(reply, profile);
             // get the google profile to retrive the email and check with the local one
         }
