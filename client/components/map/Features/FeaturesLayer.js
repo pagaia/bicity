@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { LayerGroup, LayersControl, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { FeatureContext } from '../../../context/FeatureContext';
@@ -22,44 +22,25 @@ const FeaturesLayer = ({ category }) => {
                         return (
                             <Marker position={[lat, long]} key={item._id}>
                                 <Popup>
-                                    <div >
-                                        <label className="fw-bold">Name</label>:{' '}
+                                    <div>
+                                        <label className="fw-bold">Name:</label>
                                         <span className="txt">{item?.properties?.name}</span>
+                                        {Object.keys(properties).map((item, idx) => {
+                                            if (item === 'name') return null;
+                                            const value = properties[item];
+                                            return (
+                                                <div key={idx}>
+                                                    <label className="fw-bold">{item}</label>:{' '}
+                                                    <span className="txt">{value}</span>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
-                                    {/* <dl className="row">
-                                        <dt className="col-sm-3">Name</dt>
-                                        <dd className="col-sm-9">{item?.properties?.name}</dd>
-
-                                        <div className="col-sm-12">
-                                            <ExternalLink
-                                                url={`https://www.google.com/maps/dir/?api=1&origin=${position.latitude},${position.longitude}&destination=${lat},${long}&travelmode=bicycling`}>
-                                                Get directions
-                                            </ExternalLink>
-                                        </div>
-                                    </dl> */}
-                                    {/* {Object.keys(properties).map((item, idx) => {
-                                        const value =
-                                            typeof properties[item] === 'string'
-                                                ? properties[item].toLowerCase()
-                                                : properties[item];
-                                        return (
-                                            <div key={idx}>
-                                                <label className="fw-bold">{item}</label>:{' '}
-                                                <span className="txt">{value}</span>
-                                            </div>
-                                        );
-                                    })} */}
                                     <div>
                                         <Link href={`/features/${item._id}`}>
                                             <a>View details</a>
                                         </Link>
                                     </div>
-                                    {/* <div>
-                                        <ExternalLink
-                                            url={`https://www.google.com/maps/dir/?api=1&origin=${position.lat},${position.lng}&destination=${lat},${long}&travelmode=bicycling`}>
-                                            Get directions
-                                        </ExternalLink>
-                                    </div> */}
                                 </Popup>
                             </Marker>
                         );

@@ -17,6 +17,7 @@
         "format": "prettier --write '**/*.js'"
     },
     "dependencies": {
+        "@reduxjs/toolkit": "^1.7.2",
         "axios": "^0.25.0",
         "classnames": "^2.3.1",
         "formik": "^2.2.9",
@@ -33,6 +34,7 @@
     },
     "devDependencies": {
         "prettier": "^2.5.1",
-        "prop-types": "^15.8.1"
+        "prop-types": "^15.8.1",
+        "redux-logger": "^3.0.6"
     }
 }

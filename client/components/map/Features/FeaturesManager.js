@@ -1,13 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { FeatureContext } from '../../../context/FeatureContext';
-import { useAuth } from '../../../hooks/useAuth';
 
 const FeaturesManager = ({ children }) => {
     const map = useMap();
-    const { user } = useAuth();
 
     const [position, setPosition] = useState(null);
     const [data, setData] = useState([]);
@@ -19,14 +16,14 @@ const FeaturesManager = ({ children }) => {
 
         map.on('locationfound', handleOnLocationFound);
         map.on('locationerror', handleOnLocationError);
-        // map.on('movestart', handleMoveEventStart);
-        // map.on('moveend', handleMoveEventEnd);
+        map.on('movestart', handleMoveEventStart);
+        map.on('moveend', handleMoveEventEnd);
 
         return () => {
             map.off('locationfound', handleOnLocationFound);
             map.off('locationerror', handleOnLocationError);
-            // map.off('movestart', handleMoveEventStart);
-            // map.off('moveend', handleMoveEventEnd);
+            map.off('movestart', handleMoveEventStart);
+            map.off('moveend', handleMoveEventEnd);
         };
     }, [map]);
 
@@ -58,13 +55,11 @@ const FeaturesManager = ({ children }) => {
     }
 
     function handleMoveEventEnd(e) {
-        console.log({ mapCenterEnd: map.getCenter(), prevCenter });
         const distance = prevCenter?.distanceTo(map.getCenter()).toFixed(0);
-        console.log({ distance });
-        if (!prevCenter || distance > 500) {
+        if (!prevCenter || distance > 1000) {
+            console.log({ prevCenter, distance });
             fetchFeatures(map.getCenter());
         }
-        console.log({ bbox: map.getBounds() });
     }
 
     function handleMoveEventStart(e) {
