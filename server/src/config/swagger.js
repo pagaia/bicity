@@ -16,8 +16,8 @@ exports.options = {
             url: 'https://github.com/pagaia/bicity',
             description: 'More info on the github project',
         },
-        host: 'localhost:8081',
-        schemes: ['http'],
+        host: 'www.bicity.tk',
+        schemes: ['https'],
         consumes: ['application/json'],
         produces: ['application/json'],
         definitions: {

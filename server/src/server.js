@@ -24,7 +24,7 @@ const server = require('./app')({
 // Run the server!
 const start = async () => {
     try {
-        await server.listen(8081);
+        await server.listen(8082);
         server.swagger();
         server.log.info(`server listening on ${server.server.address().port}`);
     } catch (err) {
