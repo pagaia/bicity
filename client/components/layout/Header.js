@@ -65,7 +65,7 @@ const Header = (props) => {
                         <Link href="/credits">
                             <a>
                                 <div>
-                                    <i class="fas fa-copyright  fa-2x"></i>{' '}
+                                    <i className="fas fa-copyright  fa-2x"></i>
                                 </div>
                                 <div className="menu-txt">Credits</div>
                             </a>
