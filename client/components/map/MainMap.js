@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
 import { FEATURE_CATEGORY, ROME_POSITION } from '../../utils/constants';
 import CenterButton from './components/CenterBotton';
-import LeaFletButton from './components/LeaFletButton';
+import UpdateOSMData from './components/UpdateOSMData';
 import FeaturesLayer from './Features/FeaturesLayer';
 import FeaturesManager from './Features/FeaturesManager';
 import OsmFeaturesLayer from './Features/OsmFeatures';
@@ -26,8 +26,7 @@ const MainMap = () => {
                     <OsmFeaturesLayer amenity="bicycle_rental" />
                     <OsmFeaturesLayer amenity="bicycle_repair_station" />
                 </LayersControl>
-
-                <LeaFletButton title={'Update data'} description="This is a custom description!" />
+                <UpdateOSMData />
                 <CenterButton />
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors.'

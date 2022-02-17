@@ -36,19 +36,39 @@ const Header = (props) => {
                 />
             </Head>
             <div className="container">
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className="navbar navbar-expand-lg navbar-light fixed-bottom  menu">
                     <div className="container-fluid">
                         <Link href="/" className="navbar-brand">
-                            <a>Home</a>
+                            <a>
+                                <div>
+                                    <i className="fas fa-igloo fa-2x"></i>
+                                </div>
+                                <div className="menu-txt">Home</div>
+                            </a>
                         </Link>
                         <Link href="/features/new-feature">
-                            <a>Add new feature</a>
+                            <a>
+                                <div>
+                                    <i className="fas fa-plus-circle fa-2x"></i>
+                                </div>
+                                <div className="menu-txt">Add</div>
+                            </a>
                         </Link>
                         <Link href="/user">
-                            <a>User</a>
+                            <a>
+                                <div>
+                                    <i className="fas fa-user fa-2x"></i>
+                                </div>
+                                <div className="menu-txt">User</div>
+                            </a>
                         </Link>
                         <Link href="/credits">
-                            <a>Credits</a>
+                            <a>
+                                <div>
+                                    <i class="fas fa-copyright  fa-2x"></i>{' '}
+                                </div>
+                                <div className="menu-txt">Credits</div>
+                            </a>
                         </Link>
                     </div>
                 </nav>

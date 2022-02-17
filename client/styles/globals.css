@@ -106,3 +106,25 @@ h4 {
     line-height: 22px;
     font-size: 18px;
 }
+
+.menu {
+    display: flex;
+    justify-content: space-evenly;
+    background: white;
+}
+
+.menu a {
+    text-align: center;
+}
+.menu-txt {
+    font-size: 11px;
+}
+
+ul.vote-lnk {
+    display: flex;
+    list-style-type: none;
+    padding-left: 0;
+}
+ul.vote-lnk li {
+    margin-right: 5px;
+}
