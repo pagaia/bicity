@@ -19,7 +19,7 @@ const OsmFeaturesLayer = ({ amenity }) => {
                         const { tags } = item;
 
                         return (
-                            <Marker position={[lat, long]} key={item._id}>
+                            <Marker position={[lat, long]} key={item.id}>
                                 <Popup>
                                     <dl className="row">
                                         <dt className="col-sm-3">Name:</dt>

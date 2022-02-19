@@ -1,14 +1,21 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
+import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
+import { fetchFeatures, selectFeatures } from '../../../store/featureSlice';
 
 const FeaturesManager = ({ children }) => {
-    const map = useMap();
+    const map = useMap();ª
 
     const [position, setPosition] = useState(null);
-    const [data, setData] = useState([]);
     const [prevCenter, setPrevCenter] = useState(null);
+
+    const dispatch = useDispatch();
+    const features = useSelector(selectFeatures);
+
+    useEffect(() => {
+        return () => console.log('Unmounted FeaturesManager');
+    }, []);
 
     useEffect(() => {
         map.locate({ setView: true, maxZoom: 16 });
@@ -27,16 +34,8 @@ const FeaturesManager = ({ children }) => {
         };
     }, [map]);
 
-    const fetchFeatures = async (position) => {
-        const response = await axios(
-            `/api/feature/nearme?lat=${position?.lat}&lng=${position?.lng}`
-        );
-        const { data } = response;
-        setData(data);
-    };
 
     function handleOnLocationFound(e) {
-        // fetch Dae near me
         const { latlng } = e;
         // map.flyTo(latlng, 15);
         if (latlng) {
@@ -44,21 +43,26 @@ const FeaturesManager = ({ children }) => {
             setPosition(latlng);
             // const circle = L.circle(e.latlng, 500);
             // circle.addTo(map);
-            fetchFeatures(latlng);
+            // fetchFeatures(latlng);
+            console.log({ position });
+            dispatch(fetchFeatures({ position: latlng }));
         } else {
             console.error({ latlng: 'NOT DEFINED' });
         }
     }
 
     function handleOnLocationError(e) {
-        console.log({ e });
+        console.log({ handleOnLocationError: e });
     }
 
     function handleMoveEventEnd(e) {
-        const distance = prevCenter?.distanceTo(map.getCenter()).toFixed(0);
-        if (!prevCenter || distance > 1000) {
+        const pos = map.getCenter();
+        const distance = prevCenter?.distanceTo?.(pos)?.toFixed(0);
+        console.log({ prevCenter, distance, pos });
+        if (pos && (!prevCenter || distance > 1000)) {
             console.log({ prevCenter, distance });
-            fetchFeatures(map.getCenter());
+            dispatch(fetchFeatures({ position: pos }));
+
         }
     }
 
@@ -67,7 +71,11 @@ const FeaturesManager = ({ children }) => {
         setPrevCenter(map.getCenter());
     }
 
-    return <FeatureContext.Provider value={{ data, position }}>{children}</FeatureContext.Provider>;
+    return (
+        <FeatureContext.Provider value={{ data: features, position }}>
+            {children}
+        </FeatureContext.Provider>
+    );
 };
 
 export default FeaturesManager;

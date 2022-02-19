@@ -1,22 +1,21 @@
 import axios from 'axios';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MAX_VOTE_FEATURE } from '../../server/src/utility/constants';
+import { fetchVote, selectFeatureVote } from '../store/featureSlice';
 
 const Vote = ({ featureId, user }) => {
-    const [avgVote, setAvgVote] = useState(null);
+
+    const dispatch = useDispatch();
+    const avgVote = useSelector(selectFeatureVote(featureId));
+
+    console.log({avgVote})
     // fetch the average vote
     useEffect(async () => {
-        updateAvgVote(featureId);
+        // updateAvgVote(featureId);
+        dispatch(fetchVote({ featureId }));
     }, [featureId]);
 
-    const updateAvgVote = async (featureId) => {
-        if (featureId) {
-            const response = await axios(`/api/vote/feature/${featureId}`);
-            const { data } = response;
-            setAvgVote(data);
-        }
-    };
     const [userVote, setUserVote] = useState(null);
 
     // fetch vote per user
@@ -37,7 +36,7 @@ const Vote = ({ featureId, user }) => {
             );
             const { data } = response;
             setUserVote(data);
-            updateAvgVote(featureId);
+            dispatch(fetchVote({ featureId }));
         } else {
             alert('please login first');
         }
@@ -45,9 +44,9 @@ const Vote = ({ featureId, user }) => {
 
     console.log({ userVote });
     const votesLinks = [...Array(MAX_VOTE_FEATURE).keys()].map((vote, idx) => {
-        const className = idx + 1 <= avgVote?.average ? 'text-warning' : 'text-muted';
+        const className = idx + 1 <= avgVote ? 'text-warning' : 'text-muted';
         return (
-            <li>
+            <li key={idx}>
                 <a
                     onClick={(e) => {
                         e.preventDefault();
@@ -61,7 +60,7 @@ const Vote = ({ featureId, user }) => {
     });
     return (
         <div>
-            <div>Average vote: {avgVote?.average}</div>
+            <div>Average vote: {avgVote}</div>
             <ul className="me-3 vote-lnk">{votesLinks}</ul>
             <div>your vote: {userVote?.vote}</div>
         </div>

@@ -8,22 +8,31 @@ const LeaFletButton = ({ title, map, action }) => {
     const createButtonControl = () => {
         const MapHelp = L.Control.extend({
             onAdd: (map) => {
-                const helpDivTemp = L.DomUtil.create('button', '');
-                helpDiv = helpDivTemp;
-                helpDiv.innerHTML = title;
+                const controlElementTag = 'button';
+                const controlElementClass = 'my-leaflet-control';
+                const controlElement = L.DomUtil.create(controlElementTag, controlElementClass);
 
-                helpDiv.addEventListener('click', () => {
+                // const helpDivTemp = L.DomUtil.create('button', '');
+                helpDiv = controlElement;
+                controlElement.innerHTML = title;
+
+                controlElement.addEventListener('click', () => {
                     console.log(map.getCenter());
                     action();
                 });
 
                 //a bit clueless how to add a click event listener to this button and then
                 // open a popup div on the map
-                return helpDiv;
+                return controlElement;
+            },
+            onRemove: (map) => {
+                console.log('Removing leaflet button');
+                helpDiv.remove()
             },
         });
         return new MapHelp({ position: 'topright' });
     };
+
 
     useEffect(() => {
         const control = createButtonControl();

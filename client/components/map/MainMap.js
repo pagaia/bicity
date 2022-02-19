@@ -15,7 +15,8 @@ const MainMap = () => {
             center={[ROME_POSITION.lat, ROME_POSITION.lng]}
             zoom={14}
             scrollWheelZoom
-            style={{ height: '85vh', width: '100%' }}>
+            style={{ height: '90vh', width: '100%' }}
+            >
             <FeaturesManager>
                 <LayersControl position="topright" onClick={() => console.log('Clicked')}>
                     {Object.keys(FEATURE_CATEGORY).map((key) => {
