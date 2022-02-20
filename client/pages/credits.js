@@ -1,4 +1,9 @@
+import { useDispatch } from 'react-redux';
+import { showError } from '../store/errorSlice';
+
 const Credits = () => {
+    const dispatch = useDispatch();
+
     return (
         <div className="container">
             <div className="row">
@@ -33,6 +38,21 @@ const Credits = () => {
                             </a>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-4">
+                    <button
+                        className="btn btn-block btn-info"
+                        onClick={() =>
+                            dispatch(
+                                showError({
+                                    error: 'messageeee',
+                                })
+                            )
+                        }>
+                        Dispatch error
+                    </button>
                 </div>
             </div>
         </div>

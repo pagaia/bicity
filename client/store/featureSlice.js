@@ -11,9 +11,21 @@ export const fetchVote = createAsyncThunk(
     }
 );
 
-// First, create the thunk
-export const fetchFeatures = createAsyncThunk('fetchFeaturesAction', async ({ position }, thunkAPI) => {
-    const response = await axios(`/api/feature/nearme?lat=${position?.lat}&lng=${position?.lng}`);
+export const fetchFeatures = createAsyncThunk(
+    'fetchFeaturesAction',
+    async ({ position }, thunkAPI) => {
+        const response = await axios(
+            `/api/feature/nearme?lat=${position?.lat}&lng=${position?.lng}`
+        );
+        const { data } = response;
+        return data;
+    }
+);
+
+export const addFeature = createAsyncThunk('addFeatureAction', async ({ feature }, thunkAPI) => {
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify(feature);
+    const response = await axios.post('/api/feature', body, { headers });
     const { data } = response;
     return data;
 });
@@ -54,6 +66,13 @@ export const featureSlice = createSlice({
             console.log({ action });
             state.error = action.payload;
         });
+        builder.addCase(addFeature.fulfilled, (state, action) => {
+            state.addedFeature = action.payload;
+        });
+        builder.addCase(addFeature.rejected, (state, action) => {
+            console.log({ action });
+            state.error = action.payload;
+        });
     },
 });
 
@@ -63,5 +82,7 @@ export const { fetchVoteAction, fetchFeaturesAction } = featureSlice.actions;
 // export selectors
 export const selectFeatureVote = (featureId) => (state) => state.featureReducer.votes[featureId];
 export const selectFeatures = (state) => state.featureReducer.features;
+export const selectAddedFeature = (state) => state.featureReducer.addedFeature;
+export const selectFeatureError = (state) => state.featureReducer.error;
 
 export default featureSlice.reducer;

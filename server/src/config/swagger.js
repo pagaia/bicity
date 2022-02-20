@@ -1,3 +1,5 @@
+const host = process.env.NODE_ENV !== 'production' ? 'localhost:8082' : 'www.bicity.tk';
+const schemes = process.env.NODE_ENV !== 'production' ? 'http' : 'https';
 exports.options = {
     routePrefix: '/documentation',
     exposeRoute: true,
@@ -16,8 +18,8 @@ exports.options = {
             url: 'https://github.com/pagaia/bicity',
             description: 'More info on the github project',
         },
-        host: 'www.bicity.tk',
-        schemes: ['https'],
+        host,
+        schemes: [schemes],
         consumes: ['application/json'],
         produces: ['application/json'],
         definitions: {

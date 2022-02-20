@@ -5,7 +5,7 @@ import { FeatureContext } from '../../../context/FeatureContext';
 import { fetchFeatures, selectFeatures } from '../../../store/featureSlice';
 
 const FeaturesManager = ({ children }) => {
-    const map = useMap();ª
+    const map = useMap();
 
     const [position, setPosition] = useState(null);
     const [prevCenter, setPrevCenter] = useState(null);

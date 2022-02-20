@@ -1,12 +1,14 @@
-import { Formik, Form, Field } from 'formik';
-import { useState } from 'react';
-import FindPositionNoSSR from '../../components/map/FindPositionNoSSR';
+import { Form, Formik } from 'formik';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import InputField from '../../components/form/InputField';
 import InputSelect from '../../components/form/InputSelect';
-import { ROME_POSITION } from '../../utils/constants';
-import ErrorMessage from '../../components/ErrorMessage';
 import TextAreaField from '../../components/form/TextAreaField';
-import Link from 'next/link';
+import FindPositionNoSSR from '../../components/map/FindPositionNoSSR';
+import { showError } from '../../store/errorSlice';
+import { addFeature, selectAddedFeature, selectFeatureError } from '../../store/featureSlice';
+import { ROME_POSITION } from '../../utils/constants';
 
 const validateNewFeature = (values) => {
     const errors = {};
@@ -39,11 +41,18 @@ const NewFeature = () => {
     const [position, setPosition] = useState(ROME_POSITION);
     const [wasValidated, setWasValidated] = useState(false);
 
-    const [submitted, setSubmitted] = useState(null);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const addedFeature = useSelector(selectAddedFeature);
+    const featureError = useSelector(selectFeatureError);
+
+    useEffect(() => {
+        if (featureError) {
+            dispatch(showError({ featureError }));
+        }
+    }, [featureError]);
 
     const submit = async (values) => {
-        const payload = {
+        const feature = {
             type: 'Feature',
             properties: values,
             geometry: {
@@ -51,21 +60,7 @@ const NewFeature = () => {
                 coordinates: [position.lng, position.lat],
             },
         };
-
-        // Simple POST request with a JSON body using fetch
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-        };
-
-        const response = await fetch('/api/feature', requestOptions);
-        const data = await response.json();
-        if (response.ok) {
-            setSubmitted(data);
-        } else {
-            setError(data);
-        }
+        dispatch(addFeature({ feature }));
     };
 
     const handleGeoCoding = (values) => {
@@ -83,7 +78,7 @@ const NewFeature = () => {
             });
     };
 
-    if (submitted) {
+    if (addedFeature) {
         return (
             <div className="container">
                 <h1>Any place in your app!</h1>
@@ -97,12 +92,12 @@ const NewFeature = () => {
                     <p className="mb-0">
                         You can go now in the home page and search for this new point of interest.
                         Or you can view all details at the following link{' '}
-                        <Link href={`/features/${submitted._id}`}>
-                            <a>{submitted?.properties?.name}</a>
+                        <Link href={`/features/${addedFeature._id}`}>
+                            <a>{addedFeature?.properties?.name}</a>
                         </Link>
                     </p>
 
-                    <pre>{JSON.stringify(submitted)}</pre>
+                    <pre>{JSON.stringify(addedFeature)}</pre>
                 </div>
             </div>
         );
@@ -112,7 +107,6 @@ const NewFeature = () => {
         <div className="container">
             <h1>Let's the community know</h1>
             <p>Do you have a new place to share? Fill in the form and give your biCity</p>
-            <ErrorMessage message={error} />
             <Formik
                 initialValues={{ name: 'Hay Biker' }}
                 validate={validateNewFeature}

@@ -10,7 +10,7 @@ const categoryProperties = {
 const routes = (fastify) => [
     {
         method: 'GET',
-        url: '/api/categories/',
+        url: '/api/categories',
         // preValidation: [fastify.authenticate],
         handler: categoryController.getCategories(fastify),
         schema: {
@@ -25,11 +25,6 @@ const routes = (fastify) => [
                         type: 'object',
                         properties: categoryProperties,
                     },
-                },
-                404: {
-                    description: 'Feature not found.',
-                    type: 'object',
-                    content: { message: 'Feature not found or vote not available' },
                 },
             },
         },

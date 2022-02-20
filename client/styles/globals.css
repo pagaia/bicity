@@ -29,12 +29,6 @@ a:hover {
     object-fit: cover;
 }
 
-.card-title,
-dt,
-dd {
-    text-transform: capitalize;
-}
-
 figcaption {
     font-size: small;
     text-align: center;
@@ -127,4 +121,11 @@ ul.vote-lnk {
 }
 ul.vote-lnk li {
     margin-right: 5px;
+}
+
+#error-message {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 999;
 }

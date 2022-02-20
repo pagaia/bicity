@@ -172,7 +172,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/feature',
-        // preValidation: [fastify.authenticate],
+        preValidation: [fastify.authenticate],
         handler: featureController.addFeature(fastify),
         schema: {
             description: 'Create a new feature',
