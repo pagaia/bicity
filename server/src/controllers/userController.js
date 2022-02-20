@@ -6,10 +6,10 @@ const bcrypt = require('bcrypt');
 // Get Data Models
 const User = require('../models/user');
 const CONST = require('../utility/constants');
-const { encryptPassword, createToken } = require('../utility/security');
+const security = require('../utility/security');
 
 // Get all users
-exports.getUsers = (fastify) => async (req, reply) => {
+exports.getUsers = () => async () => {
     try {
         const users = await User.find();
         return users;
@@ -37,26 +37,96 @@ exports.verifyUser = (fastify) => async (req, reply) => {
     try {
         const { username, password } = req.body;
         const user = await User.findOne({ username: username });
-        if (!user) {
-            return fastify.notFound(req, reply);
-        }
-        console.log({ password, user });
-        const isMatch = bcrypt.compareSync(password, user.passwordHash);
 
-        // const isMatch = await user.verifyPassword(password);
-
-        if (isMatch) {
-            console.log('password match');
-        } else {
-            reply.code(401).send({ error: 'Unauthorized' });
-            return;
+        if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
+            return reply
+                .code(401)
+                .send({ error: 'Unauthorized', message: 'Username or password is incorrect' });
         }
-        const token = fastify.jwt.sign({ user }, { expiresIn: '30m' });
-        reply.header('Authorization', `Bearer ${token}`).send(user);
+
+        const { jwtToken, refreshToken, ...userInfo } = await security.generateTokens(
+            fastify,
+            user,
+            req.ip
+        );
+
+        // send back User info, jwtToken in header, and refreshToken in the cookie
+        return reply
+            .header('Authorization', `Bearer ${jwtToken}`)
+            .setCookie(CONST.COOKIE_REFRESH_TOKEN, refreshToken, {
+                expires: new Date(Date.now() + CONST.ONE_WEEK_MILLISECONDS), // expires in 7 days
+            })
+            .send(userInfo);
     } catch (err) {
         throw boom.boomify(err);
     }
 };
+
+// verify refresh token and refresh access token and refreshToken
+exports.refreshToken = (fastify) => async (req, reply) => {
+    try {
+        console.log({ cookies: req.cookies });
+        if (!req.cookies[CONST.COOKIE_REFRESH_TOKEN]) {
+            return reply.code(401).send({ message: 'Missing cookie' });
+        }
+        const result = reply.unsignCookie(req.cookies[CONST.COOKIE_REFRESH_TOKEN]);
+        console.log({ result });
+        if (!result.valid) {
+            return reply.code(401).send({ message: 'Cookie invalid' });
+        }
+        const token = result.value;
+
+        const { jwtToken, refreshToken, ...userInfo } = await security.refreshToken({
+            fastify,
+            token,
+            ipAddress: req.ip,
+        });
+
+        // send back User info, jwtToken in header, and refreshToken in the cookie
+        return reply
+            .header('Authorization', `Bearer ${jwtToken}`)
+            .setCookie(CONST.COOKIE_REFRESH_TOKEN, refreshToken, {
+                expires: new Date(Date.now() + CONST.ONE_WEEK_MILLISECONDS), // expires in 7 days
+            })
+            .send(userInfo);
+    } catch (err) {
+        if (err?.message === 'Invalid token') {
+            return reply.code(401).send({ message: 'Token not valid! Please login again' });
+        }
+        throw boom.boomify(err);
+    }
+};
+
+// revoke Token - normally when the user wants to log out from the app
+exports.revokeToken = (fastify) => async (req, reply) => {
+    try {
+        console.log({ cookies: req.cookies });
+
+        // cookie is missing
+        if (!req.cookies[CONST.COOKIE_REFRESH_TOKEN]) {
+            return reply.code(400).send({ message: 'Token is required' });
+        }
+
+        const result = reply.unsignCookie(req.cookies[CONST.COOKIE_REFRESH_TOKEN]);
+        console.log({ result });
+        if (!result.valid) {
+            return reply.code(400).send({ message: 'Token is NOT valid' });
+        }
+        const token = result.value;
+
+        await security.revokeToken({
+            token,
+            ipAddress: req.ip,
+        });
+
+        // token revoke
+        return reply.send({ message: 'Token revoked' });
+    } catch (err) {
+        console.log(err);
+        throw boom.boomify(err);
+    }
+};
+
 // Add a new user
 exports.addUser = (fastify) => async (req, reply) => {
     try {
@@ -69,7 +139,7 @@ exports.addUser = (fastify) => async (req, reply) => {
             email,
             username,
             passwordHash,
-            accessToken: createToken(),
+            accessToken: randomTokenString(),
             picture: `https://api.multiavatar.com/${name} ${lastName}.png`,
         };
 

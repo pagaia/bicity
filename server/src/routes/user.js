@@ -51,7 +51,6 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/users/login',
-        // preValidation: [fastify.authenticate],
         handler: userController.verifyUser(fastify),
         schema: {
             description: 'Login with username and password',
@@ -75,6 +74,69 @@ const routes = (fastify) => [
                     description: 'Bad request.',
                     type: 'object',
                     content: {},
+                },
+            },
+        },
+        security: [
+            {
+                apiKey: [],
+            },
+        ],
+    },
+    {
+        method: 'POST',
+        url: '/api/users/refresh-token',
+        handler: userController.refreshToken(fastify),
+        schema: {
+            description: 'Api to refresh the user token and geta new jwt token',
+            tags: ['user'],
+            summary: 'Api to refresh the user token and geta new jwt token',
+            response: {
+                200: {
+                    description: 'Successful response',
+                    type: 'object',
+                    properties: userProperties,
+                },
+                400: {
+                    description: 'Bad request.',
+                    type: 'object',
+                    content: {},
+                },
+                404: {
+                    description: 'Token not found or expired',
+                    type: 'object',
+                    content: {},
+                },
+            },
+        },
+        security: [
+            {
+                apiKey: [],
+            },
+        ],
+    },
+    {
+        method: 'POST',
+        url: '/api/users/revoke-token',
+        handler: userController.revokeToken(fastify),
+        schema: {
+            description: 'Api to revoke the user token, normally when the user wants to logout',
+            tags: ['user'],
+            summary: 'Api to revoke the user token, normally when the user wants to logout',
+            response: {
+                200: {
+                    description: 'Successful response',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string', example: 'Token revoked' },
+                    },
+                },
+                400: {
+                    description: 'Bad request',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string', example: 'Cookie not found' },
+                    },
                 },
             },
         },

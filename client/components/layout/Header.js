@@ -62,12 +62,12 @@ const Header = (props) => {
                                 <div className="menu-txt">User</div>
                             </a>
                         </Link>
-                        <Link href="/credits">
+                        <Link href="/about">
                             <a>
                                 <div>
                                     <i className="fas fa-copyright  fa-2x"></i>
                                 </div>
-                                <div className="menu-txt">Credits</div>
+                                <div className="menu-txt">About</div>
                             </a>
                         </Link>
                     </div>

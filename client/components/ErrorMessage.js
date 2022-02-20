@@ -16,7 +16,7 @@ const ErrorMessage = () => {
                 className="alert alert-danger alert-dismissible fade show"
                 role="alert">
                 <h4 className="alert-heading">Ops something when wrong!</h4>
-                <p>Something went wrong. Please check the error message:</p>
+                <p>Please check the error message:</p>
                 <hr />
                 <p className="mb-0">{JSON.stringify(error)}</p>
                 <button

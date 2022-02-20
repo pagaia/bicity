@@ -24,11 +24,7 @@ const validateNewUser = (values) => {
 
 const Login = () => {
     const [wasValidated, setWasValidated] = useState(false);
-    const { user, googleSignIn, oauthFacebookSignIn, oauthTwitterSignIn, signOut } = useAuth();
-
-    const [submitted, setSubmitted] = useState(null);
-    const [error, setError] = useState(null);
-    const { setUser } = useAuth();
+    const { googleSignIn, oauthFacebookSignIn, oauthTwitterSignIn, setUser } = useAuth();
 
     const submit = async (values) => {
         const body = JSON.stringify(values);
@@ -42,12 +38,7 @@ const Login = () => {
 
         // store user profile and JWT for future calls
         setUser({ profile: data, authorization });
-        setSubmitted(response);
     };
-
-    if (submitted) {
-        return <div>Well done!!</div>;
-    }
 
     return (
         <section className="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark login-section">

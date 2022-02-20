@@ -28,3 +28,20 @@ export const verifyUserLogin = async ({ code, state }) => {
     // store user google profile and JWT for future calls
     return { profile, authorization };
 };
+
+/**
+ *  Function to verify the user via the backend with service ID provider
+ * @param {code} param0
+ * @returns
+ */
+export const refreshUserToken = async () => {
+    const response = await axios.post(`/api/users/refresh-token`);
+
+    // get the authorization from the header
+    const { authorization } = response.headers;
+    // get the user profile from the body
+    const { data: profile } = response;
+
+    // store user google profile and JWT for future calls
+    return { profile, authorization };
+};

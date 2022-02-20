@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const featureRoutes = require('./routes/feature');
 const userRoutes = require('./routes/user');
@@ -14,9 +14,21 @@ function build(opts = {}) {
     const fastify = require('fastify')(opts);
 
     // add CORS feature
-    fastify.register(require('fastify-cors'), {
-        // put your options here
-        origin: 'http://localhost:3000',
+    // fastify.register(require('fastify-cors'), {
+    //     // put your options here
+    //     origin: 'http://localhost:3000',
+    // });
+
+    // register cookie plugin
+    fastify.register(require('fastify-cookie'), {
+        secret: opts.config.cookie.secret, // for cookies signature
+        parseOptions: {
+            sameSite: true,
+            path: '/',
+            httpOnly: true,
+            secure: true,
+            signed: true
+        }, // options for parsing cookies
     });
 
     // Register Swagger
@@ -29,11 +41,12 @@ function build(opts = {}) {
     fastify.setNotFoundHandler(fastify.notFound);
 
     // plugin to verify user and create JWT
-    fastify.register(require('./plugins/googleAuth'), {});
+    fastify.register(require('./plugins/oauth'), {});
 
     // plugin to verify JWT
     fastify.register(require('./plugins/authenticate'), opts);
 
+    // validate user token
     fastify.decorate('validateToken', validateToken);
 
     fastify.register(require('fastify-auth')).after(routes);

@@ -129,3 +129,24 @@ ul.vote-lnk li {
     right: 50px;
     z-index: 999;
 }
+
+.about {
+    margin: 5em 0;
+}
+
+@media (min-width: 600px) {
+    .about {
+        margin: 0;
+    }
+}
+
+.about {
+    margin: 0;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .about {
+        margin: 4em 0;
+    }
+}

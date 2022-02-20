@@ -8,3 +8,7 @@ exports.DEFAULT_LOCATION = {
 };
 
 exports.MAX_VOTE_FEATURE = 5;
+
+exports.ONE_WEEK_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
+
+exports.COOKIE_REFRESH_TOKEN = '__Host-refreshToken';

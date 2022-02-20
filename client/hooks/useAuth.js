@@ -4,6 +4,8 @@ import Router from 'next/router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useHash, verifyUserLogin } from '../utils/common.functions';
 import usePrevious from './usePrevious';
+import { useDispatch } from 'react-redux';
+import { revokeToken } from '../store/userSlice';
 
 const authContext = createContext();
 
@@ -142,12 +144,12 @@ function useProvideAuth() {
     const [code, setCode] = useState(null);
     const [state, setState] = useState(null);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         let hash = useHash();
         const state = hash.get('state') || hash.get('#state');
-
         const code = hash.get('access_token') || hash.get('#access_token');
-
         console.log({ code, state });
         setCode(code);
         setState(state);
@@ -168,7 +170,7 @@ function useProvideAuth() {
             const data = await verifyUserLogin({ code, state });
             // save the user into the state
             setUser(data);
-            // remove the google information from the url
+            // remove the token information from the url
             Router.push('/user');
         }
     }, [code, prevCode, state]);
@@ -178,6 +180,7 @@ function useProvideAuth() {
 
     const signOut = () => {
         setUser(null);
+        dispatch(revokeToken());
     };
 
     // Return the user object and auth methods

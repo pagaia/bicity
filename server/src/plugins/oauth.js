@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const axios = require('axios');
-const { createToken } = require('../utility/security');
+const { randomTokenString, generateTokens } = require('../utility/security');
+const { ONE_WEEK_MILLISECONDS, COOKIE_REFRESH_TOKEN } = require('../utility/constants');
 
 const getGoogleUserInfo = async (access_token) => {
     const { data } = await axios({
@@ -35,14 +36,14 @@ const getFacebookUserInfo = async (access_token) => {
 };
 
 module.exports = function (fastify, options, done) {
-    const verifyUser = async (reply, profile) => {
+    const verifyUser = async (reply, profile, ipAddress) => {
         const email = profile.email;
 
         console.log({ profile });
         // search the user in the DB with the email
         let user = await User.findOne({ email });
 
-        // if user not found  add into the DB
+        // if user not found  add into the DB first
         if (!user) {
             const userData = {
                 name: profile.given_name,
@@ -51,21 +52,25 @@ module.exports = function (fastify, options, done) {
                 username: profile.email,
                 locale: profile.locale,
                 picture: profile.picture,
-                accessToken: createToken(),
+                accessToken: randomTokenString(),
             };
             user = new User(userData);
             user = await user.save();
-
-            // reply.code(401).type("application/json").send({ error: "Not Found" });
-            // return;
         }
 
-        // otherwise generate a JWT with the profile inside and return to the Client
-        const token = fastify.jwt.sign({ profile }, { expiresIn: '30m' });
-        reply.header('Authorization', `Bearer ${token}`).send(user);
+        const { jwtToken, refreshToken, ...userInfo } = await generateTokens(
+            fastify,
+            user,
+            ipAddress
+        );
 
-        // add the user into the payload as response
-        // reply.send(user);
+        // send back User info, jwtToken in header, and refreshToken in the cookie
+        return reply
+            .header('Authorization', `Bearer ${jwtToken}`)
+            .setCookie(COOKIE_REFRESH_TOKEN, refreshToken, {
+                expires: new Date(Date.now() + ONE_WEEK_MILLISECONDS), // expires in 7 days
+            })
+            .send(userInfo);
     };
 
     fastify.get(
@@ -103,13 +108,14 @@ module.exports = function (fastify, options, done) {
         async (request, reply) => {
             const code = request.headers.code;
             const provider = request.params.provider;
+            const ipAddress = request.ip;
             console.log({ code, provider });
             let profile =
                 provider === 'google-state-test'
                     ? await getGoogleUserInfo(code)
                     : await getFacebookUserInfo(code);
 
-            await verifyUser(reply, profile);
+            await verifyUser(reply, profile, ipAddress);
             // get the google profile to retrive the email and check with the local one
         }
     );

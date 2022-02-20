@@ -26,7 +26,7 @@ const LeaFletButton = ({ title, map, action }) => {
                 return controlElement;
             },
             onRemove: (map) => {
-                console.log('Removing leaflet button');
+                console.log(`Removing leaflet button ${title}`);
                 helpDiv.remove()
             },
         });
@@ -37,7 +37,6 @@ const LeaFletButton = ({ title, map, action }) => {
     useEffect(() => {
         const control = createButtonControl();
         control.addTo(map);
-        return helpDiv.remove;
     }, []);
 
     return null;

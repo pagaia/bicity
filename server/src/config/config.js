@@ -13,6 +13,9 @@ const config = {
     jwt: {
         secret: process.env.JWT_SECRET,
     },
+    cookie: {
+        secret: process.env.COOKIE_SECRET,
+    },
 };
 
 module.exports = config;
