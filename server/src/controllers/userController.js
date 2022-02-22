@@ -131,7 +131,7 @@ exports.revokeToken = (fastify) => async (req, reply) => {
 exports.addUser = (fastify) => async (req, reply) => {
     try {
         const { name, lastName, password, email, username } = req.body;
-        const passwordHash = await encryptPassword(password);
+        const passwordHash = await security.encryptPassword(password);
         const data = {
             name,
             lastName,
@@ -139,7 +139,7 @@ exports.addUser = (fastify) => async (req, reply) => {
             email,
             username,
             passwordHash,
-            accessToken: randomTokenString(),
+            accessToken: security.randomTokenString(),
             picture: `https://api.multiavatar.com/${name} ${lastName}.png`,
         };
 
