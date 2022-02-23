@@ -21,7 +21,7 @@ function build(opts = {}) {
 
     // register rate limit
     fastify.register(require('fastify-rate-limit'), {
-        max: 3,
+        max: 100,
         timeWindow: '1 minute',
     });
 
