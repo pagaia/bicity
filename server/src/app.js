@@ -19,6 +19,12 @@ function build(opts = {}) {
     //     origin: 'http://localhost:3000',
     // });
 
+    // register rate limit
+    fastify.register(require('fastify-rate-limit'), {
+        max: 3,
+        timeWindow: '1 minute',
+    });
+
     // register cookie plugin
     fastify.register(require('fastify-cookie'), {
         secret: opts.config.cookie.secret, // for cookies signature
@@ -27,7 +33,7 @@ function build(opts = {}) {
             path: '/',
             httpOnly: true,
             secure: true,
-            signed: true
+            signed: true,
         }, // options for parsing cookies
     });
 

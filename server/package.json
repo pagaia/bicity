@@ -33,6 +33,7 @@
     "fastify-cookie": "^5.5.0",
     "fastify-cors": "^5.2.0",
     "fastify-jwt": "^2.4.0",
+    "fastify-rate-limit": "^5.7.2",
     "fastify-swagger": "^3.5.0",
     "json2csv": "^5.0.6",
     "mongoose": "^6.1.5",
