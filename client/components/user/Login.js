@@ -41,7 +41,7 @@ const Login = () => {
     };
 
     return (
-        <section className="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark login-section">
+        <section className="mt-0 align-items-center d-flex  login-section">
             <div className="container-fluid">
                 <div className="row  justify-content-center align-items-center d-flex-row text-center h-100">
                     <div className="col-12 col-md-6 h-50 ">

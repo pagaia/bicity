@@ -11,28 +11,10 @@ const UpdateOSMData = () => {
     const fetchAmenity = () => {
         dispatch(
             fetchOSMAmenities({
-                amenity: 'bicycle_parking',
+                amenities: 'bicycle_rental|bicycle_parking|bicycle_repair_station',
                 bbox: map.getBounds(),
             })
         );
-
-        setTimeout(() => {
-            dispatch(
-                fetchOSMAmenities({
-                    amenity: 'bicycle_rental',
-                    bbox: map.getBounds(),
-                })
-            );
-        }, 2000);
-
-        setTimeout(() => {
-            dispatch(
-                fetchOSMAmenities({
-                    amenity: 'bicycle_repair_station',
-                    bbox: map.getBounds(),
-                })
-            );
-        }, 4000);
     };
     return <LeaFletButton title="Update OSM" action={fetchAmenity} />;
 };

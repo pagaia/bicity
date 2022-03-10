@@ -1,17 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const amenities = ['bicycle_rental', 'bicycle_parking', 'bicycle_repair_station'];
 
 // First, create the thunk
 export const fetchOSMAmenities = createAsyncThunk(
     'osm/fetchAmenities',
-    async ({ amenity, bbox }, thunkAPI) => {
+    async ({ amenities, bbox }, thunkAPI) => {
         const { _northEast, _southWest } = bbox;
         const payload = encodeURI(`[out:json][timeout:25];
   // gather results
   (
-    node["amenity"="${amenity}"](${_southWest.lat},${_southWest.lng},${_northEast.lat},${_northEast.lng});
+    node[~"^(amenity)$"~"(${amenities})"](${_southWest.lat},${_southWest.lng},${_northEast.lat},${_northEast.lng});
   );
   // print results
   out geom;`);

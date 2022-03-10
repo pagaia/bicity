@@ -7,11 +7,8 @@ export default function Home() {
     });
 
     return (
-        <Fragment>
-            <div id="map">
-                <MapWithNoSSR />
-            </div>
-            <div id="list"></div>
-        </Fragment>
+        <div id="map">
+            <MapWithNoSSR />
+        </div>
     );
 }

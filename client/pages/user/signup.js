@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import InputField from '../../components/form/InputField';
+import Link from 'next/link';
 
 const validateNewUser = (values) => {
     const errors = {};
@@ -59,14 +60,14 @@ const SignUp = () => {
     }
 
     return (
-        <section className="pt-5 pb-5 mt-0 align-items-center d-flex bg-dark login-section">
+        <section className="mt-0 align-items-center d-flex login-section">
             <div className="container-fluid">
                 <div className="row  justify-content-center align-items-center d-flex-row text-center h-100">
                     <div className="col-12 col-md-6 h-50 ">
                         <div className="card shadow">
                             <div className="card-body mx-auto">
                                 <h4 className="card-title mt-3 text-center">Create Account</h4>
-                               
+
                                 <Formik
                                     initialValues={{ name: 'Hay Biker' }}
                                     validate={validateNewUser}
@@ -159,7 +160,9 @@ const SignUp = () => {
                                             </div>
                                             <p className="text-center">
                                                 Have an account?
-                                                <a href="">Log In</a>
+                                                <Link href="/user">
+                                                    <a>Log In</a>
+                                                </Link>
                                             </p>
                                         </Form>
                                     )}

@@ -23,14 +23,14 @@ const FeaturesManager = ({ children }) => {
 
         map.on('locationfound', handleOnLocationFound);
         map.on('locationerror', handleOnLocationError);
-        map.on('movestart', handleMoveEventStart);
-        map.on('moveend', handleMoveEventEnd);
+        // map.on('movestart', handleMoveEventStart);
+        // map.on('moveend', handleMoveEventEnd);
 
         return () => {
             map.off('locationfound', handleOnLocationFound);
             map.off('locationerror', handleOnLocationError);
-            map.off('movestart', handleMoveEventStart);
-            map.off('moveend', handleMoveEventEnd);
+            // map.off('movestart', handleMoveEventStart);
+            // map.off('moveend', handleMoveEventEnd);
         };
     }, [map]);
 
@@ -55,21 +55,21 @@ const FeaturesManager = ({ children }) => {
         console.log({ handleOnLocationError: e });
     }
 
-    function handleMoveEventEnd(e) {
-        const pos = map.getCenter();
-        const distance = prevCenter?.distanceTo?.(pos)?.toFixed(0);
-        console.log({ prevCenter, distance, pos });
-        if (pos && (!prevCenter || distance > 1000)) {
-            console.log({ prevCenter, distance });
-            dispatch(fetchFeatures({ position: pos }));
+    // function handleMoveEventEnd(e) {
+    //     const pos = map.getCenter();
+    //     const distance = prevCenter?.distanceTo?.(pos)?.toFixed(0);
+    //     console.log({ prevCenter, distance, pos });
+    //     // if (pos && (!prevCenter || distance > 1000)) {
+    //     //     console.log({ prevCenter, distance });
+    //     //     dispatch(fetchFeatures({ position: pos }));
 
-        }
-    }
+    //     // }
+    // }
 
-    function handleMoveEventStart(e) {
-        console.log({ mapCenterStart: map.getCenter() });
-        setPrevCenter(map.getCenter());
-    }
+    // function handleMoveEventStart(e) {
+    //     console.log({ mapCenterStart: map.getCenter() });
+    //     setPrevCenter(map.getCenter());
+    // }
 
     return (
         <FeatureContext.Provider value={{ data: features, position }}>

@@ -9,7 +9,7 @@ const LeaFletButton = ({ title, map, action }) => {
         const MapHelp = L.Control.extend({
             onAdd: (map) => {
                 const controlElementTag = 'button';
-                const controlElementClass = 'my-leaflet-control';
+                const controlElementClass = 'my-leaflet-control leaflet-control-layers';
                 const controlElement = L.DomUtil.create(controlElementTag, controlElementClass);
 
                 // const helpDivTemp = L.DomUtil.create('button', '');

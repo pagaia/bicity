@@ -10,6 +10,11 @@ const FeaturesLayer = ({ category }) => {
 
     const filteredData = data?.filter((feature) => feature?.properties?.category === category);
 
+    const onClick = (e, id) => {
+        const element = document.getElementById(id);
+        element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    };
+
     return (
         <LayersControl.Overlay name={category}>
             <LayerGroup>
@@ -20,7 +25,10 @@ const FeaturesLayer = ({ category }) => {
                         const { properties } = item;
 
                         return (
-                            <Marker position={[lat, long]} key={item._id}>
+                            <Marker
+                                position={[lat, long]}
+                                key={item._id}
+                                eventHandlers={{ click: (e) => onClick(e, item._id) }}>
                                 <Popup>
                                     <div>
                                         <label className="fw-bold">Name:</label>

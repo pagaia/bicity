@@ -150,3 +150,34 @@ ul.vote-lnk li {
         margin: 4em 0;
     }
 }
+
+#list {
+    overflow: scroll;
+    height: 40vh;
+}
+.element {
+    padding: 15px;
+}
+
+.element .txt {
+    font-size: small;
+    margin-right: 1em;
+}
+
+.element h1 {
+    font-size: medium;
+}
+
+.element .feature-icon {
+    margin-right: 1em;
+}
+
+.checked {
+    color: #ffa500;
+    font-size: 21px;
+    margin: 0 3px;
+}
+.unchecked {
+    font-size: 21px;
+    margin: 0 3px;
+}
