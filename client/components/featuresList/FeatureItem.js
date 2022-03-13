@@ -1,4 +1,3 @@
-import Image from 'next/image';
 
 const FeatureItem = ({ feature, onClick }) => {
     const { properties } = feature;

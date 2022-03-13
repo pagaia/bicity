@@ -7,8 +7,13 @@ import { selectAmenity } from '../../../store/osmSlice';
 const OsmFeaturesLayer = ({ amenity }) => {
     const data = useSelector(selectAmenity(amenity));
 
-    const filteredData = data?.elements ?? [];
+    const filteredData = data ?? [];
 
+    const onClick = (e, id) => {
+        const element = document.getElementById(id);
+        console.log({ element, id });
+        element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+    };
     return (
         <LayersControl.Overlay name={`OSM_${amenity}`}>
             <LayerGroup>
@@ -19,18 +24,21 @@ const OsmFeaturesLayer = ({ amenity }) => {
                         const { tags } = item;
 
                         return (
-                            <Marker position={[lat, long]} key={item.id}>
-                                <Popup>
+                            <Marker
+                                position={[lat, long]}
+                                key={item.id}
+                                eventHandlers={{ click: (e) => onClick(e, item.id) }}>
+                                {/* <Popup>
                                     <dl className="row">
                                         <dt className="col-sm-3">Name:</dt>
                                         <dd className="col-sm-9">{tags.amenity}</dd>
 
-                                        {/* <div className="col-sm-12">
+                                        <div className="col-sm-12">
                                             <ExternalLink
                                                 url={`https://www.google.com/maps/dir/?api=1&origin=${position.latitude},${position.longitude}&destination=${lat},${long}&travelmode=bicycling`}>
                                                 Get directions
                                             </ExternalLink>
-                                        </div> */}
+                                        </div>
                                         {Object.keys(tags).map((item, idx) => {
                                             const value = tags[item];
                                             return (
@@ -41,7 +49,7 @@ const OsmFeaturesLayer = ({ amenity }) => {
                                             );
                                         })}
                                     </dl>
-                                </Popup>
+                                </Popup> */}
                             </Marker>
                         );
                     })}

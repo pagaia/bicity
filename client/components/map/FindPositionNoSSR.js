@@ -6,7 +6,7 @@ const FindPositionNoSSR = ({ position, setPosition }) => {
     });
 
     return (
-        <div id="map">
+        <div id="map" className='mb-5'>
             <WrapperMap position={position} setPosition={setPosition} />
         </div>
     );

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-
 // First, create the thunk
 export const fetchOSMAmenities = createAsyncThunk(
     'osm/fetchAmenities',
@@ -44,9 +43,13 @@ export const osmSlice = createSlice({
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(fetchOSMAmenities.fulfilled, (state, action) => {
-            const { amenity } = action?.meta?.arg;
+            const { amenities } = action?.meta?.arg;
             // Add amenities to the state
-            state[amenity] = action.payload;
+            const listAmenities = amenities?.split('|');
+            listAmenities.forEach((amenity) => {
+                const list = action.payload.elements?.filter((el) => el.tags.amenity == amenity);
+                state[amenity] = list;
+            });
         });
     },
 });

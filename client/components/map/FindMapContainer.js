@@ -11,11 +11,10 @@ const FindMapContainer = ({ position = ROME_POSITION, setPosition }) => {
             center={[position.lat, position.lng]}
             zoom={14}
             scrollWheelZoom
-            style={{ height: '20vh', width: '100%' }}
-        >
+            style={{ height: '20vh', width: '100%' }}>
             <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors.'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+                attribution="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community"
             />
             <FindPosition position={position} setPosition={setPosition} />
         </MapContainer>

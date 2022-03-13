@@ -6,3 +6,9 @@ export const FEATURE_CATEGORY = {
     BIKE_RESELLER: 'bike-reseller',
     BAR: 'bar',
 };
+
+export const AMENITIES = {
+    BICYCLE_PARKING: 'bicycle_parking',
+    BICYCLE_RENTAL: 'bicycle_rental',
+    BICYCLE_REPAIR_STATION: 'bicycle_repair_station',
+};

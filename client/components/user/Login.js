@@ -41,9 +41,9 @@ const Login = () => {
     };
 
     return (
-        <section className="mt-0 align-items-center d-flex  login-section">
+        <section className="mt-0 align-items-center d-flex login-section">
             <div className="container-fluid">
-                <div className="row  justify-content-center align-items-center d-flex-row text-center h-100">
+                <div className="row  justify-content-center align-items-center d-flex-row text-center">
                     <div className="col-12 col-md-6 h-50 ">
                         <div className="card shadow">
                             <div className="card-body mx-auto">

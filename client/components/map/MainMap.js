@@ -3,8 +3,8 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet/dist/leaflet.css';
 import { useMemo, useState } from 'react';
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
-import { FEATURE_CATEGORY, ROME_POSITION } from '../../utils/constants';
-import FeaturesList from '../FeaturesList';
+import { AMENITIES, FEATURE_CATEGORY, ROME_POSITION } from '../../utils/constants';
+import FeaturesList from '../featuresList/FeaturesList';
 import CenterButton from './components/CenterBotton';
 import UpdateFeatureButton from './components/UpdateFeatureButton';
 import UpdateOSMData from './components/UpdateOSMData';
@@ -33,16 +33,16 @@ const MainMap = (props) => {
                             return <FeaturesLayer category={FEATURE_CATEGORY[key]} key={key} />;
                         })}
 
-                        <OsmFeaturesLayer amenity="bicycle_parking" />
-                        <OsmFeaturesLayer amenity="bicycle_rental" />
-                        <OsmFeaturesLayer amenity="bicycle_repair_station" />
+                        <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_PARKING} />
+                        <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_RENTAL} />
+                        <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_REPAIR_STATION} />
                     </LayersControl>
                     <UpdateOSMData />
                     <CenterButton />
                     <UpdateFeatureButton />
                     <TileLayer
-                        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors.'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+                        attribution="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community"
                     />
                 </FeaturesManager>
             </MapContainer>

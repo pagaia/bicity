@@ -19,13 +19,13 @@
 
 .footer {
     width: 100%;
-    padding-top: 1.5em;
+    padding-top: 2em;
     display: flex;
     justify-content: center;
     align-items: center;
     /* position: absolute;
   bottom: 0; */
-    margin-bottom: 2em;
+    /* margin-bottom: 2em; */
 }
 
 .footer a {
