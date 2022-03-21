@@ -3,13 +3,19 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet/dist/leaflet.css';
 import { useMemo, useState } from 'react';
 import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
-import { AMENITIES, FEATURE_CATEGORY, ROME_POSITION } from '../../utils/constants';
+import {
+    AMENITIES,
+    FEATURE_CATEGORY,
+    MULTI_FEATURE_CATEGORY,
+    ROME_POSITION
+} from '../../utils/constants';
 import FeaturesList from '../featuresList/FeaturesList';
 import CenterButton from './components/CenterBotton';
-import UpdateFeatureButton from './components/UpdateFeatureButton';
-import UpdateOSMData from './components/UpdateOSMData';
+import SelectFeatures from './components/SelectFeatures';
+import UpdateSearchButton from './components/UpdateSearchButton';
 import FeaturesLayer from './Features/FeaturesLayer';
 import FeaturesManager from './Features/FeaturesManager';
+import MultiLineFeaturesLayer from './Features/MultiLineFeaturesLayer';
 import OsmFeaturesLayer from './Features/OsmFeatures';
 
 const MainMap = (props) => {
@@ -32,17 +38,25 @@ const MainMap = (props) => {
                         {Object.keys(FEATURE_CATEGORY).map((key) => {
                             return <FeaturesLayer category={FEATURE_CATEGORY[key]} key={key} />;
                         })}
-
+                        {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
+                            return (
+                                <MultiLineFeaturesLayer
+                                    category={MULTI_FEATURE_CATEGORY[key]}
+                                    key={key}
+                                />
+                            );
+                        })}
                         <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_PARKING} />
                         <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_RENTAL} />
                         <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_REPAIR_STATION} />
                     </LayersControl>
-                    <UpdateOSMData />
+                    {/* <UpdateOSMData /> */}
                     <CenterButton />
-                    <UpdateFeatureButton />
+                    <UpdateSearchButton />
+                    <SelectFeatures />
                     <TileLayer
-                        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
-                        attribution="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community"
+                        attribution='Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'
+                        url={`https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`}
                     />
                 </FeaturesManager>
             </MapContainer>

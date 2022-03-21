@@ -1,14 +1,22 @@
 [
     {
+        "name": "bike_line",
+        "description": "Bike lanes",
+        "type": "line"
+    },
+    {
         "name": "bike-parking",
-        "description": "A place to park a bike"
+        "description": "A place to park a bike",
+        "type": "point"
     },
     {
         "name": "bike-reseller",
-        "description": "A bike shop"
+        "description": "A bike shop",
+        "type": "point"
     },
     {
         "name": "bar",
-        "description": "A bike friendly bar"
+        "description": "A bike friendly bar",
+        "type": "point"
     }
 ]

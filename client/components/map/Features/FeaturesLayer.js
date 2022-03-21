@@ -1,14 +1,21 @@
 import Link from 'next/link';
-import { Fragment, useContext } from 'react';
+import { useContext } from 'react';
 import { LayerGroup, LayersControl, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { FeatureContext } from '../../../context/FeatureContext';
-// import ExternalLink from '../../ExternalLink';
+import L from 'leaflet';
 
+const fontAwesomeIcon = L.divIcon({
+    html: '<i class="fas fa-globe-africa fa-2x"></i>',
+    iconSize: [20, 20],
+    className: 'myDivIcon',
+});
 const FeaturesLayer = ({ category }) => {
     const { data, position } = useContext(FeatureContext);
 
-    const filteredData = data?.filter((feature) => feature?.properties?.category === category);
+    const filteredData = data?.features?.filter(
+        (feature) => feature?.properties?.category === category
+    );
 
     const onClick = (e, id) => {
         const element = document.getElementById(id);
@@ -28,7 +35,8 @@ const FeaturesLayer = ({ category }) => {
                             <Marker
                                 position={[lat, long]}
                                 key={item._id}
-                                eventHandlers={{ click: (e) => onClick(e, item._id) }}>
+                                eventHandlers={{ click: (e) => onClick(e, item._id) }}
+                                icon={fontAwesomeIcon}>
                                 <Popup>
                                     <div>
                                         <label className="fw-bold">Name:</label>

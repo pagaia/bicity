@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
-import { fetchFeatures, selectFeatures } from '../../../store/featureSlice';
+import {
+    fetchFeatures,
+    fetchMultiFeatures,
+    selectFeatures,
+    selectMultiFeatures,
+} from '../../../store/featureSlice';
 
 const FeaturesManager = ({ children }) => {
     const map = useMap();
@@ -12,6 +17,7 @@ const FeaturesManager = ({ children }) => {
 
     const dispatch = useDispatch();
     const features = useSelector(selectFeatures);
+    const multiFeatures = useSelector(selectMultiFeatures);
 
     useEffect(() => {
         return () => console.log('Unmounted FeaturesManager');
@@ -34,9 +40,9 @@ const FeaturesManager = ({ children }) => {
         };
     }, [map]);
 
-
     function handleOnLocationFound(e) {
         const { latlng } = e;
+        const bbox = map.getBounds();
         // map.flyTo(latlng, 15);
         if (latlng) {
             console.log({ latlng });
@@ -46,6 +52,7 @@ const FeaturesManager = ({ children }) => {
             // fetchFeatures(latlng);
             console.log({ position });
             dispatch(fetchFeatures({ position: latlng }));
+            dispatch(fetchMultiFeatures({ bbox }));
         } else {
             console.error({ latlng: 'NOT DEFINED' });
         }
@@ -72,7 +79,7 @@ const FeaturesManager = ({ children }) => {
     // }
 
     return (
-        <FeatureContext.Provider value={{ data: features, position }}>
+        <FeatureContext.Provider value={{ data: { features, multiFeatures }, position }}>
             {children}
         </FeatureContext.Provider>
     );

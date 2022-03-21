@@ -1,42 +1,33 @@
-// External Dependancies
 const mongoose = require('mongoose');
 const validateCategory = require('./validation');
 
-
-const pointSchema = new mongoose.Schema({
+const multiLineStringSchema = new mongoose.Schema({
     type: {
         type: String,
-        enum: ['Point'],
+        enum: ['MultiLineString'],
         required: true,
     },
     coordinates: {
-        type: [Number],
+        type: [[[Number]]],
         required: true,
     },
 });
 
-const featureSchema = new mongoose.Schema(
+const multiFeatureSchema = new mongoose.Schema(
     {
         type: String,
         properties: {
-            name: 'string',
-            url: 'string',
-            phone: 'string',
-            country: 'string',
-            address: 'string',
-            city: 'string',
-            country: 'string',
             category: {
                 type: 'string',
                 validate: validateCategory,
                 required: true,
             },
-            capacity: Number,
-            description: 'string',
-            additionalProperties: 'string',
+            name: 'string',
+            length: 'string',
+            status: 'string',
         },
         geometry: {
-            type: pointSchema,
+            type: multiLineStringSchema,
             required: true,
             index: '2dsphere', // Create a special 2dsphere index on `device.location`
         },
@@ -44,5 +35,5 @@ const featureSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const Feature = mongoose.model('feature', featureSchema);
-module.exports = Feature;
+const MultiFeature = mongoose.model('multifeature', multiFeatureSchema);
+module.exports = MultiFeature;

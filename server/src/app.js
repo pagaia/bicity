@@ -1,6 +1,7 @@
 'use strict';
 
 const featureRoutes = require('./routes/feature');
+const multiFeatureRoutes = require('./routes/multiFeature');
 const userRoutes = require('./routes/user');
 const voteRoutes = require('./routes/vote');
 const categoryRoutes = require('./routes/category');
@@ -75,6 +76,11 @@ function build(opts = {}) {
 
         // Configure routes for Feature
         featureRoutes(fastify).forEach((route, index) => {
+            fastify.route(route);
+        });
+
+        // Configure routes for Multi Feature
+        multiFeatureRoutes(fastify).forEach((route, index) => {
             fastify.route(route);
         });
 

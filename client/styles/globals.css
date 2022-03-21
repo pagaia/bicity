@@ -179,3 +179,33 @@ ul.vote-lnk li {
     font-size: 21px;
     margin: 0 3px;
 }
+
+.modal.modal-fullscreen {
+    width: 100vw;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    background: white;
+    position: fixed;
+    display: none;
+    animation: slide-up 1s;
+}
+
+.modal.modal-fullscreen.show {
+    width: 100vw;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+    background: white;
+    display: block;
+    position: fixed;
+}
+
+@keyframes slide-up {
+    from {
+        top: 100vh;
+    }
+    to {
+        top: 0;
+    }
+}

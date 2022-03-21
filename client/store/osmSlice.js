@@ -14,8 +14,13 @@ export const fetchOSMAmenities = createAsyncThunk(
   // print results
   out geom;`);
 
+        const overPassServers = [
+            'https://lz4.overpass-api.de/api/interpreter',
+            'https://z.overpass-api.de/api/interpreter',
+            'https://overpass.osm.ch/api/interpreter'
+        ];
         const body = `data=${payload}`;
-        const response = await axios.post(`https://overpass-api.de/api/interpreter`, body, {
+        const response = await axios.post(overPassServers[0], body, {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
         });
         return response.data;
