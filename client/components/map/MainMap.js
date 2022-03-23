@@ -2,7 +2,7 @@ import 'leaflet-defaulticon-compatibility';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet/dist/leaflet.css';
 import { useMemo, useState } from 'react';
-import { LayersControl, MapContainer, TileLayer } from 'react-leaflet';
+import { LayersControl, MapContainer, ScaleControl, TileLayer } from 'react-leaflet';
 import {
     AMENITIES,
     FEATURE_CATEGORY,
@@ -10,9 +10,8 @@ import {
     ROME_POSITION
 } from '../../utils/constants';
 import FeaturesList from '../featuresList/FeaturesList';
-import CenterButton from './components/CenterBotton';
-import SelectFeatures from './components/SelectFeatures';
-import UpdateSearchButton from './components/UpdateSearchButton';
+import GeoCoding from './components/GeoCoding';
+import Toolbar from './components/ToolBar';
 import FeaturesLayer from './Features/FeaturesLayer';
 import FeaturesManager from './Features/FeaturesManager';
 import MultiLineFeaturesLayer from './Features/MultiLineFeaturesLayer';
@@ -33,6 +32,7 @@ const MainMap = (props) => {
                 scrollWheelZoom
                 style={{ height: '50vh', width: '100%' }}
                 whenCreated={setMap}>
+                <ScaleControl position="bottomleft" />
                 <FeaturesManager>
                     <LayersControl position="topright" eventHandlers={{ click: onClick }}>
                         {Object.keys(FEATURE_CATEGORY).map((key) => {
@@ -50,10 +50,8 @@ const MainMap = (props) => {
                         <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_RENTAL} />
                         <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_REPAIR_STATION} />
                     </LayersControl>
-                    {/* <UpdateOSMData /> */}
-                    <CenterButton />
-                    <UpdateSearchButton />
-                    <SelectFeatures />
+
+                    <Toolbar />
                     <TileLayer
                         attribution='Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'
                         url={`https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`}
@@ -65,6 +63,7 @@ const MainMap = (props) => {
     );
     return (
         <>
+            {map && <GeoCoding map={map} />}
             {displayMap}
             {map && <FeaturesList map={map} />}
         </>

@@ -209,3 +209,22 @@ ul.vote-lnk li {
         top: 0;
     }
 }
+
+.autocomplete-container {
+    z-index: 999;
+    width: 60%;
+    position: fixed;
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+    left: 5em;
+}
+
+.geoapify-autocomplete-items {
+    overflow: scroll;
+    height: 200px;
+}
+
+.geoapify-autocomplete-input {
+    border-radius: 5px;
+}
