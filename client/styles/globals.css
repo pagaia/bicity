@@ -224,7 +224,3 @@ ul.vote-lnk li {
     overflow: scroll;
     height: 200px;
 }
-
-.geoapify-autocomplete-input {
-    border-radius: 5px;
-}

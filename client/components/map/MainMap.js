@@ -7,11 +7,12 @@ import {
     AMENITIES,
     FEATURE_CATEGORY,
     MULTI_FEATURE_CATEGORY,
-    ROME_POSITION
+    ROME_POSITION,
 } from '../../utils/constants';
 import FeaturesList from '../featuresList/FeaturesList';
 import GeoCoding from './components/GeoCoding';
 import Toolbar from './components/ToolBar';
+import ZoomCenter from './components/ZoomCenter';
 import FeaturesLayer from './Features/FeaturesLayer';
 import FeaturesManager from './Features/FeaturesManager';
 import MultiLineFeaturesLayer from './Features/MultiLineFeaturesLayer';
@@ -50,7 +51,7 @@ const MainMap = (props) => {
                         <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_RENTAL} />
                         <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_REPAIR_STATION} />
                     </LayersControl>
-
+                    <ZoomCenter  />
                     <Toolbar />
                     <TileLayer
                         attribution='Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'
