@@ -8,6 +8,7 @@ import {
     selectFeatures,
     selectMultiFeatures,
 } from '../../../store/featureSlice';
+import { MIN_ZOOM } from '../../../utils/constants';
 
 const FeaturesManager = ({ children }) => {
     const map = useMap();
@@ -43,6 +44,8 @@ const FeaturesManager = ({ children }) => {
     function handleOnLocationFound(e) {
         const { latlng } = e;
         const bbox = map.getBounds();
+        const zoom = map.getZoom();
+
         // map.flyTo(latlng, 15);
         if (latlng) {
             console.log({ latlng });
@@ -51,8 +54,12 @@ const FeaturesManager = ({ children }) => {
             // circle.addTo(map);
             // fetchFeatures(latlng);
             console.log({ position });
-            dispatch(fetchFeatures({ position: latlng }));
-            dispatch(fetchMultiFeatures({ bbox }));
+            if (zoom < MIN_ZOOM) {
+                alert('Please increase the zoom to reduce the number of results');
+            } else {
+                dispatch(fetchFeatures({ position: latlng }));
+                dispatch(fetchMultiFeatures({ bbox }));
+            }
         } else {
             console.error({ latlng: 'NOT DEFINED' });
         }

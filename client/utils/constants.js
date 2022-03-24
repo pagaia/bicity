@@ -20,3 +20,8 @@ export const AMENITIES = {
     BICYCLE_RENTAL: 'bicycle_rental',
     BICYCLE_REPAIR_STATION: 'bicycle_repair_station',
 };
+
+/**
+ * minimum zoom to use to run a search 
+ */
+export const MIN_ZOOM = 15;

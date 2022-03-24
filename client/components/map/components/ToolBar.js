@@ -3,6 +3,7 @@ import { useMap } from 'react-leaflet';
 import { useDispatch } from 'react-redux';
 import { fetchFeatures, fetchMultiFeatures } from '../../../store/featureSlice';
 import { fetchOSMAmenities } from '../../../store/osmSlice';
+import { MIN_ZOOM } from '../../../utils/constants';
 import Modal from '../../Modal';
 import ButtonToolbar from './ButtonToolbar';
 
@@ -26,9 +27,14 @@ const Toolbar = () => {
     const update = () => {
         const position = map.getCenter();
         const bbox = map.getBounds();
-        dispatch(fetchMultiFeatures({ bbox }));
-        dispatch(fetchFeatures({ position }));
-        fetchAmenity();
+        const zoom = map.getZoom();
+        if (zoom < MIN_ZOOM) {
+            alert('Please increase the zoom to reduce the number of results');
+        } else {
+            dispatch(fetchMultiFeatures({ bbox }));
+            dispatch(fetchFeatures({ position }));
+            fetchAmenity();
+        }
     };
     const buttons = [
         {

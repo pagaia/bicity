@@ -1,6 +1,6 @@
 import { GeocoderAutocomplete } from '@geoapify/geocoder-autocomplete';
-import { useEffect, useState } from 'react';
-import '@geoapify/geocoder-autocomplete/styles/minimal.css';
+import '@geoapify/geocoder-autocomplete/styles/round-borders.css';
+import { useEffect } from 'react';
 
 let marker = null;
 
@@ -17,9 +17,7 @@ const GeoCoding = ({ map }) => {
         autocomplete.on('select', (location) => {
             // check selected location here
             console.log({ location });
-            const [lng, lat] = Array.isArray(location?.geometry?.coordinates?.[0])
-                ? location?.geometry?.coordinates?.[0]
-                : location?.geometry?.coordinates;
+            const [lng, lat] = location?.geometry?.coordinates;
             console.log({ map, lat, lng });
             if (marker) {
                 console.log({ marker });
