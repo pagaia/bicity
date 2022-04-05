@@ -1,0 +1,14 @@
+REACT_APP_GOOGLE_TRACK=google track token
+REACT_APP_VERSION=$npm_package_version
+REACT_APP_NAME=$npm_package_name
+REACT_APP_GOOGLE_API_KEY=google api key to access google spreadsheets
+REACT_APP_GOOGLE_FILE=google spreadsheet #1 key
+REACT_APP_GOOGLE_FILE_RIPETTA=google spreadsheet #2 key
+REACT_APP_GOOGLE_PULSE_XMAS=google spreadsheet #2 key
+REACT_APP_MAIL_USERNAME=gmail address
+REACT_APP_MAIL_PASSWORD=gmail password
+REACT_APP_MAIL_RECIPIENTS=["email@example.com"]
+REACT_APP_MAIL_RECIPIENTS_CC=[]
+REACT_APP_MAIL_RECIPIENTS_BCC=["example3@example.com", "email4@example.com"]
+REACT_APP_MAIL_FROM=email@example.com
+REACT_APP_REPLY_TO=email@example.com

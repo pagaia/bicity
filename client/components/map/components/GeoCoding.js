@@ -17,8 +17,28 @@ const GeoCoding = ({ map }) => {
         autocomplete.on('select', (location) => {
             // check selected location here
             console.log({ location });
-            const [lng, lat] = location?.geometry?.coordinates;
-            console.log({ map, lat, lng });
+            if (!location) {
+                return;
+            }
+            let lng, lat;
+            switch (location?.geometry?.type) {
+                case 'Polygon':
+                case 'MultiPoint':
+                    [lng, lat] = location?.geometry?.coordinates?.[0]?.[0];
+                    break;
+                case 'MultiPolygon':
+                case 'MultiLineString':
+                    [lng, lat] = location?.geometry?.coordinates?.[0]?.[0]?.[0];
+                    break;
+                case 'LineString':
+                    [lng, lat] = location?.geometry?.coordinates?.[0];
+                    break;
+                case 'Point':
+                case 'Position':
+                    [lng, lat] = location?.geometry?.coordinates;
+                    break;
+            }
+            console.log({ lng, lat });
             if (marker) {
                 console.log({ marker });
                 var newLatLng = new L.LatLng(lat, lng);

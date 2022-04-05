@@ -17,7 +17,6 @@ const InputSelect = ({ name, label, errors, touched }) => {
             <ErrorMessage
                 name={name}
                 component="div"
-                className="invalid-feedback is-invalid"
                 className={`invalid-feedback ${status}`}
             />
         </div>

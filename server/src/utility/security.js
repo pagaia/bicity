@@ -22,7 +22,7 @@ const validateToken = async (req, reply, done) => {
     let userId = req.params.id;
     let api_key = req.headers['x-api-token']; //version 3 using a header
     console.log({ headers: req.headers });
-    console.log({ tokenHost, deviceId, api_key });
+    console.log({ tokenHost, api_key });
 
     try {
         const user = await User.findOne({

@@ -1,11 +1,10 @@
-import { Fragment } from 'react';
-import { LayerGroup, LayersControl, Marker, Popup } from 'react-leaflet';
+import { LayerGroup, LayersControl, Marker } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { useSelector } from 'react-redux';
-import { selectAmenity } from '../../../store/osmSlice';
+import { selectAmenities } from '../../../store/osmSlice';
 
-const OsmFeaturesLayer = ({ amenity }) => {
-    const data = useSelector(selectAmenity(amenity));
+const OsmFeaturesLayer = (props) => {
+    const data = useSelector(selectAmenities);
 
     const filteredData = data ?? [];
 
@@ -14,8 +13,9 @@ const OsmFeaturesLayer = ({ amenity }) => {
         console.log({ element, id });
         element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     };
+
     return (
-        <LayersControl.Overlay name={`OSM_${amenity}`}>
+        <LayersControl.Overlay name="OSM amenities" >
             <LayerGroup>
                 <MarkerClusterGroup>
                     {filteredData.map((item) => {

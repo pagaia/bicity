@@ -51,7 +51,7 @@ const routes = (fastify) => [
             querystring: {
                 lat: { type: 'number' },
                 lng: { type: 'number' },
-                category: { type: 'string' },
+                categories: { type: 'string' },
                 maxDistance: { type: 'number' },
             },
             response: {

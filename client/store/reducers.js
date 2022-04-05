@@ -4,6 +4,7 @@ import featureReducer from './featureSlice';
 import osmReducer from './osmSlice';
 import errorReducer from './errorSlice';
 import usersReducer from './userSlice';
+import categoryReducer from './categorySlice';
 
 export default configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
         featureReducer,
         errorReducer,
         usersReducer,
+        categoryReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -71,7 +71,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/categories',
-        // preValidation: [fastify.authenticate],
+        preValidation: [fastify.authenticate],
         handler: categoryController.addCategory(fastify),
         schema: {
             description: 'Add a new category',

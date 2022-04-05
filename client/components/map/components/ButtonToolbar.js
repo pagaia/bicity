@@ -25,7 +25,6 @@ const ButtonToolbar = ({
         _button.href = '#';
 
         _button.addEventListener('click', () => {
-            console.log(map.getCenter());
             action();
         });
 
@@ -33,7 +32,7 @@ const ButtonToolbar = ({
         L.DomUtil.create('i', defaultIconClassName + ' ' + iconClassName, _button);
     };
 
-    const createButtonControl = () => {
+    const createButtonControl = (buttons) => {
         const MapHelp = L.Control.extend({
             onAdd: (map) => {
                 const _container = L.DomUtil.create(
@@ -58,9 +57,12 @@ const ButtonToolbar = ({
     };
 
     useEffect(() => {
-        const control = createButtonControl();
+        const control = createButtonControl(buttons);
         control.addTo(map);
-    }, []);
+        return () => {
+            control.remove();
+        };
+    });
 
     return null;
 };
