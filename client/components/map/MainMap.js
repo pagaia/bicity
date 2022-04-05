@@ -36,9 +36,7 @@ const MainMap = (props) => {
                 <ScaleControl position="bottomleft" />
                 <FeaturesManager>
                     <LayersControl position="topright" eventHandlers={{ click: onClick }}>
-                        {Object.keys(FEATURE_CATEGORY).map((key) => {
-                            return <FeaturesLayer category={FEATURE_CATEGORY[key]} key={key} />;
-                        })}
+                        <FeaturesLayer />
                         {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
                             return (
                                 <MultiLineFeaturesLayer
@@ -47,11 +45,9 @@ const MainMap = (props) => {
                                 />
                             );
                         })}
-                        <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_PARKING} />
-                        <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_RENTAL} />
-                        <OsmFeaturesLayer amenity={AMENITIES.BICYCLE_REPAIR_STATION} />
+                        <OsmFeaturesLayer />
                     </LayersControl>
-                    <ZoomCenter  />
+                    <ZoomCenter />
                     <Toolbar />
                     <TileLayer
                         attribution='Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'

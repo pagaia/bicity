@@ -1,13 +1,12 @@
 import { useSelector } from 'react-redux';
 import { selectFeatures } from '../../store/featureSlice';
-import { selectAmenity } from '../../store/osmSlice';
-import { AMENITIES } from '../../utils/constants';
+import { selectAmenities } from '../../store/osmSlice';
 import FeatureItem from './FeatureItem';
 import OsmFeatureItem from './OsmFeatureItem';
 
 const FeaturesList = ({ map }) => {
     const features = useSelector(selectFeatures);
-    const osmParking = useSelector(selectAmenity(AMENITIES.BICYCLE_PARKING));
+    const osmAmenities = useSelector(selectAmenities);
 
     if (!features) {
         return null;
@@ -25,7 +24,7 @@ const FeaturesList = ({ map }) => {
             {features?.map((feature) => (
                 <FeatureItem feature={feature} onClick={locate} key={feature._id} />
             ))}
-            {osmParking?.map((item) => (
+            {osmAmenities?.map((item) => (
                 <OsmFeatureItem key={item.id} item={item} onClick={locate} />
             ))}
         </div>

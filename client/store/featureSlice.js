@@ -13,9 +13,11 @@ export const fetchVote = createAsyncThunk(
 
 export const fetchFeatures = createAsyncThunk(
     'fetchFeaturesAction',
-    async ({ position }, thunkAPI) => {
+    async ({ position, categories }, thunkAPI) => {
         const response = await axios(
-            `/api/feature/nearme?lat=${position?.lat}&lng=${position?.lng}`
+            `/api/feature/nearme?lat=${position?.lat}&lng=${
+                position?.lng
+            }&categories=${categories?.join(',')}`
         );
         const { data } = response;
         return data;

@@ -17,7 +17,7 @@ export const fetchOSMAmenities = createAsyncThunk(
         const overPassServers = [
             'https://lz4.overpass-api.de/api/interpreter',
             'https://z.overpass-api.de/api/interpreter',
-            'https://overpass.osm.ch/api/interpreter'
+            'https://overpass.osm.ch/api/interpreter',
         ];
         const body = `data=${payload}`;
         const response = await axios.post(overPassServers[0], body, {
@@ -48,13 +48,7 @@ export const osmSlice = createSlice({
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(fetchOSMAmenities.fulfilled, (state, action) => {
-            const { amenities } = action?.meta?.arg;
-            // Add amenities to the state
-            const listAmenities = amenities?.split('|');
-            listAmenities.forEach((amenity) => {
-                const list = action.payload.elements?.filter((el) => el.tags.amenity == amenity);
-                state[amenity] = list;
-            });
+            state.amenities = action.payload.elements;
         });
     },
 });
@@ -64,5 +58,6 @@ export const osmSlice = createSlice({
 
 // export selectors
 export const selectAmenity = (amenity) => (state) => state.osmReducer[amenity];
+export const selectAmenities = (state) => state.osmReducer.amenities;
 
 export default osmSlice.reducer;

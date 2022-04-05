@@ -10,9 +10,9 @@ exports.getFeatureNearMe = (fastify) => async (req, reply) => {
     try {
         const lat = req.query.lat || CONST.DEFAULT_LOCATION.LAT;
         const lng = req.query.lng || CONST.DEFAULT_LOCATION.LONG;
-        const category = req.query.category;
+        const categories = req.query.categories?.split(',');
         const maxDistance = req.query.maxDistance || 1000;
-        console.log({ lat, lng, category, maxDistance });
+        console.log({ lat, lng, categories, maxDistance });
 
         let payload = {
             geometry: {
@@ -25,8 +25,8 @@ exports.getFeatureNearMe = (fastify) => async (req, reply) => {
                 },
             },
         };
-        if (category) {
-            payload.properties = { category };
+        if (categories) {
+            payload['properties.category'] = { $in: categories };
         }
 
         console.log({ payload: JSON.stringify(payload) });

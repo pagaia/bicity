@@ -180,6 +180,12 @@ ul.vote-lnk li {
     margin: 0 3px;
 }
 
+.modal-dialog {
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+        Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-size: 20px;
+}
+
 .modal.modal-fullscreen {
     width: 100vw;
     max-width: none;
@@ -223,4 +229,10 @@ ul.vote-lnk li {
 .geoapify-autocomplete-items {
     overflow: scroll;
     height: 200px;
+}
+
+.autocomplete-container .geoapify-close-button.visible {
+    right: 3em;
+    width: 80%;
+    max-width: 30em;
 }

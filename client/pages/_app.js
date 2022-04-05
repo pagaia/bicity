@@ -1,4 +1,5 @@
 import { Provider } from 'react-redux';
+import Category from '../components/categories/Category';
 import ErrorMessage from '../components/ErrorMessage';
 import Layout from '../components/layout/Layout';
 import RefreshToken from '../components/user/RefreshToken';
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
         <Provider store={store}>
             <ProvideAuth>
                 <RefreshToken/>
+                <Category/>
                 <Layout>
                     <ErrorMessage />
                     <Component {...pageProps} />
