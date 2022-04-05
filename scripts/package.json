@@ -1,0 +1,32 @@
+{
+  "name": "bicity-script",
+  "version": "0.1.0",
+  "description": "Some scripts to execute automation tasks",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pagaia/bicity/scripts"
+  },
+  "keywords": [
+    "bicity",
+    "script"
+  ],
+  "author": {
+    "name": "Remo MORO",
+    "url": "https://twitter.com/pagaia"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "google-spreadsheet": "^3.1.15",
+    "nodemailer": "^6.5.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  }
+}
