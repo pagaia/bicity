@@ -6,33 +6,9 @@ const Header = (props) => {
         <>
             <Head>
                 <title>BiCity - city for cyclists</title>
-                <meta name="description" content="BiCity - city for cyclists" />
-                <link rel="icon" href="/favicon.ico" />
-
-                {/* Bootstrap */}
-                <link
-                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-                    rel="stylesheet"
-                    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-                    crossOrigin="anonymous"
-                />
-
-                {/* <!-- Font Awesome --> */}
-                <link
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-                    rel="stylesheet"
-                />
-                {/* <!-- Google Fonts --> */}
-                <link
-                    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-                    rel="stylesheet"
-                />
-                {/* <!--  markercluster --> */}
-                <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-                <link
-                    rel="stylesheet"
-                    href="https://unpkg.com/react-leaflet-markercluster/dist/styles.min.css"
+                <meta
+                    name="viewport"
+                    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
                 />
             </Head>
             <div className="container">
