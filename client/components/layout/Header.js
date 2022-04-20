@@ -17,7 +17,7 @@ const Header = (props) => {
                         <Link href="/" className="navbar-brand">
                             <a>
                                 <div>
-                                    <i className="fas fa-igloo fa-2x"></i>
+                                    <i className="fas fa-igloo fa-1-5x"></i>
                                 </div>
                                 <div className="menu-txt">Home</div>
                             </a>
@@ -25,7 +25,7 @@ const Header = (props) => {
                         <Link href="/features/new-feature">
                             <a>
                                 <div>
-                                    <i className="fas fa-plus-circle fa-2x"></i>
+                                    <i className="fas fa-plus-circle fa-1-5x"></i>
                                 </div>
                                 <div className="menu-txt">Add</div>
                             </a>
@@ -33,7 +33,7 @@ const Header = (props) => {
                         <Link href="/user">
                             <a>
                                 <div>
-                                    <i className="fas fa-user fa-2x"></i>
+                                    <i className="fas fa-user fa-1-5x"></i>
                                 </div>
                                 <div className="menu-txt">User</div>
                             </a>
@@ -41,7 +41,7 @@ const Header = (props) => {
                         <Link href="/about">
                             <a>
                                 <div>
-                                    <i className="fas fa-copyright  fa-2x"></i>
+                                    <i className="fas fa-copyright  fa-1-5x"></i>
                                 </div>
                                 <div className="menu-txt">About</div>
                             </a>

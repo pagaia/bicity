@@ -236,3 +236,11 @@ ul.vote-lnk li {
     width: 80%;
     max-width: 30em;
 }
+
+.fa-1-5x {
+    font-size: 1.5em;
+}
+
+.form-control {
+    padding: 0.129rem;
+}
