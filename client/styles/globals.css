@@ -99,6 +99,9 @@ h4 {
     font-size: 18px;
 }
 
+.navbar {
+    padding-bottom: 0;
+}
 .menu {
     display: flex;
     justify-content: space-evenly;
@@ -151,10 +154,12 @@ ul.vote-lnk li {
 
 #list {
     overflow: scroll;
-    height: 40vh;
+    height: 30vh;
+    word-break: break-all;
 }
 .element {
     padding: 15px;
+    font-size: small;
 }
 
 .element .txt {
@@ -205,6 +210,17 @@ ul.vote-lnk li {
     background: white;
     display: block;
     position: fixed;
+}
+
+.modal-dialog {
+    max-width: 100%;
+}
+
+.modal-fullscreen .modal-body {
+    background: white;
+}
+.modal-dialog-scrollable .modal-content {
+    overflow: scroll;
 }
 
 @keyframes slide-up {

@@ -24,4 +24,4 @@ export const AMENITIES = {
 /**
  * minimum zoom to use to run a search 
  */
-export const MIN_ZOOM = 15;
+export const MIN_ZOOM = 11;

@@ -46,6 +46,14 @@ const Header = (props) => {
                                 <div className="menu-txt">About</div>
                             </a>
                         </Link>
+                        <Link href="/settings">
+                            <a>
+                                <div>
+                                    <i class="fas fa-cog  fa-1-5x"></i>
+                                </div>
+                                <div className="menu-txt">Settings</div>
+                            </a>
+                        </Link>
                     </div>
                 </nav>
             </div>

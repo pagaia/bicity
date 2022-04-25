@@ -47,7 +47,6 @@ const Modal = ({ show, setOpen }) => {
                                     </div>
                                     <div className="modal-body">
                                         {categories?.map((category, idx) => {
-                                         if(idx> 15) {return null}
                                          return (
                                                 <SwitchField
                                                     description={category?.name}

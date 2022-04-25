@@ -18,7 +18,7 @@ const FeaturesLayer = (props) => {
 
     const onClick = (e, id) => {
         const element = document.getElementById(id);
-        element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     };
 
     return (

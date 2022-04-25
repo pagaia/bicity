@@ -10,6 +10,7 @@ import {
     ROME_POSITION,
 } from '../../utils/constants';
 import FeaturesList from '../featuresList/FeaturesList';
+import Modal from '../Modal';
 import GeoCoding from './components/GeoCoding';
 import Toolbar from './components/ToolBar';
 import ZoomCenter from './components/ZoomCenter';
@@ -17,6 +18,8 @@ import FeaturesLayer from './Features/FeaturesLayer';
 import FeaturesManager from './Features/FeaturesManager';
 import MultiLineFeaturesLayer from './Features/MultiLineFeaturesLayer';
 import OsmFeaturesLayer from './Features/OsmFeatures';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectShowModal, showModal } from '../../store/categorySlice';
 
 const MainMap = (props) => {
     const onClick = (e) => {
@@ -24,6 +27,12 @@ const MainMap = (props) => {
     };
 
     const [map, setMap] = useState(null);
+    const dispatch = useDispatch();
+    const viewModal = useSelector(selectShowModal);
+
+    const setModal = (toggle) => {
+        dispatch(showModal(toggle));
+    };
 
     const displayMap = useMemo(
         () => (
@@ -31,7 +40,7 @@ const MainMap = (props) => {
                 center={[ROME_POSITION.lat, ROME_POSITION.lng]}
                 zoom={14}
                 scrollWheelZoom
-                style={{ height: '50vh', width: '100%' }}
+                style={{ height: '60vh', width: '100%' }}
                 whenCreated={setMap}>
                 <ScaleControl position="bottomleft" />
                 <FeaturesManager>
@@ -62,6 +71,7 @@ const MainMap = (props) => {
         <>
             {map && <GeoCoding map={map} />}
             {displayMap}
+            <Modal show={viewModal} setOpen={setModal} />
             {map && <FeaturesList map={map} />}
         </>
     );

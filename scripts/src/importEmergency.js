@@ -1,17 +1,20 @@
 const { default: axios } = require("axios");
 const { exists } = require("../../server/src/models/category");
-const { readAmenities } = require("./googleSheet");
+const { readGoogleFile } = require("./googleSheet");
 
 const endPoint = "http://localhost:8082/api/categories";
 
-async function importAmenities() {
-  const amenities = await readAmenities();
+async function importEmergency() {
+  const emergencies = await readGoogleFile({
+    title: "emergency",
+    file: "FILEKEY"
+  });
 
-  amenities.forEach(async (amenity, idx) => {
-    console.log({ amenity });
+  emergencies.forEach(async (emergency, idx) => {
+    console.log({ emergency });
 
     axios
-      .post(endPoint, amenity, {
+      .post(endPoint, emergency, {
         headers: {
           accept: "application/json",
           "Content-Type": "application/json",
@@ -28,4 +31,4 @@ async function importAmenities() {
   });
 }
 
-importAmenities();
+importEmergency();
