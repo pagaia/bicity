@@ -167,7 +167,7 @@ const routes = (fastify) => [
                 required: ['name', 'lastName', 'email', 'username'],
             },
             response: {
-                200: {
+                201: {
                     description: 'Successful response',
                     type: 'object',
                     properties: userProperties,

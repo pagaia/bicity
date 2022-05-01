@@ -6,18 +6,19 @@ import RandomPicture from '../../ui/RandomPicture';
 import Spinner from '../../ui/Spinner';
 import Vote from '../../Vote';
 import { usePosition } from '../../../hooks/usePosition';
+import Favorite from '../../featuresList/Favorite';
 
 const FeatureDetails = (props) => {
-   
     const { featureId } = props;
 
     const { user } = useAuth();
+    const userId = user?.profile?._id;
     const [feature, setFeature] = useState(null);
     const [error, setError] = useState(null);
     const [fetching, setFetching] = useState(true);
     const { position } = usePosition();
 
-    console.log({ position });
+    console.log({ position, user });
     useEffect(async () => {
         console.log({ featureId });
         if (featureId) {
@@ -43,6 +44,7 @@ const FeatureDetails = (props) => {
                 <RandomPicture />
                 <div className="card-body">
                     <h5 className="card-title">{feature?.properties?.name}</h5>
+                    <Favorite featureId={featureId} userId={userId} />
                     <div className="card-text">
                         <dl className="row">
                             {Object.keys(feature?.properties)?.map((key) => {
@@ -76,7 +78,7 @@ const FeatureDetails = (props) => {
                                     Get directions
                                 </ExternalLink>
                             </div>
-                            <Vote featureId={featureId} user={user} />
+                            <Vote featureId={featureId} userId={userId} />
                         </dl>
                     </div>
                 </div>

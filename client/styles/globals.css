@@ -119,6 +119,7 @@ ul.vote-lnk {
     display: flex;
     list-style-type: none;
     padding-left: 0;
+    margin-bottom: 0;
 }
 ul.vote-lnk li {
     margin-right: 5px;
@@ -178,11 +179,12 @@ ul.vote-lnk li {
 .checked {
     color: #ffa500;
     font-size: 21px;
-    margin: 0 3px;
+    margin: 0 3px 0 0;
 }
 .unchecked {
     font-size: 21px;
-    margin: 0 3px;
+    margin: 0 3px 0 0;
+    color: darkgray;
 }
 
 .modal-dialog {

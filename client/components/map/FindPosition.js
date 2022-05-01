@@ -30,7 +30,8 @@ const FindPosition = ({ position, setPosition }) => {
     useEffect(() => {
         if (lat && lng) {
             console.log({ position });
-            map.flyTo({ lat, lng }, 15);
+            map?.setView({ lat, lng }, 15);
+
         }
         return () => {
             console.log('UnMounting ');

@@ -69,8 +69,8 @@ const routes = (fastify) => [
                 401: {
                     description: 'Authorization error',
                     type: 'object',
-                    content: {
-                        message: 'No Authorization was found in request.headers',
+                    properties: {
+                        error: { type: 'string' },
                     },
                 },
             },
@@ -111,15 +111,15 @@ const routes = (fastify) => [
                 401: {
                     description: 'Authorization error',
                     type: 'object',
-                    content: {
-                        message: 'No Authorization was found in request.headers',
+                    properties: {
+                        error: { type: 'string' },
                     },
                 },
                 404: {
                     description: 'Feature not found',
                     type: 'object',
-                    content: {
-                        message: "The feature is not here. It's around riding a bike :)",
+                    properties: {
+                        message: { type: 'string' },
                     },
                 },
             },

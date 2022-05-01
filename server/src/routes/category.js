@@ -1,5 +1,6 @@
 // Import our Controllers
 const categoryController = require('../controllers/categoryController');
+const { ERROR_MESSAGES } = require('../utility/constants');
 
 const categoryProperties = {
     _id: { type: 'string' },
@@ -95,6 +96,13 @@ const routes = (fastify) => [
                     description: 'Bad request.',
                     type: 'object',
                     content: {},
+                },
+                401: {
+                    description: 'Authorization error',
+                    type: 'object',
+                    properties: {
+                        error: { type: 'string' },
+                    },
                 },
             },
         },

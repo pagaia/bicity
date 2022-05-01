@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Favorites from '../featuresList/Favorites';
 
 const UserProfile = ({ user, signOut }) => {
     const { profile } = user;
@@ -78,6 +79,7 @@ const UserProfile = ({ user, signOut }) => {
                             <div className="mt-3">
                                 <h4>2563</h4>
                                 <p className="mb-0 text-muted">Wallets Balance</p>
+                                <Favorites userId={profile._id} />
                             </div>
                         </div>
                         <div className="col-4">

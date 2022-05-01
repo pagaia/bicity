@@ -1,5 +1,6 @@
 // Import our Controllers
 const featureController = require('../controllers/featureController');
+const { ERROR_MESSAGES } = require('../utility/constants');
 
 const featureProperties = {
     _id: { type: 'string' },
@@ -68,13 +69,6 @@ const routes = (fastify) => [
                     type: 'object',
                     content: {},
                 },
-                401: {
-                    description: 'Authorization error',
-                    type: 'object',
-                    content: {
-                        message: 'No Authorization was found in request.headers',
-                    },
-                },
             },
         },
         security: [
@@ -105,13 +99,6 @@ const routes = (fastify) => [
                     description: 'Invalid tag value',
                     type: 'object',
                     content: {},
-                },
-                401: {
-                    description: 'Authorization error',
-                    type: 'object',
-                    content: {
-                        message: 'No Authorization was found in request.headers',
-                    },
                 },
             },
         },
@@ -147,13 +134,6 @@ const routes = (fastify) => [
                     type: 'object',
                     content: {},
                 },
-                401: {
-                    description: 'Authorization error',
-                    type: 'object',
-                    content: {
-                        message: 'No Authorization was found in request.headers',
-                    },
-                },
                 404: {
                     description: 'Feature not found',
                     type: 'object',
@@ -188,11 +168,12 @@ const routes = (fastify) => [
                     type: 'object',
                     properties: featureProperties,
                 },
-
-                default: {
-                    description: 'Unexpected error',
+                401: {
+                    description: 'Authorization error',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        error: { type: 'string' },
+                    },
                 },
             },
         },
@@ -204,4 +185,7 @@ const routes = (fastify) => [
     },
 ];
 
-module.exports = routes;
+module.exports = {
+    routes,
+    featureProperties,
+};

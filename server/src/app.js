@@ -1,10 +1,11 @@
 'use strict';
 
-const featureRoutes = require('./routes/feature');
+const featureRoutes = require('./routes/feature').routes;
 const multiFeatureRoutes = require('./routes/multiFeature');
 const userRoutes = require('./routes/user');
 const voteRoutes = require('./routes/vote');
 const categoryRoutes = require('./routes/category');
+const favoriteRoutes = require('./routes/favorite');
 
 // Import Swagger Options
 const swagger = require('./config/swagger');
@@ -95,6 +96,10 @@ function build(opts = {}) {
         });
 
         categoryRoutes(fastify).forEach((route, index) => {
+            fastify.route(route);
+        });
+
+        favoriteRoutes(fastify).forEach((route, index) => {
             fastify.route(route);
         });
     }
