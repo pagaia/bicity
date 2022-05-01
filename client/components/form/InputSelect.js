@@ -1,6 +1,6 @@
 import { ErrorMessage, Field } from 'formik';
 
-const InputSelect = ({ name, label, errors, touched }) => {
+const InputSelect = ({ name, label, errors, touched, data }) => {
     const status = touched?.[name] ? (errors?.[name] ? 'is-invalid' : 'is-valid') : '';
     return (
         <div className="form-outline mb-4">
@@ -9,16 +9,11 @@ const InputSelect = ({ name, label, errors, touched }) => {
             </label>
             <Field id={name} name={name} className={`form-control ${status}`} as="select">
                 <option value="">--</option>
-                <option value="dae">Defibrillator</option>
-                <option value="bar">Bar bike friendly</option>
-                <option value="bike-parking">Bike parking</option>
-                <option value="bike-reseller">Bike reseller</option>
+                {data.map((item) => (
+                    <option value={item.name}>{item.name}</option>
+                ))}
             </Field>
-            <ErrorMessage
-                name={name}
-                component="div"
-                className={`invalid-feedback ${status}`}
-            />
+            <ErrorMessage name={name} component="div" className={`invalid-feedback ${status}`} />
         </div>
     );
 };
