@@ -160,11 +160,11 @@ ul.vote-lnk li {
 }
 .element {
     padding: 15px;
-    font-size: small;
+    /* font-size: small; */
 }
 
 .element .txt {
-    font-size: small;
+    /* font-size: small; */
     margin-right: 1em;
 }
 
@@ -261,4 +261,11 @@ ul.vote-lnk li {
 
 .form-control {
     padding: 0.129rem;
+}
+
+.osm-icon {
+    color: red;
+}
+.local-icon {
+    color: deeppink;
 }

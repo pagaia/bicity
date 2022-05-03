@@ -4,25 +4,28 @@ import { useContext } from 'react';
 import { LayerGroup, LayersControl, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { FeatureContext } from '../../../context/FeatureContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { featureSelected } from '../../../store/featureSlice';
 
 const fontAwesomeIcon = L.divIcon({
-    html: '<i class="fas fa-globe-africa fa-2x"></i>',
+    html: '<i class="fas fa-map-pin fa-2x"></i>',
     iconSize: [20, 20],
-    className: 'myDivIcon',
+    className: 'local-icon',
 });
 
 const FeaturesLayer = (props) => {
     const { data, position } = useContext(FeatureContext);
 
-    const filteredData = data?.features
+    const filteredData = data?.features;
+
+    const dispatch = useDispatch();
 
     const onClick = (e, id) => {
-        const element = document.getElementById(id);
-        element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        dispatch(featureSelected({ local: id }));
     };
 
     return (
-        <LayersControl.Overlay name="BiCity DB" >
+        <LayersControl.Overlay name="BiCity DB">
             <LayerGroup>
                 <MarkerClusterGroup>
                     {filteredData.map((item) => {
@@ -36,7 +39,7 @@ const FeaturesLayer = (props) => {
                                 key={item._id}
                                 eventHandlers={{ click: (e) => onClick(e, item._id) }}
                                 icon={fontAwesomeIcon}>
-                                <Popup>
+                                {/* <Popup>
                                     <div>
                                         <label className="fw-bold">Name:</label>
                                         <span className="txt">{item?.properties?.name}</span>
@@ -56,7 +59,7 @@ const FeaturesLayer = (props) => {
                                             <a>View details</a>
                                         </Link>
                                     </div>
-                                </Popup>
+                                </Popup> */}
                             </Marker>
                         );
                     })}

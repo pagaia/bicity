@@ -10,7 +10,9 @@ const InputSelect = ({ name, label, errors, touched, data }) => {
             <Field id={name} name={name} className={`form-control ${status}`} as="select">
                 <option value="">--</option>
                 {data.map((item) => (
-                    <option value={item.name}>{item.name}</option>
+                    <option key={item.name} value={item.name}>
+                        {item.name}
+                    </option>
                 ))}
             </Field>
             <ErrorMessage name={name} component="div" className={`invalid-feedback ${status}`} />

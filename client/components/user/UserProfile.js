@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Favorites from '../featuresList/Favorites';
+import Favorites from '../features/Favorites';
 
 const UserProfile = ({ user, signOut }) => {
     const { profile } = user;

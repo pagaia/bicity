@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // First, create the thunk
 export const fetchVote = createAsyncThunk(
-    'vote/fetchByFetureId',
+    'vote/fetchByFeatureId',
     async ({ featureId }, thunkAPI) => {
         const response = await axios(`/api/vote/feature/${featureId}`);
         const { data } = response;
@@ -77,6 +77,9 @@ export const featureSlice = createSlice({
     name: 'feature',
     initialState: { features: [], favorites: [], multiFeatures: [], votes: [], loading: 'idle' }, // loading: idle and pending
     reducers: {
+        featureSelected: (state, action) => {
+            state.featureSelected = action.payload;
+        },
         // increment: state => {
         //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
         //   // doesn't actually mutate the state because it uses the Immer library,
@@ -148,11 +151,12 @@ export const featureSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { fetchVoteAction, fetchFeaturesAction } = featureSlice.actions;
+export const { fetchVoteAction, fetchFeaturesAction, featureSelected } = featureSlice.actions;
 
 // export selectors
 export const selectFeatureVote = (featureId) => (state) => state.featureReducer.votes[featureId];
 export const selectFeatures = (state) => state.featureReducer.features;
+export const selectFeatureId = (state) => state.featureReducer.featureSelected;
 export const selectMultiFeatures = (state) => state.featureReducer.multiFeatures;
 export const selectAddedFeature = (state) => state.featureReducer.addedFeature;
 export const selectFeatureError = (state) => state.featureReducer.error;

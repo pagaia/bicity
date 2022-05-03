@@ -6,10 +6,6 @@ const Header = (props) => {
         <>
             <Head>
                 <title>BiCity - city for cyclists</title>
-                <meta
-                    name="viewport"
-                    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-                />
             </Head>
             <div className="container">
                 <nav className="navbar navbar-expand-lg navbar-light fixed-bottom  menu">

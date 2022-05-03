@@ -1,6 +1,10 @@
-import { Fragment } from "react";
+import { Fragment } from 'react';
+import RandomPicture from '../ui/RandomPicture';
 
 const OsmFeatureItem = ({ item, onClick }) => {
+    if (!item) {
+        return null;
+    }
     const { tags } = item;
     const { lat, lon } = item;
 
@@ -8,8 +12,10 @@ const OsmFeatureItem = ({ item, onClick }) => {
         <div
             className="element shadow-sm p-3 mb-3 bg-body rounded"
             id={item.id}
-            onClick={() => onClick({ coordinates: [lon, lat] })}
+            // onClick={() => onClick({ coordinates: [lon, lat] })}
             key={item.id}>
+            <RandomPicture />
+
             <dl className="row">
                 <dt className="col-sm-3">Amenity:</dt>
                 <dd className="col-sm-9">{tags?.amenity}</dd>

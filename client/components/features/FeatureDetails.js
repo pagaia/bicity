@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
-import ExternalLink from '../../ExternalLink';
-import RandomPicture from '../../ui/RandomPicture';
-import Spinner from '../../ui/Spinner';
-import Vote from '../../Vote';
-import { usePosition } from '../../../hooks/usePosition';
-import Favorite from '../../featuresList/Favorite';
+import { useAuth } from '../../hooks/useAuth';
+import ExternalLink from '../ExternalLink';
+import RandomPicture from '../ui/RandomPicture';
+import Spinner from '../ui/Spinner';
+import Vote from '../Vote';
+import { usePosition } from '../../hooks/usePosition';
+import Favorite from './Favorite';
 
 const FeatureDetails = (props) => {
     const { featureId } = props;
@@ -29,6 +29,10 @@ const FeatureDetails = (props) => {
         }
     }, [featureId]);
 
+    if (!featureId) {
+        return null;
+    }
+
     if (fetching) {
         return (
             <div className="container">
@@ -38,6 +42,7 @@ const FeatureDetails = (props) => {
     }
     const lat = feature.geometry.coordinates[1];
     const long = feature.geometry.coordinates[0];
+   
     return (
         <div className="container">
             <div className="card">
@@ -82,9 +87,9 @@ const FeatureDetails = (props) => {
                         </dl>
                     </div>
                 </div>
-                <div className="card-footer">
+                {/* <div className="card-footer">
                     <small className="text-muted">Last update: {feature.updatedAt}</small>
-                </div>
+                </div> */}
             </div>
         </div>
     );

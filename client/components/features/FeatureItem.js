@@ -1,8 +1,12 @@
 import { useAuth } from '../../hooks/useAuth';
+import RandomPicture from '../ui/RandomPicture';
 import Vote from '../Vote';
 import Favorite from './Favorite';
 
 const FeatureItem = ({ feature, onClick }) => {
+    if (!feature) {
+        return null;
+    }
     const { properties } = feature;
     const featureId = feature._id;
 
@@ -12,7 +16,10 @@ const FeatureItem = ({ feature, onClick }) => {
         <div
             className="element shadow-sm p-3 mb-3 bg-body rounded"
             id={featureId}
-            onClick={() => onClick(feature.geometry)}>
+            // onClick={() => onClick(feature.geometry)}
+        >
+            <RandomPicture />
+
             <h1>{properties.name}</h1>
 
             <Vote featureId={featureId} userId={userId} />
