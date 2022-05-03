@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import FeatureDetails from '../../components/map/Features/FeatureDetails';
+import FeatureDetails from '../../components/features/FeatureDetails';
 
 const FeaturePage = () => {
     const router = useRouter();
