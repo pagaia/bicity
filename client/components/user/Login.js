@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import InputField from '../form/InputField';
 import Link from 'next/link';
 import axios from 'axios';
+import { ROUTES } from '../../utils/routes';
 
 const validateNewUser = (values) => {
     const errors = {};
@@ -121,8 +122,8 @@ const Login = () => {
                                             </div>
                                             <p className="text-center">
                                                 Don't have an account?
-                                                <Link href={`/user/signup`}>
-                                                    <a href="">Sign up</a>
+                                                <Link href={ROUTES.USER_SIGNUP}>
+                                                    <a>Sign up</a>
                                                 </Link>
                                             </p>
                                         </Form>

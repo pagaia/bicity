@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Footer from '../components/layout/Footer';
+import ExternalLink from '../components/ExternalLink';
 
 const About = () => {
     return (
@@ -27,9 +27,9 @@ const About = () => {
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">BiCity Logo</h5>
-                            <a href="https://www.freepik.com/vectors/riding-bicycle">
+                            <ExternalLink url="https://www.freepik.com/vectors/riding-bicycle">
                                 Riding bicycle vector created by vectorjuice - www.freepik.com
-                            </a>
+                            </ExternalLink>
                         </div>
                     </div>
                 </div>

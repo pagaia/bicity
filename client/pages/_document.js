@@ -60,13 +60,13 @@ export default function Document() {
                     name="twitter:card"
                     content="BiCity info - the application for cyclists around the world"
                 />
-                <meta name="twitter:url" content="https://www.bicity.tk" />
+                <meta name="twitter:url" content="https://www.bicity.info" />
                 <meta name="twitter:title" content="BiCity info" />
                 <meta
                     name="twitter:description"
                     content="BiCity info - the application for cyclists around the world"
                 />
-                <meta name="twitter:image" content="https://www.bicity.tk/icons/icon-192x192.png" />
+                <meta name="twitter:image" content="https://www.bicity.info/bicity-logo.jpg" />
                 <meta name="twitter:creator" content="@pagaia" />
 
                 <meta property="og:type" content="website" />
@@ -76,11 +76,8 @@ export default function Document() {
                     content="BiCity info - the application for cyclists around the world"
                 />
                 <meta property="og:site_name" content="BiCity info" />
-                <meta property="og:url" content="https://www.bicity.tk" />
-                <meta
-                    property="og:image"
-                    content="https://www.bicity.tk/icons/apple-touch-icon.png"
-                />
+                <meta property="og:url" content="https://www.bicity.info" />
+                <meta property="og:image" content="https://www.bicity.info/bicity-logo.jpg" />
             </Head>
             <body>
                 <Main />

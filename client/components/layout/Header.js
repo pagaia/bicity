@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { ROUTES } from '../../utils/routes';
 
 const Header = (props) => {
     return (
@@ -7,10 +8,10 @@ const Header = (props) => {
             <Head>
                 <title>BiCity - city for cyclists</title>
             </Head>
-            <div className="container">
+            <div className="">
                 <nav className="navbar navbar-expand-lg navbar-light fixed-bottom  menu">
-                    <div className="container-fluid">
-                        <Link href="/" className="navbar-brand">
+                    <div className="container">
+                        <Link href={ROUTES.HOME} className="navbar-brand">
                             <a>
                                 <div>
                                     <i className="fas fa-igloo fa-1-5x"></i>
@@ -18,7 +19,7 @@ const Header = (props) => {
                                 <div className="menu-txt">Home</div>
                             </a>
                         </Link>
-                        <Link href="/features/new-feature">
+                        <Link href={ROUTES.NEW_FEATURE}>
                             <a>
                                 <div>
                                     <i className="fas fa-plus-circle fa-1-5x"></i>
@@ -26,7 +27,7 @@ const Header = (props) => {
                                 <div className="menu-txt">Add</div>
                             </a>
                         </Link>
-                        <Link href="/user">
+                        <Link href={ROUTES.USER}>
                             <a>
                                 <div>
                                     <i className="fas fa-user fa-1-5x"></i>
@@ -34,7 +35,7 @@ const Header = (props) => {
                                 <div className="menu-txt">User</div>
                             </a>
                         </Link>
-                        <Link href="/about">
+                        <Link href={ROUTES.ABOUT}>
                             <a>
                                 <div>
                                     <i className="fas fa-copyright  fa-1-5x"></i>
@@ -42,14 +43,14 @@ const Header = (props) => {
                                 <div className="menu-txt">About</div>
                             </a>
                         </Link>
-                        <Link href="/settings">
+                        {/* <Link href={ROUTES.SETTINGS}>
                             <a>
                                 <div>
                                     <i class="fas fa-cog  fa-1-5x"></i>
                                 </div>
                                 <div className="menu-txt">Settings</div>
                             </a>
-                        </Link>
+                        </Link> */}
                     </div>
                 </nav>
             </div>
