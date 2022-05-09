@@ -58,7 +58,7 @@ const MainMap = (props) => {
                     <ZoomCenter />
                     <Toolbar />
                     <TileLayer
-                        attribution='Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'
+                        attribution='© <a href="https://bicity.info/copyright-policy" target="_blank">BiCity Project</a> | Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'
                         url={`https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`}
                     />
                 </FeaturesManager>
