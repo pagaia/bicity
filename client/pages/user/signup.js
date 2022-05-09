@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import InputField from '../../components/form/InputField';
 import Link from 'next/link';
+import { ROUTES } from '../../utils/routes';
 
 const validateNewUser = (values) => {
     const errors = {};
@@ -160,7 +161,7 @@ const SignUp = () => {
                                             </div>
                                             <p className="text-center">
                                                 Have an account?
-                                                <Link href="/user">
+                                                <Link href={ROUTES.USER}>
                                                     <a>Log In</a>
                                                 </Link>
                                             </p>

@@ -1,17 +1,14 @@
-import { clearPreviewData } from 'next/dist/server/api-utils';
-import { useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectChoosenCategories } from '../../../store/categorySlice';
+import { selectChoosenCategories, showModal } from '../../../store/categorySlice';
 import { fetchFeatures, fetchMultiFeatures } from '../../../store/featureSlice';
 import { fetchOSMAmenities } from '../../../store/osmSlice';
 import { MIN_ZOOM } from '../../../utils/constants';
-import Modal from '../../Modal';
 import ButtonToolbar from './ButtonToolbar';
 
 const Toolbar = () => {
     const map = useMap();
-    const [viewModal, setModal] = useState(false);
+
     const dispatch = useDispatch();
     const setPosition = () => {
         map.locate({ setView: true, maxZoom: 16 });
@@ -19,7 +16,7 @@ const Toolbar = () => {
 
     const categories = useSelector(selectChoosenCategories).map((cat) => cat.name);
 
-    console.log({ selectChoosenCategories:  categories.join('|') });
+    console.log({ selectChoosenCategories: categories.join('|') });
     const fetchAmenity = () => {
         dispatch(
             fetchOSMAmenities({
@@ -54,7 +51,7 @@ const Toolbar = () => {
             {
                 iconClassName: 'fa-edit',
                 title: 'Select features to display',
-                action: () => setModal(true),
+                action: () => dispatch(showModal(true)),
             },
             {
                 iconClassName: 'fa-redo',
@@ -63,12 +60,7 @@ const Toolbar = () => {
             },
         ];
     };
-    return (
-        <>
-            <ButtonToolbar buttons={buildButtons(categories)} />
-            <Modal show={viewModal} setOpen={setModal} />
-        </>
-    );
+    return <ButtonToolbar buttons={buildButtons(categories)} />;
 };
 
 export default Toolbar;

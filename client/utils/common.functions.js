@@ -1,10 +1,21 @@
 // A custom hook that builds on useLocation to parse
 
 import axios from 'axios';
+import { useState } from 'react';
 
 // the hash string for you.
 export function useHash() {
-    return new URLSearchParams(window?.location?.hash);
+    const [hash, setHash] = useState('');
+
+    function locationHashChanged() {
+        setHash(new URLSearchParams(window?.location?.hash));
+    }
+
+    if (typeof window !== 'undefined') {
+        window.onhashchange = locationHashChanged;
+    }
+
+    return hash;
 }
 
 /**
@@ -12,11 +23,11 @@ export function useHash() {
  * @param {code} param0
  * @returns
  */
-export const verifyUserLogin = async ({ code, state }) => {
-    if (!code || !state) {
-        throw new Error('Code or state not defined');
+export const verifyUserLogin = async ({ code, provider }) => {
+    if (!code || !provider) {
+        throw new Error('Code or provider not defined');
     }
-    const response = await axios(`/api/users/verify/${state}`, {
+    const response = await axios(`/api/users/verify/${provider}`, {
         headers: { code },
     });
 

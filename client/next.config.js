@@ -1,4 +1,12 @@
-module.exports = {
+const withPWA = require('next-pwa');
+
+module.exports = withPWA({
+    pwa: {
+        dest: 'public',
+    },
+});
+
+module.exports = withPWA({
     async rewrites() {
         return [
             {
@@ -15,4 +23,7 @@ module.exports = {
             'platform-lookaside.fbsbx.com',
         ],
     },
-};
+    pwa: {
+        dest: 'public',
+    },
+});

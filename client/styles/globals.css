@@ -99,6 +99,9 @@ h4 {
     font-size: 18px;
 }
 
+.navbar {
+    padding-bottom: 0;
+}
 .menu {
     display: flex;
     justify-content: space-evenly;
@@ -116,6 +119,7 @@ ul.vote-lnk {
     display: flex;
     list-style-type: none;
     padding-left: 0;
+    margin-bottom: 0;
 }
 ul.vote-lnk li {
     margin-right: 5px;
@@ -151,14 +155,16 @@ ul.vote-lnk li {
 
 #list {
     overflow: scroll;
-    height: 40vh;
+    height: 30vh;
+    word-break: break-all;
 }
 .element {
     padding: 15px;
+    /* font-size: small; */
 }
 
 .element .txt {
-    font-size: small;
+    /* font-size: small; */
     margin-right: 1em;
 }
 
@@ -173,11 +179,12 @@ ul.vote-lnk li {
 .checked {
     color: #ffa500;
     font-size: 21px;
-    margin: 0 3px;
+    margin: 0 3px 0 0;
 }
 .unchecked {
     font-size: 21px;
-    margin: 0 3px;
+    margin: 0 3px 0 0;
+    color: darkgray;
 }
 
 .modal-dialog {
@@ -205,6 +212,17 @@ ul.vote-lnk li {
     background: white;
     display: block;
     position: fixed;
+}
+
+.modal-dialog {
+    max-width: 100%;
+}
+
+.modal-fullscreen .modal-body {
+    background: white;
+}
+.modal-dialog-scrollable .modal-content {
+    overflow: scroll;
 }
 
 @keyframes slide-up {
@@ -235,4 +253,54 @@ ul.vote-lnk li {
     right: 3em;
     width: 80%;
     max-width: 30em;
+}
+
+.fa-1-5x {
+    font-size: 1.5em;
+}
+
+.form-control {
+    padding: 0.129rem;
+}
+
+.osm-icon {
+    color: red;
+}
+.local-icon {
+    color: deeppink;
+}
+
+.logo {
+    background: rgb(255, 201, 60);
+    box-shadow: none;
+    padding: 4em 3em;
+    border-radius: 10px;
+}
+
+@media (max-width: 400px) {
+    .logo {
+        padding: 1em;
+    }
+}
+
+
+table thead th {
+    color: rgba(74, 85, 104, 1);
+    font-size: 15px;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.75rem;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+table td,
+table th {
+    border: 1px solid;
+    border-color: rgba(226, 232, 240, 1);
+    padding: 0.5em;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: rgba(237, 242, 247, 1);
 }

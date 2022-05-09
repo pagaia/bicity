@@ -50,7 +50,7 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/vote/:featureId/:userId',
-        // preValidation: [fastify.authenticate],
+        preValidation: [fastify.authenticate],
         handler: voteController.getVoteByUserPerFeature(fastify),
         schema: {
             description: 'Get vote per feature per User',
@@ -85,7 +85,8 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/vote/:featureId/:userId',
-        // preValidation: [fastify.authenticate],
+        // TODO : verify logged user can update only its own votes
+        preValidation: [fastify.authenticate],
         handler: voteController.addVote(fastify),
         schema: {
             description: 'Add a vote per feature by the user',

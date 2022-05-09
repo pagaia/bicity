@@ -6,6 +6,7 @@ import InputField from '../../components/form/InputField';
 import InputSelect from '../../components/form/InputSelect';
 import TextAreaField from '../../components/form/TextAreaField';
 import FindPositionNoSSR from '../../components/map/FindPositionNoSSR';
+import { selectCategories } from '../../store/categorySlice';
 import { showError } from '../../store/errorSlice';
 import { addFeature, selectAddedFeature, selectFeatureError } from '../../store/featureSlice';
 import { ROME_POSITION } from '../../utils/constants';
@@ -44,6 +45,7 @@ const NewFeature = () => {
     const dispatch = useDispatch();
     const addedFeature = useSelector(selectAddedFeature);
     const featureError = useSelector(selectFeatureError);
+    const categories = useSelector(selectCategories);
 
     useEffect(() => {
         if (featureError) {
@@ -143,6 +145,7 @@ const NewFeature = () => {
                             name="category"
                             errors={errors}
                             touched={touched}
+                            data={categories}
                         />
 
                         <TextAreaField

@@ -8,7 +8,8 @@ node_modules
 data
 
 # testing
-/server/coverage
+/coverage
+server/coverage
 
 # production
 /build

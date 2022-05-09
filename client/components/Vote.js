@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MAX_VOTE_FEATURE } from '../../server/src/utility/constants';
 import { fetchVote, selectFeatureVote } from '../store/featureSlice';
 
-const Vote = ({ featureId, user }) => {
-
+const Vote = ({ featureId, userId }) => {
     const dispatch = useDispatch();
     const avgVote = useSelector(selectFeatureVote(featureId));
 
-    console.log({avgVote})
+    console.log({ avgVote });
     // fetch the average vote
     useEffect(async () => {
         // updateAvgVote(featureId);
@@ -20,18 +19,18 @@ const Vote = ({ featureId, user }) => {
 
     // fetch vote per user
     useEffect(async () => {
-        console.log({ featureId, user });
-        if (featureId && user) {
-            const response = await axios(`/api/vote/${featureId}/${user?.profile?._id}`);
+        console.log({ featureId, userId });
+        if (featureId && userId) {
+            const response = await axios(`/api/vote/${featureId}/${userId}`);
             const { data } = response;
             setUserVote(data);
         }
-    }, [featureId, user]);
+    }, [featureId, userId]);
 
     const handleAddVote = async (vote) => {
-        if (featureId && user) {
+        if (featureId && userId) {
             const response = await axios.post(
-                `/api/vote/${featureId}/${user?.profile?._id}`,
+                `/api/vote/${featureId}/${userId}`,
                 { vote } // body
             );
             const { data } = response;
@@ -44,16 +43,17 @@ const Vote = ({ featureId, user }) => {
 
     console.log({ userVote });
     const votesLinks = [...Array(MAX_VOTE_FEATURE).keys()].map((vote, idx) => {
-        const className = idx + 1 <= avgVote ? 'text-warning' : 'text-muted';
+        const voted = idx + 1 <= avgVote ? 'checked' : 'unchecked';
         return (
             <li key={idx}>
                 <a
+                    href="#setVote"
                     onClick={(e) => {
-                        e.preventDefault();
+                        e?.preventDefault();
                         handleAddVote(vote + 1);
                     }}
-                    className={className}>
-                    <i className="fas fa-igloo fa-2x"></i>
+                    title={`Set vote to ${idx + 1}`}>
+                    <i className={`fas fa-bicycle ${voted}`}></i>
                 </a>
             </li>
         );

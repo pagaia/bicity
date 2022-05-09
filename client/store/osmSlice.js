@@ -9,12 +9,13 @@ export const fetchOSMAmenities = createAsyncThunk(
         const payload = encodeURI(`[out:json][timeout:25];
   // gather results
   (
-    node[~"^(amenity)$"~"(${amenities})"](${_southWest.lat},${_southWest.lng},${_northEast.lat},${_northEast.lng});
+    node[~"(amenity|emergency)"~"(${amenities})"](${_southWest.lat},${_southWest.lng},${_northEast.lat},${_northEast.lng});
   );
   // print results
   out geom;`);
 
         const overPassServers = [
+            'https://overpass-api.de/api/interpreter',
             'https://lz4.overpass-api.de/api/interpreter',
             'https://z.overpass-api.de/api/interpreter',
             'https://overpass.osm.ch/api/interpreter',
