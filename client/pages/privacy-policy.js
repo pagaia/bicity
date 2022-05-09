@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
                 <p>
                     This document states the BiCity Project privacy policy for services formally
                     operated and provided by the company QBQUITY Sprl through the{' '}
-                    <ExternalLink url="https://www.bicity.info">www.bicity.info</ExternalLink>{' '}
+                    <ExternalLink url="https://bicity.info">bicity.info</ExternalLink>{' '}
                     website, the connected app for mobile devices and the associated services and
                     APIs. It describes what personal information we may be gathering from you, who
                     can see this information, and what options you have for controlling this. We
@@ -229,7 +229,7 @@ const PrivacyPolicy = () => {
                 </p>
                 <h2 id="gravatar">Gravatar</h2>
                 <p>
-                    The <ExternalLink url="https://www.bicity.info">bicity.info</ExternalLink>{' '}
+                    The <ExternalLink url="https://bicity.info">bicity.info</ExternalLink>{' '}
                     website supports the display of Gravatars, these are retrieved from{' '}
                     <ExternalLink url="https://gravatar.com/">gravatar.com</ExternalLink> by
                     generating a globally unique key from your e-mail address. Our website software
@@ -363,11 +363,7 @@ const PrivacyPolicy = () => {
                     website and services that require a login. However, your access to our websites
                     will not be affected if you disable cookies placed by third parties. More
                     precisely, the cookies installed by the BiCity website are the following:
-                    {/* GOOGLE:
-                __Host-GAPS it last 2years
-                CONSENT  it last 2years
-                NID  it last 6 months */}
-                    <table>
+                    <table className="mt-3">
                         <thead>
                             <tr>
                                 <th>COOKIE</th>

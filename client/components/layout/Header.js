@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ROUTES } from '../../utils/routes';
+import { ScreenSize } from './ScreenSize';
 
 const Header = (props) => {
     return (
@@ -9,6 +10,7 @@ const Header = (props) => {
                 <title>BiCity - city for cyclists</title>
             </Head>
             <div className="">
+                <ScreenSize/>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-bottom  menu">
                     <div className="container">
                         <Link href={ROUTES.HOME} className="navbar-brand">

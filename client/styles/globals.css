@@ -269,3 +269,38 @@ ul.vote-lnk li {
 .local-icon {
     color: deeppink;
 }
+
+.logo {
+    background: rgb(255, 201, 60);
+    box-shadow: none;
+    padding: 4em 3em;
+    border-radius: 10px;
+}
+
+@media (max-width: 400px) {
+    .logo {
+        padding: 1em;
+    }
+}
+
+
+table thead th {
+    color: rgba(74, 85, 104, 1);
+    font-size: 15px;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.75rem;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+table td,
+table th {
+    border: 1px solid;
+    border-color: rgba(226, 232, 240, 1);
+    padding: 0.5em;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: rgba(237, 242, 247, 1);
+}
