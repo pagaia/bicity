@@ -12,8 +12,8 @@ exports.getVoteByUserPerFeature = (fastify) => async (req, reply) => {
     try {
         const { featureId, userId } = req.params;
 
-        // console.log({ featureId, userId });
-        const vote = await Vote.findOne({ user: userId, feature: featureId });
+        const vote = await Vote.findOne({ user: userId, feature: featureId })
+            .lean();
         if (!vote) {
             reply.code(404).type('application/json').send({ error: 'Not Found' });
         }
@@ -29,20 +29,15 @@ exports.getVoteByUserPerFeature = (fastify) => async (req, reply) => {
 exports.getAvgVotePerFeature = (fastify) => async (req, reply) => {
     try {
         const { featureId } = req.params;
-        console.log({ featureId });
 
         let vote = await Vote.aggregate()
             .match({ feature: mongoose.Types.ObjectId(featureId) })
             .group({ _id: '$feature', average: { $avg: '$vote' } });
-        // let vote = await Vote.aggregate([
-        //     { $match: { feature: mongoose.Types.ObjectId(featureId) } },
-        //     {
-        //         $group: { _id: '$feature', average: { $avg: '$vote' } },
-        //     },
-        // ]);
+
         if (!vote.length) {
             reply.code(404).type('application/json').send({ error: 'Not Found' });
         }
+        vote[0].average = vote?.[0]?.average?.toFixed(1)
         return vote?.[0];
     } catch (err) {
         throw boom.boomify(err);
@@ -56,7 +51,6 @@ exports.addVote = (fastify) => async (req, reply) => {
         const { vote } = req.body;
 
         const voteData = { feature: featureId, user: userId, vote };
-        // console.log({ voteData });
 
         const updatedVote = await Vote.findOneAndUpdate(
             {
@@ -68,9 +62,7 @@ exports.addVote = (fastify) => async (req, reply) => {
                 new: true, // return the new information
                 upsert: true, // Make this update into an upsert
             }
-        );
-
-        // console.log({ updatedVote });
+        ).lean();
 
         return updatedVote;
     } catch (err) {

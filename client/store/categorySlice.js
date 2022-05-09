@@ -10,7 +10,7 @@ export const fetchCategories = createAsyncThunk('fetchCategories', async ({}, th
 
 export const categorySlice = createSlice({
     name: 'category',
-    initialState: { list: [], loading: 'idle' }, // loading: idle and pending
+    initialState: { list: [], loading: 'idle', showModal: false }, // loading: idle and pending
     reducers: {
         chooseCategory: (state, action) => {
             // set the category selected
@@ -18,6 +18,9 @@ export const categorySlice = createSlice({
                 ...category,
                 selected: !!action.payload[category._id],
             }));
+        },
+        showModal: (state, action) => {
+            state.showModal = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -54,11 +57,12 @@ export const categorySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { chooseCategory } = categorySlice.actions;
+export const { chooseCategory, showModal } = categorySlice.actions;
 
 // export selectors
 export const selectCategories = (state) => state.categoryReducer.list;
 export const selectChoosenCategories = (state) =>
     state.categoryReducer.list.filter((cat) => cat.selected);
+export const selectShowModal = (state) => state.categoryReducer.showModal;
 
 export default categorySlice.reducer;

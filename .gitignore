@@ -9,6 +9,7 @@ data
 
 # testing
 /coverage
+server/coverage
 
 # production
 /build

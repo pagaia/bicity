@@ -1,21 +1,26 @@
 import { LayerGroup, LayersControl, Marker } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { useSelector } from 'react-redux';
 import { selectAmenities } from '../../../store/osmSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { featureSelected } from '../../../store/featureSlice';
+
+const fontAwesomeIcon = L.divIcon({
+    html: '<i class="fas fa-map-pin fa-2x"></i>',
+    iconSize: [20, 20],
+    className: 'osm-icon',
+});
 
 const OsmFeaturesLayer = (props) => {
     const data = useSelector(selectAmenities);
+    const dispatch = useDispatch();
 
     const filteredData = data ?? [];
 
     const onClick = (e, id) => {
-        const element = document.getElementById(id);
-        console.log({ element, id });
-        element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+        dispatch(featureSelected({ osm: id }));
     };
-
     return (
-        <LayersControl.Overlay name="OSM amenities" >
+        <LayersControl.Overlay name="OSM amenities">
             <LayerGroup>
                 <MarkerClusterGroup>
                     {filteredData.map((item) => {
@@ -27,7 +32,8 @@ const OsmFeaturesLayer = (props) => {
                             <Marker
                                 position={[lat, long]}
                                 key={item.id}
-                                eventHandlers={{ click: (e) => onClick(e, item.id) }}>
+                                eventHandlers={{ click: (e) => onClick(e, item.id) }}
+                                icon={fontAwesomeIcon}>
                                 {/* <Popup>
                                     <dl className="row">
                                         <dt className="col-sm-3">Name:</dt>

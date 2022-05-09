@@ -8,9 +8,6 @@ async function importAmenities() {
   const amenities = await readAmenities();
 
   amenities.forEach(async (amenity, idx) => {
-    // if (idx > 1) {
-    //   return;
-    // }
     console.log({ amenity });
 
     axios
@@ -18,8 +15,7 @@ async function importAmenities() {
         headers: {
           accept: "application/json",
           "Content-Type": "application/json",
-          authorization:
-            "Bearer TOKEN"
+          authorization: "Bearer TOKEN"
         }
       })
       .then((res) => {

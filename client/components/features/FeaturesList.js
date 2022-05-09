@@ -12,20 +12,20 @@ const FeaturesList = ({ map }) => {
         return null;
     }
 
-    const locate = (position) => {
+    const moveTo = (position) => {
         console.log({ position });
         const [lng, lat] = position?.coordinates;
         console.log({ lat, lng });
-        map?.flyTo({ lat, lng }, 18);
+        map?.setView({ lat, lng }, 18);
     };
 
     return (
         <div id="list">
             {features?.map((feature) => (
-                <FeatureItem feature={feature} onClick={locate} key={feature._id} />
+                <FeatureItem feature={feature} onClick={moveTo} key={feature._id} />
             ))}
             {osmAmenities?.map((item) => (
-                <OsmFeatureItem key={item.id} item={item} onClick={locate} />
+                <OsmFeatureItem key={item.id} item={item} onClick={moveTo} />
             ))}
         </div>
     );

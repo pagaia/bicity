@@ -1,20 +1,29 @@
+import { useAuth } from '../../hooks/useAuth';
+import RandomPicture from '../ui/RandomPicture';
+import Vote from '../Vote';
+import Favorite from './Favorite';
 
 const FeatureItem = ({ feature, onClick }) => {
+    if (!feature) {
+        return null;
+    }
     const { properties } = feature;
+    const featureId = feature._id;
 
+    const { user } = useAuth();
+    const userId = user?.profile?._id;
     return (
         <div
             className="element shadow-sm p-3 mb-3 bg-body rounded"
-            id={feature._id}
-            onClick={() => onClick(feature.geometry)}>
+            id={featureId}
+            // onClick={() => onClick(feature.geometry)}
+        >
+            <RandomPicture />
+
             <h1>{properties.name}</h1>
 
-           
-            <i className="fas fa-bicycle checked"></i>
-            <i className="fas fa-bicycle checked"></i>
-            <i className="fas fa-bicycle checked"></i>
-            <i className="fas fa-bicycle checked"></i>
-            <i className="fas fa-bicycle unchecked"></i>
+            <Vote featureId={featureId} userId={userId} />
+            <Favorite featureId={featureId} userId={userId} />
 
             {(properties.address || properties.city || properties.country) && (
                 <div className="feature-prop">

@@ -11,8 +11,8 @@ function MyApp({ Component, pageProps }) {
     return (
         <Provider store={store}>
             <ProvideAuth>
-                <RefreshToken/>
-                <Category/>
+                <RefreshToken />
+                <Category />
                 <Layout>
                     <ErrorMessage />
                     <Component {...pageProps} />

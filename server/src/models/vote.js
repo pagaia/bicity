@@ -6,7 +6,7 @@ const { MAX_VOTE_FEATURE } = require('../utility/constants');
  * validate  vote added
  */
 const validateVote = (vote) => {
-    return vote <= MAX_VOTE_FEATURE;
+    return vote >= 0 && vote <= MAX_VOTE_FEATURE;
 };
 
 /**
@@ -14,6 +14,7 @@ const validateVote = (vote) => {
  */
 const voteSchema = new mongoose.Schema(
     {
+        // TODO : add average in the DB when adding the vote
         vote: { type: 'number', required: true, validate: validateVote, default: 0 },
         user: {
             type: mongoose.Schema.Types.ObjectId,
