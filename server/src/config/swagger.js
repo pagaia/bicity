@@ -1,4 +1,4 @@
-const host = process.env.NODE_ENV !== 'production' ? 'localhost:8082' : 'www.bicity.tk';
+const host = process.env.NODE_ENV !== 'production' ? 'localhost:8082' : 'bicity.info';
 const schemes = process.env.NODE_ENV !== 'production' ? 'http' : 'https';
 exports.options = {
     routePrefix: '/documentation',
