@@ -5,10 +5,7 @@ import { useMemo, useState } from 'react';
 import { LayersControl, MapContainer, ScaleControl, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowModal, showModal } from '../../store/categorySlice';
-import {
-    MULTI_FEATURE_CATEGORY,
-    ROME_POSITION
-} from '../../utils/constants';
+import { MULTI_FEATURE_CATEGORY, ROME_POSITION } from '../../utils/constants';
 import FeaturesList from '../features/FeaturesList';
 import CategorySelection from '../categories/CategorySelection';
 import GeoCoding from './components/GeoCoding';
@@ -72,7 +69,7 @@ const MainMap = (props) => {
             {displayMap}
             <CategorySelection show={viewModal} setOpen={setModal} />
             {/* {map && <FeaturesList map={map} />} */}
-            <ModalFeature/>
+            <ModalFeature />
         </>
     );
 };

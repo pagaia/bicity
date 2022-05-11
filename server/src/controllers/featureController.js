@@ -37,6 +37,42 @@ exports.getFeatureNearMe = (fastify) => async (req, reply) => {
     }
 };
 
+// Get Feature by bbox
+exports.getFeaturesByBox = (fastify) => async (req, reply) => {
+    try {
+        const { nlat, nlng, slat, slng } = req.query;
+
+        const categories = req.query.categories?.split(',');
+
+        let payload = {
+            geometry: {
+                $geoWithin: {
+                    $geometry: {
+                        type: 'Polygon',
+                        coordinates: [
+                            [
+                                [slng, slat],
+                                [nlng, slat],
+                                [nlng, nlat],
+                                [slng, nlat],
+                                [slng, slat],
+                            ],
+                        ],
+                    },
+                },
+            },
+        };
+
+        if (categories) {
+            payload['properties.category'] = { $in: categories };
+        }
+        const feature = await Feature.find(payload);
+        return feature;
+    } catch (err) {
+        throw boom.boomify(err);
+    }
+};
+
 // Get  Feature by Id
 exports.getFeatureById = (fastify) => async (req, reply) => {
     try {

@@ -16,8 +16,11 @@ const MultiLineFeaturesLayer = ({ category }) => {
     };
 
     console.log({ category });
+    if (!filteredData || !filteredData.length) {
+        return null;
+    }
     return (
-        <LayersControl.Overlay name={category}>
+        <LayersControl.Overlay name={category} checked>
             <LayerGroup>
                 {filteredData.map((item) => {
                     const { properties } = item;

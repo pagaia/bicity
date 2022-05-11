@@ -65,6 +65,23 @@ export const fetchMultiFeatures = createAsyncThunk(
     }
 );
 
+export const fetchFeaturesByBbox = createAsyncThunk(
+    'fetchFeaturesByBbox',
+    async ({ bbox, categories }, thunkAPI) => {
+        const { _northEast, _southWest } = bbox;
+        const { lat: nlat, lng: nlng } = _northEast;
+        const { lat: slat, lng: slng } = _southWest;
+        const query = `nlat=${nlat}&nlng=${nlng}&slat=${slat}&slng=${slng}&categories=${categories?.join(
+            ','
+        )}`;
+        console.log({ query });
+
+        const response = await axios(`/api/feature/bbox?${query}`);
+        const { data } = response;
+        return data;
+    }
+);
+
 export const addFeature = createAsyncThunk('addFeatureAction', async ({ feature }, thunkAPI) => {
     const headers = { 'Content-Type': 'application/json' };
     const body = JSON.stringify(feature);
@@ -123,6 +140,20 @@ export const featureSlice = createSlice({
             state.favorites = action.payload;
         });
         builder.addCase(removeFavorite.rejected, (state, action) => {
+            console.log({ action });
+            state.error = action.payload;
+        });
+
+        builder.addCase(fetchFeaturesByBbox.fulfilled, (state, action) => {
+            state.features = action.payload;
+            const { bbox, categories } = action?.meta?.arg;
+            const { _northEast, _southWest } = bbox;
+            const { lat: nlat, lng: nlng } = _northEast;
+            const { lat: slat, lng: slng } = _southWest;
+            state.bbox = { _northEast: { nlng, nlat }, _southWest: { slng, slat } };
+            state.selectedCategories = categories;
+        });
+        builder.addCase(fetchFeaturesByBbox.rejected, (state, action) => {
             console.log({ action });
             state.error = action.payload;
         });

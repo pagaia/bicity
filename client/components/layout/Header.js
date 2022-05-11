@@ -16,7 +16,7 @@ const Header = (props) => {
                         <Link href={ROUTES.HOME} className="navbar-brand">
                             <a>
                                 <div>
-                                    <i className="fas fa-igloo fa-1-5x"></i>
+                                    <i className="fas fa-map-marked-alt fa-1-5x"></i>
                                 </div>
                                 <div className="menu-txt">Home</div>
                             </a>

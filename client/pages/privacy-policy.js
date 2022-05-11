@@ -13,22 +13,23 @@ const PrivacyPolicy = () => {
                 <h2 id="introduction">Introduction</h2>
                 <p>
                     This document states the BiCity Project privacy policy for services formally
-                    operated and provided by the company QBQUITY Sprl through the{' '}
-                    <ExternalLink url="https://bicity.info">bicity.info</ExternalLink>{' '}
-                    website, the connected app for mobile devices and the associated services and
-                    APIs. It describes what personal information we may be gathering from you, who
-                    can see this information, and what options you have for controlling this. We
-                    value your privacy and strive to achieve a balance between the legitimate
-                    interests of the BiCity Project and your interests and rights. This document is
-                    mainly intended for BiCity Project contributors; if you are using services
-                    provided by the QBQUITY Sprl without contributing, section “Data we receive
-                    automatically” will be most relevant for you.
+                    operated and provided by the company{' '}
+                    <ExternalLink url="https://qbquity.com">QBQUITY Sprl</ExternalLink> through the{' '}
+                    <ExternalLink url="https://bicity.info">bicity.info</ExternalLink> website, the
+                    connected app for mobile devices and the associated services and APIs. It
+                    describes what personal information we may be gathering from you, who can see
+                    this information, and what options you have for controlling this. We value your
+                    privacy and strive to achieve a balance between the legitimate interests of the
+                    BiCity Project and your interests and rights. This document is mainly intended
+                    for BiCity Project contributors; if you are using services provided by the
+                    QBQUITY Sprl without contributing, section “Data we receive automatically” will
+                    be most relevant for you.
                 </p>
                 <h2 id="data-controller">Data controller </h2>
                 <p>
-                    The data controller is <b>QBQUITY Sprl</b> (we/us). You can contact us here:
-                    Address: rue Général Molitor 14 - 1040 Brussels (Brussels) Belgium Email:
-                    legal@bicity.info
+                    The data controller is <b>QBQUITY Sprl</b>
+                    (we/us). You can contact us here: Address: rue Général Molitor 14 - 1040
+                    Brussels (Brussels) Belgium Email: legal@bicity.info
                 </p>
                 <h2 id="processing">
                     Lawfulness of processing (why do we store and process personal data?)
@@ -91,7 +92,8 @@ const PrivacyPolicy = () => {
                         <li>any blocks the user has received and associated messages.</li>
                         <li>
                             network access data (example IP addresses) for the systems and services
-                            operated by the QBQUITY Sprl (see “Data we receive automatically”).
+                            operated by the QBQUITY Sprl (see
+                            <a href="#automatic-data">“Data we receive automatically”</a>).
                         </li>
                     </ul>
                 </p>
@@ -229,8 +231,8 @@ const PrivacyPolicy = () => {
                 </p>
                 <h2 id="gravatar">Gravatar</h2>
                 <p>
-                    The <ExternalLink url="https://bicity.info">bicity.info</ExternalLink>{' '}
-                    website supports the display of Gravatars, these are retrieved from{' '}
+                    The <ExternalLink url="https://bicity.info">bicity.info</ExternalLink> website
+                    supports the display of Gravatars, these are retrieved from{' '}
                     <ExternalLink url="https://gravatar.com/">gravatar.com</ExternalLink> by
                     generating a globally unique key from your e-mail address. Our website software
                     will check on the initial signup and on every email address change if you have a
@@ -241,7 +243,7 @@ const PrivacyPolicy = () => {
                 </p>
                 <h2 id="survey">Surveys</h2>
                 <p>
-                    The QBQUITY sprl may conduct surveys within the users in order to determine the
+                    The QBQUITY Sprl may conduct surveys within the users in order to determine the
                     opinions and better to serve the community. Distributing surveys and processing
                     their results may require the use of personal data such as names and email
                     addresses. Personal data gathered or used in connection with surveys will be

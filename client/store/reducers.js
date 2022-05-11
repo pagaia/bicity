@@ -5,6 +5,7 @@ import osmReducer from './osmSlice';
 import errorReducer from './errorSlice';
 import usersReducer from './userSlice';
 import categoryReducer from './categorySlice';
+// import { throttle } from './reduxUtils';
 
 export default configureStore({
     reducer: {

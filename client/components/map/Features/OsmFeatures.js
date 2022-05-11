@@ -19,8 +19,11 @@ const OsmFeaturesLayer = (props) => {
     const onClick = (e, id) => {
         dispatch(featureSelected({ osm: id }));
     };
+    if (!filteredData || !filteredData.length) {
+        return null;
+    }
     return (
-        <LayersControl.Overlay name="OSM amenities">
+        <LayersControl.Overlay name="OSM DB" checked>
             <LayerGroup>
                 <MarkerClusterGroup>
                     {filteredData.map((item) => {

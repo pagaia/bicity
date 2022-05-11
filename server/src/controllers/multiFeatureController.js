@@ -11,7 +11,6 @@ exports.getMultiFeatures = (fastify) => async (req, reply) => {
         const { nlat, nlng, slat, slng } = req.query;
 
         const category = req.query.category;
-        console.log({ nlat, nlng, slat, slng, category });
 
         let payload = {
             geometry: {
@@ -37,9 +36,6 @@ exports.getMultiFeatures = (fastify) => async (req, reply) => {
 
         const multiFeature = await MultiFeature.find(payload);
 
-        multiFeature.forEach((bikeLane) => {
-            console.log({ multiFeature: JSON.stringify(bikeLane) });
-        });
         return multiFeature;
     } catch (err) {
         throw boom.boomify(err);

@@ -1,6 +1,7 @@
 import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { chooseCategory, selectCategories } from '../../store/categorySlice';
+import { fetchFeaturesByBbox, fetchMultiFeatures } from '../../store/featureSlice';
 import SwitchField from '../form/SwitchField';
 import Modal from '../Modal';
 
@@ -20,6 +21,9 @@ const CategorySelection = ({ show, setOpen }) => {
         // update redux store
         dispatch(chooseCategory(values));
         setOpen(false);
+        // dispatch(fetchMultiFeatures({ bbox }));
+        // dispatch(fetchFeaturesByBbox({ bbox, categories: cat }));
+
     };
     return (
         <Modal show={show}>

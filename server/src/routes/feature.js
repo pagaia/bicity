@@ -79,6 +79,43 @@ const routes = (fastify) => [
     },
     {
         method: 'GET',
+        url: '/api/feature/bbox',
+        handler: featureController.getFeaturesByBox(fastify),
+        schema: {
+            description: 'Get list of features in the bbox made by the up-left and bottom-right points',
+            tags: ['feature'],
+            summary: 'Get list of features in the bbox made by the up-left and bottom-right points',
+            querystring: {
+                nlat: { type: 'number' },
+                nlng: { type: 'number' },
+                slat: { type: 'number' },
+                slng: { type: 'number' },
+                category: { type: 'string' },
+            },
+            response: {
+                200: {
+                    description: 'Successful response',
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: featureProperties,
+                    },
+                },
+                400: {
+                    description: 'Invalid tag value',
+                    type: 'object',
+                    content: {},
+                },
+            },
+        },
+        security: [
+            {
+                apiKey: [],
+            },
+        ],
+    },
+    {
+        method: 'GET',
         url: '/api/feature',
         // preValidation: [fastify.authenticate],
         handler: featureController.getAllFeatures(fastify),

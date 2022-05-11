@@ -1,7 +1,10 @@
 import { useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectChoosenCategories, showModal } from '../../../store/categorySlice';
-import { fetchFeatures, fetchMultiFeatures } from '../../../store/featureSlice';
+import {
+    fetchFeaturesByBbox,
+    fetchMultiFeatures
+} from '../../../store/featureSlice';
 import { fetchOSMAmenities } from '../../../store/osmSlice';
 import { MIN_ZOOM } from '../../../utils/constants';
 import ButtonToolbar from './ButtonToolbar';
@@ -17,6 +20,7 @@ const Toolbar = () => {
     const categories = useSelector(selectChoosenCategories).map((cat) => cat.name);
 
     console.log({ selectChoosenCategories: categories.join('|') });
+
     const fetchAmenity = () => {
         dispatch(
             fetchOSMAmenities({
@@ -26,7 +30,7 @@ const Toolbar = () => {
         );
     };
 
-    const update = (cat) => {
+    const update = (categories) => {
         const position = map.getCenter();
         const bbox = map.getBounds();
         const zoom = map.getZoom();
@@ -34,8 +38,8 @@ const Toolbar = () => {
             alert('Please increase the zoom to reduce the number of results');
         } else {
             dispatch(fetchMultiFeatures({ bbox }));
-            console.log({ update: cat });
-            dispatch(fetchFeatures({ position, categories: cat }));
+            console.log({ update: categories });
+            dispatch(fetchFeaturesByBbox({ bbox, categories, throttle: 10000 }));
             fetchAmenity();
         }
     };

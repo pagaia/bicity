@@ -13,9 +13,10 @@ const CopyrightPolicy = () => {
                 </h1>
                 <p>
                     The BiCity Project is open data, licensed under the Open Data Commons Open
-                    Database License (ODbL) by QBQUITY Sprl. QBQUITY Sprl is (and will remain in the
-                    future) the owner of the copyright and the sui generis right on the BiCity
-                    database.
+                    Database License (ODbL) by QBQUITY Sprl.{' '}
+                    <ExternalLink url="https://qbquity.com">QBQUITY Sprl</ExternalLink> is (and will
+                    remain in the future) the owner of the copyright and the sui generis right on
+                    the BiCity database.
                 </p>
                 <p>
                     You are free to copy, distribute, transmit and adapt our data, as long as you
@@ -422,7 +423,7 @@ const CopyrightPolicy = () => {
                     Below is a list of software components developed by third parties and used by
                     BiCity Project, with their respective licenses.
                 </p>
-                
+
                 <table>
                     <tbody>
                         <tr>
@@ -684,7 +685,7 @@ const CopyrightPolicy = () => {
                         </tr>
                     </tbody>
                 </table>
-                <h1 id="intellectual-property" className='mt-5'>
+                <h1 id="intellectual-property" className="mt-5">
                     <span>Intellectual property rights</span>
                     <span>&nbsp;infringement</span>
                 </h1>
@@ -707,7 +708,7 @@ const CopyrightPolicy = () => {
                     legal@bicity.info.
                 </p>
                 <p>
-                    <span>Latest update of this document: May 10, 2022</span>
+                    Latest update of this document: <time datetime="2022-05-10"> May 10, 2022</time>
                 </p>
             </div>
         </>

@@ -23,9 +23,12 @@ const FeaturesLayer = (props) => {
     const onClick = (e, id) => {
         dispatch(featureSelected({ local: id }));
     };
+    if (!filteredData || !filteredData.length) {
+        return null;
+    }
 
     return (
-        <LayersControl.Overlay name="BiCity DB">
+        <LayersControl.Overlay name="BiCity DB" checked>
             <LayerGroup>
                 <MarkerClusterGroup>
                     {filteredData.map((item) => {

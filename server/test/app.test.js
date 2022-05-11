@@ -411,7 +411,7 @@ test('test APIs', async (t) => {
             },
             geometry: {
                 type: 'Point',
-                coordinates: [10, 20],
+                coordinates: [20, 30],
             },
         };
 
@@ -495,12 +495,10 @@ test('test APIs', async (t) => {
         t.equal(response.statusCode, 200, ' - Get 200');
         t.same(json.user, user._id, '- get user ID');
         t.same(json.features.length, 1, '- get one favorite feature');
-       
 
         // end test
         t.end();
     });
-
 
     t.test('POST a new favorite feature - Unauthorized', async (t) => {
         const url = `/api/favorite/${user._id}/${feature._id}`;
@@ -747,6 +745,52 @@ test('test APIs', async (t) => {
         let json = await response.json();
 
         t.equal(response.statusCode, 401, ' - Get Unahotorized');
+
+        // end test
+        t.end();
+    });
+
+    t.test('FIND 1 feature by bbox', async (t) => {
+        const response = await app.inject({
+            method: 'GET',
+            url: '/api/feature/bbox?nlng=5&nlat=25&slng=15&slat=5',
+        });
+
+        const json = await response.json();
+        feature = json;
+        t.equal(response.statusCode, 200, ' - Get 200');
+        t.same(json.length, 1, '- get 1 point');
+        t.same(json[0].geometry.coordinates, [10, 20], '- get geometry');
+
+        // end test
+        t.end();
+    });
+
+    t.test('FIND 2 features by bbox', async (t) => {
+        const response = await app.inject({
+            method: 'GET',
+            url: '/api/feature/bbox?nlng=5&nlat=31&slng=22&slat=5',
+        });
+
+        const json = await response.json();
+        feature = json;
+        t.equal(response.statusCode, 200, ' - Get 200');
+        t.same(json.length, 2, '- get 2 points');
+        t.same(json[1].geometry.coordinates, [20, 30], '- get geometry');
+
+        // end test
+        t.end();
+    });
+    t.test('FIND features by bbox and category', async (t) => {
+        const response = await app.inject({
+            method: 'GET',
+            url: '/api/feature/bbox?nlng=5&nlat=31&slng=22&slat=5&categories=noavailable',
+        });
+
+        const json = await response.json();
+        feature = json;
+        t.equal(response.statusCode, 200, ' - Get 200');
+        t.same(json.length, 0, '- get 0 points - no category found');
 
         // end test
         t.end();

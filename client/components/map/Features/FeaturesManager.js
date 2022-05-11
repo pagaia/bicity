@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
+import { selectChoosenCategories } from '../../../store/categorySlice';
 import {
     fetchFeatures,
+    fetchFeaturesByBbox,
     fetchMultiFeatures,
     selectFeatures,
     selectMultiFeatures,
 } from '../../../store/featureSlice';
+import { fetchOSMAmenities } from '../../../store/osmSlice';
 import { MIN_ZOOM } from '../../../utils/constants';
 
 const FeaturesManager = ({ children }) => {
@@ -19,6 +22,7 @@ const FeaturesManager = ({ children }) => {
     const dispatch = useDispatch();
     const features = useSelector(selectFeatures);
     const multiFeatures = useSelector(selectMultiFeatures);
+    const categories = useSelector(selectChoosenCategories).map((cat) => cat.name);
 
     useEffect(() => {
         return () => console.log('Unmounted FeaturesManager');
@@ -57,8 +61,16 @@ const FeaturesManager = ({ children }) => {
             if (zoom < MIN_ZOOM) {
                 alert('Please increase the zoom to reduce the number of results');
             } else {
-                dispatch(fetchFeatures({ position: latlng }));
+                dispatch(fetchFeaturesByBbox({ bbox, categories }));
+                const amenities = categories?.join('|');
+                // dispatch(fetchFeatures({ position: latlng }));
                 dispatch(fetchMultiFeatures({ bbox }));
+                dispatch(
+                    fetchOSMAmenities({
+                        amenities,
+                        bbox,
+                    })
+                );
             }
         } else {
             console.error({ latlng: 'NOT DEFINED' });

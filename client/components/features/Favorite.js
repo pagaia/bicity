@@ -15,7 +15,7 @@ const Favorite = ({ userId, featureId }) => {
         dispatch(setFavorite({ userId, featureId }));
     };
     return (
-        <a href="#likeit" onClick={handleClick}>
+        <a href="#likeit" onClick={handleClick} className="favorite">
             {isFavorite ? <i class="fas fa-heart"></i> : <i class="far fa-heart"></i>}
         </a>
     );
