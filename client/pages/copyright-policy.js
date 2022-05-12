@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import ExternalLink from '../components/ExternalLink';
+import Footer from '../components/layout/Footer';
 
 const CopyrightPolicy = () => {
     return (
@@ -711,6 +712,7 @@ const CopyrightPolicy = () => {
                     Latest update of this document: <time datetime="2022-05-10"> May 10, 2022</time>
                 </p>
             </div>
+            <Footer />
         </>
     );
 };

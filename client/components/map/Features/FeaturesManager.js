@@ -46,6 +46,7 @@ const FeaturesManager = ({ children }) => {
     }, [map]);
 
     function handleOnLocationFound(e) {
+        console.log('handleOnLocationFound ', e)
         const { latlng } = e;
         const bbox = map.getBounds();
         const zoom = map.getZoom();
@@ -54,7 +55,7 @@ const FeaturesManager = ({ children }) => {
         if (latlng) {
             console.log({ latlng });
             setPosition(latlng);
-            // const circle = L.circle(e.latlng, 500);
+            // const circle = L.marker(latlng, 20);
             // circle.addTo(map);
             // fetchFeatures(latlng);
             console.log({ position });
@@ -81,21 +82,7 @@ const FeaturesManager = ({ children }) => {
         console.log({ handleOnLocationError: e });
     }
 
-    // function handleMoveEventEnd(e) {
-    //     const pos = map.getCenter();
-    //     const distance = prevCenter?.distanceTo?.(pos)?.toFixed(0);
-    //     console.log({ prevCenter, distance, pos });
-    //     // if (pos && (!prevCenter || distance > 1000)) {
-    //     //     console.log({ prevCenter, distance });
-    //     //     dispatch(fetchFeatures({ position: pos }));
-
-    //     // }
-    // }
-
-    // function handleMoveEventStart(e) {
-    //     console.log({ mapCenterStart: map.getCenter() });
-    //     setPrevCenter(map.getCenter());
-    // }
+  
 
     return (
         <FeatureContext.Provider value={{ data: { features, multiFeatures }, position }}>

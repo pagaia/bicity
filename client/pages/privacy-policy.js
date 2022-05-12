@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import ExternalLink from '../components/ExternalLink';
+import Footer from '../components/layout/Footer';
 import { ROUTES } from '../utils/routes';
 
 const PrivacyPolicy = () => {
@@ -409,6 +410,7 @@ const PrivacyPolicy = () => {
                     .
                 </p>
             </div>
+            <Footer />
         </>
     );
 };

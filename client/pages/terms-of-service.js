@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import ExternalLink from '../components/ExternalLink';
+import Footer from '../components/layout/Footer';
 import { ROUTES } from '../utils/routes';
 
 const TermsOfService = () => {
@@ -338,6 +339,7 @@ const TermsOfService = () => {
                 <p>
                     Latest update of this document: <time datetime="2022-05-10"> May 10, 2022</time>
                 </p>
+                <Footer />
             </div>
         </>
     );

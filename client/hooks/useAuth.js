@@ -203,15 +203,18 @@ function useProvideAuth() {
     }, [authorization, prevAuthorization]);
 
     // check the response
-    useEffect(async () => {
-        if (code && prevCode !== code && provider) {
-            // call the api to authenticate the user
-            const data = await verifyUserLogin({ code, provider });
-            // save the user into the state
-            setUser(data);
-            // remove the token information from the url
-            Router.push('/user');
-        }
+    useEffect(() => {
+        const verifyUser = async () => {
+            if (code && prevCode !== code && provider) {
+                // call the api to authenticate the user
+                const data = await verifyUserLogin({ code, provider });
+                // save the user into the state
+                setUser(data);
+                // remove the token information from the url
+                Router.push('/user');
+            }
+        };
+        verifyUser();
     }, [code, prevCode, provider]);
 
     // call the oauthSignIn method which redirect to Google OAuth page

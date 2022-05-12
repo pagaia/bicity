@@ -1,10 +1,9 @@
 import L from 'leaflet';
-import Link from 'next/link';
 import { useContext } from 'react';
-import { LayerGroup, LayersControl, Marker, Popup } from 'react-leaflet';
+import { LayersControl, Marker } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import { useDispatch } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
-import { useDispatch, useSelector } from 'react-redux';
 import { featureSelected } from '../../../store/featureSlice';
 
 const fontAwesomeIcon = L.divIcon({
@@ -28,21 +27,20 @@ const FeaturesLayer = (props) => {
     }
 
     return (
-        <LayersControl.Overlay name="BiCity DB" checked>
-            <LayerGroup>
-                <MarkerClusterGroup>
-                    {filteredData.map((item) => {
-                        const lat = item.geometry.coordinates[1];
-                        const long = item.geometry.coordinates[0];
-                        const { properties } = item;
+        <LayersControl.Overlay name="BiCity DB" checked={filteredData.length}>
+            <MarkerClusterGroup>
+                {filteredData.map((item) => {
+                    const lat = item.geometry.coordinates[1];
+                    const long = item.geometry.coordinates[0];
+                    const { properties } = item;
 
-                        return (
-                            <Marker
-                                position={[lat, long]}
-                                key={item._id}
-                                eventHandlers={{ click: (e) => onClick(e, item._id) }}
-                                icon={fontAwesomeIcon}>
-                                {/* <Popup>
+                    return (
+                        <Marker
+                            position={[lat, long]}
+                            key={item._id}
+                            eventHandlers={{ click: (e) => onClick(e, item._id) }}
+                            icon={fontAwesomeIcon}>
+                            {/* <Popup>
                                     <div>
                                         <label className="fw-bold">Name:</label>
                                         <span className="txt">{item?.properties?.name}</span>
@@ -63,11 +61,10 @@ const FeaturesLayer = (props) => {
                                         </Link>
                                     </div>
                                 </Popup> */}
-                            </Marker>
-                        );
-                    })}
-                </MarkerClusterGroup>
-            </LayerGroup>
+                        </Marker>
+                    );
+                })}
+            </MarkerClusterGroup>
         </LayersControl.Overlay>
     );
 };

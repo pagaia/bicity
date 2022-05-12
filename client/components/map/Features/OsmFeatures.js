@@ -22,8 +22,9 @@ const OsmFeaturesLayer = (props) => {
     if (!filteredData || !filteredData.length) {
         return null;
     }
+
     return (
-        <LayersControl.Overlay name="OSM DB" checked>
+        <LayersControl.Overlay name="OSM DB" checked={filteredData.length} >
             <LayerGroup>
                 <MarkerClusterGroup>
                     {filteredData.map((item) => {

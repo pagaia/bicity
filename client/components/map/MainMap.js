@@ -2,7 +2,7 @@ import 'leaflet-defaulticon-compatibility';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet/dist/leaflet.css';
 import { useMemo, useState } from 'react';
-import { LayersControl, MapContainer, ScaleControl, TileLayer } from 'react-leaflet';
+import { LayersControl, MapContainer, Marker, ScaleControl, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowModal, showModal } from '../../store/categorySlice';
 import { MULTI_FEATURE_CATEGORY, ROME_POSITION } from '../../utils/constants';
@@ -16,6 +16,8 @@ import FeaturesManager from './Features/FeaturesManager';
 import MultiLineFeaturesLayer from './Features/MultiLineFeaturesLayer';
 import OsmFeaturesLayer from './Features/OsmFeatures';
 import ModalFeature from '../features/ModalFeature';
+import MyPositionIcon from './icons/MyPositionIcon';
+import MyPosition from './icons/MyPositionIcon';
 
 const MainMap = (props) => {
     const onClick = (e) => {
@@ -35,21 +37,24 @@ const MainMap = (props) => {
             <MapContainer
                 center={[ROME_POSITION.lat, ROME_POSITION.lng]}
                 zoom={14}
+                maxZoom={18}
                 scrollWheelZoom
-                style={{ height: '93vh', width: '100%' }}
-                whenCreated={setMap}>
+                style={{ height: 'calc(100vh - 110px)', width: '100%' }}
+                whenCreated={setMap}
+                id="mapContainer">
                 <ScaleControl position="bottomleft" />
                 <FeaturesManager>
+                    <MyPosition />
                     <LayersControl position="topright" eventHandlers={{ click: onClick }}>
                         <FeaturesLayer />
-                        {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
+                        {/* {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
                             return (
                                 <MultiLineFeaturesLayer
                                     category={MULTI_FEATURE_CATEGORY[key]}
                                     key={key}
                                 />
                             );
-                        })}
+                        })} */}
                         <OsmFeaturesLayer />
                     </LayersControl>
                     <ZoomCenter />

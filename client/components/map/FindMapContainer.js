@@ -1,8 +1,9 @@
-import { MapContainer, TileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import { ROME_POSITION } from '../../utils/constants';
+import LocateButton from './components/LocateButton';
 import FindPosition from './FindPosition';
 
 const FindMapContainer = ({ position = ROME_POSITION, setPosition }) => {
@@ -17,6 +18,7 @@ const FindMapContainer = ({ position = ROME_POSITION, setPosition }) => {
                 url={`https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`}
             />
             <FindPosition position={position} setPosition={setPosition} />
+            <LocateButton />
         </MapContainer>
     );
 };

@@ -19,14 +19,17 @@ const FeatureDetails = (props) => {
     const { position } = usePosition();
 
     console.log({ position, user });
-    useEffect(async () => {
-        console.log({ featureId });
-        if (featureId) {
-            const response = await axios(`/api/feature/${featureId}`);
-            const { data } = response;
-            setFeature(data);
-            setFetching(false);
-        }
+    useEffect(() => {
+        const fetchFeatureDetails = async () => {
+            console.log({ featureId });
+            if (featureId) {
+                const response = await axios(`/api/feature/${featureId}`);
+                const { data } = response;
+                setFeature(data);
+                setFetching(false);
+            }
+        };
+        fetchFeatureDetails();
     }, [featureId]);
 
     if (!featureId) {
@@ -42,7 +45,7 @@ const FeatureDetails = (props) => {
     }
     const lat = feature.geometry.coordinates[1];
     const long = feature.geometry.coordinates[0];
-   
+
     return (
         <div className="container">
             <div className="card">

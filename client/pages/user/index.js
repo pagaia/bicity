@@ -1,3 +1,4 @@
+import Footer from '../../components/layout/Footer';
 import Login from '../../components/user/Login';
 import UserProfile from '../../components/user/UserProfile';
 
@@ -8,9 +9,18 @@ const UserInfo = () => {
     console.log({ user, signOut });
 
     if (user) {
-        return <UserProfile user={user} signOut={signOut} />;
+        return (
+            <>
+                <UserProfile user={user} signOut={signOut} />
+                <Footer />
+            </>
+        );
     }
-    return <Login />;
+    return (
+        <>
+            <Login />
+        </>
+    );
 };
 
 export default UserInfo;
