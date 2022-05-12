@@ -24,7 +24,8 @@ const ButtonToolbar = ({
 
         _button.href = '#';
 
-        _button.addEventListener('click', () => {
+        _button.addEventListener('click', (e) => {
+            e?.preventDefault();
             action();
         });
 

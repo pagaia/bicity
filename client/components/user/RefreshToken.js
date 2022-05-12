@@ -15,7 +15,7 @@ const RefreshToken = () => {
     }, [user]);
 
     // check if the user is logged in and retrieve the information
-    useEffect(async () => {
+    useEffect( () => {
         dispatch(refreshToken());
     }, []);
 

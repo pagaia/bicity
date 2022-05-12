@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import InputField from '../../components/form/InputField';
 import Link from 'next/link';
 import { ROUTES } from '../../utils/routes';
+import Footer from '../../components/layout/Footer';
 
 const validateNewUser = (values) => {
     const errors = {};
@@ -61,119 +62,122 @@ const SignUp = () => {
     }
 
     return (
-        <section className="mt-0 align-items-center d-flex login-section">
-            <div className="container-fluid">
-                <div className="row  justify-content-center align-items-center d-flex-row text-center h-100">
-                    <div className="col-12 col-md-6 h-50 ">
-                        <div className="card shadow">
-                            <div className="card-body mx-auto">
-                                <h4 className="card-title mt-3 text-center">Create Account</h4>
+        <>
+            <section className="mt-0 align-items-center d-flex login-section">
+                <div className="container-fluid">
+                    <div className="row  justify-content-center align-items-center d-flex-row text-center h-100">
+                        <div className="col-12 col-md-6 h-50 ">
+                            <div className="card shadow">
+                                <div className="card-body mx-auto">
+                                    <h4 className="card-title mt-3 text-center">Create Account</h4>
 
-                                <Formik
-                                    initialValues={{ name: 'Hay Biker' }}
-                                    validate={validateNewUser}
-                                    onSubmit={async (values, { setSubmitting }) => {
-                                        setSubmitting(true);
-                                        setWasValidated?.(true);
-                                        await submit(values);
-                                        setSubmitting(false);
-                                    }}>
-                                    {({ isSubmitting, errors, touched, values }) => (
-                                        <Form
-                                            className={`mb-4 ${
-                                                wasValidated ? 'was-validated' : ''
-                                            }`}>
-                                            <div className="form-group input-group">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text">
-                                                        <i className="fa fa-user"></i>
-                                                    </span>
+                                    <Formik
+                                        initialValues={{ name: 'Hay Biker' }}
+                                        validate={validateNewUser}
+                                        onSubmit={async (values, { setSubmitting }) => {
+                                            setSubmitting(true);
+                                            setWasValidated?.(true);
+                                            await submit(values);
+                                            setSubmitting(false);
+                                        }}>
+                                        {({ isSubmitting, errors, touched, values }) => (
+                                            <Form
+                                                className={`mb-4 ${
+                                                    wasValidated ? 'was-validated' : ''
+                                                }`}>
+                                                <div className="form-group input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-user"></i>
+                                                        </span>
+                                                    </div>
+                                                    <InputField
+                                                        name="name"
+                                                        errors={errors}
+                                                        touched={touched}
+                                                        placeholder="Name"
+                                                    />
                                                 </div>
-                                                <InputField
-                                                    name="name"
-                                                    errors={errors}
-                                                    touched={touched}
-                                                    placeholder="Name"
-                                                />
-                                            </div>
-                                            <div className="form-group input-group">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text">
-                                                        <i className="fa fa-user"></i>
-                                                    </span>
+                                                <div className="form-group input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-user"></i>
+                                                        </span>
+                                                    </div>
+                                                    <InputField
+                                                        name="lastName"
+                                                        errors={errors}
+                                                        touched={touched}
+                                                        placeholder="Lastname"
+                                                    />
                                                 </div>
-                                                <InputField
-                                                    name="lastName"
-                                                    errors={errors}
-                                                    touched={touched}
-                                                    placeholder="Lastname"
-                                                />
-                                            </div>
 
-                                            <div className="form-group input-group">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text">
-                                                        <i className="fa fa-envelope"></i>
-                                                    </span>
+                                                <div className="form-group input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-envelope"></i>
+                                                        </span>
+                                                    </div>
+                                                    <InputField
+                                                        name="email"
+                                                        errors={errors}
+                                                        touched={touched}
+                                                        placeholder="Email address"
+                                                    />
                                                 </div>
-                                                <InputField
-                                                    name="email"
-                                                    errors={errors}
-                                                    touched={touched}
-                                                    placeholder="Email address"
-                                                />
-                                            </div>
-                                            <div className="form-group input-group">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text">
-                                                        <i className="fa fa-lock"></i>
-                                                    </span>
+                                                <div className="form-group input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-lock"></i>
+                                                        </span>
+                                                    </div>
+                                                    <InputField
+                                                        placeholder="Your password"
+                                                        name="password"
+                                                        type="password"
+                                                        errors={errors}
+                                                        touched={touched}
+                                                    />
                                                 </div>
-                                                <InputField
-                                                    placeholder="Your password"
-                                                    name="password"
-                                                    type="password"
-                                                    errors={errors}
-                                                    touched={touched}
-                                                />
-                                            </div>
-                                            <div className="form-group input-group">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text">
-                                                        <i className="fa fa-lock"></i>
-                                                    </span>
+                                                <div className="form-group input-group">
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="fa fa-lock"></i>
+                                                        </span>
+                                                    </div>
+                                                    <InputField
+                                                        placeholder="Repeat password"
+                                                        name="password2"
+                                                        type="password"
+                                                        errors={errors}
+                                                        touched={touched}
+                                                    />
                                                 </div>
-                                                <InputField
-                                                    placeholder="Repeat password"
-                                                    name="password2"
-                                                    type="password"
-                                                    errors={errors}
-                                                    touched={touched}
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary btn-block"
-                                                    disabled={isSubmitting}>
-                                                    Create Account
-                                                </button>
-                                            </div>
-                                            <p className="text-center">
-                                                Have an account?
-                                                <Link href={ROUTES.USER}>
-                                                    <a>Log In</a>
-                                                </Link>
-                                            </p>
-                                        </Form>
-                                    )}
-                                </Formik>
+                                                <div className="form-group">
+                                                    <button
+                                                        type="submit"
+                                                        className="btn btn-primary btn-block"
+                                                        disabled={isSubmitting}>
+                                                        Create Account
+                                                    </button>
+                                                </div>
+                                                <p className="text-center">
+                                                    Have an account?
+                                                    <Link href={ROUTES.USER}>
+                                                        <a>Log In</a>
+                                                    </Link>
+                                                </p>
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <Footer />
+        </>
     );
 };
 

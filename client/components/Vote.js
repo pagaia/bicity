@@ -10,7 +10,7 @@ const Vote = ({ featureId, userId }) => {
 
     console.log({ avgVote });
     // fetch the average vote
-    useEffect(async () => {
+    useEffect(() => {
         // updateAvgVote(featureId);
         dispatch(fetchVote({ featureId }));
     }, [featureId]);
@@ -18,13 +18,17 @@ const Vote = ({ featureId, userId }) => {
     const [userVote, setUserVote] = useState(null);
 
     // fetch vote per user
-    useEffect(async () => {
-        console.log({ featureId, userId });
-        if (featureId && userId) {
-            const response = await axios(`/api/vote/${featureId}/${userId}`);
-            const { data } = response;
-            setUserVote(data);
-        }
+    useEffect(() => {
+        const fetchVote = async () => {
+            console.log({ featureId, userId });
+            if (featureId && userId) {
+                const response = await axios(`/api/vote/${featureId}/${userId}`);
+                const { data } = response;
+                setUserVote(data);
+            }
+        };
+
+        fetchVote();
     }, [featureId, userId]);
 
     const handleAddVote = async (vote) => {

@@ -18,23 +18,27 @@ const RandomPicture = () => {
     const [error, setError] = useState(null);
     const [fetching, setFetching] = useState(true);
 
-    useEffect(async () => {
-        const response = await fetch(
-            `https://api.pexels.com/v1/search?per_page=1&query=${randomSearchString()}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: process.env.NEXT_PUBLIC_PEXEL_TOKEN,
-                },
+    useEffect( () => {
+        const fetchImage = async () => {
+            const response = await fetch(
+                `https://api.pexels.com/v1/search?per_page=1&query=${randomSearchString()}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: process.env.NEXT_PUBLIC_PEXEL_TOKEN,
+                    },
+                }
+            );
+            const data = await response.json();
+            if (response.ok) {
+                setImage(data?.photos?.[0]);
+            } else {
+                setError(data);
             }
-        );
-        const data = await response.json();
-        if (response.ok) {
-            setImage(data?.photos?.[0]);
-        } else {
-            setError(data);
-        }
-        setFetching(false);
+            setFetching(false);
+        };
+
+        fetchImage();
     }, []);
 
     if (!image) {

@@ -5,6 +5,7 @@ import InputField from '../form/InputField';
 import Link from 'next/link';
 import axios from 'axios';
 import { ROUTES } from '../../utils/routes';
+import Footer from '../layout/Footer';
 
 const validateNewUser = (values) => {
     const errors = {};

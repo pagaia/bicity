@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { Provider } from 'react-redux';
 import Category from '../components/categories/Category';
 import ErrorMessage from '../components/ErrorMessage';
@@ -10,17 +11,26 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
     return (
-        <Provider store={store}>
-            <ProvideAuth>
-                <BetaVersion/>
-                <RefreshToken />
-                <Category />
-                <Layout>
-                    <ErrorMessage />
-                    <Component {...pageProps} />
-                </Layout>
-            </ProvideAuth>
-        </Provider>
+        <>
+            <Head>
+                <meta
+                    name="viewport"
+                    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+                />
+            </Head>
+
+            <Provider store={store}>
+                <ProvideAuth>
+                    <BetaVersion />
+                    <RefreshToken />
+                    <Category />
+                    <Layout>
+                        <ErrorMessage />
+                        <Component {...pageProps} />
+                    </Layout>
+                </ProvideAuth>
+            </Provider>
+        </>
     );
 }
 

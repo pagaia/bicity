@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import InputField from '../../components/form/InputField';
 import InputSelect from '../../components/form/InputSelect';
 import TextAreaField from '../../components/form/TextAreaField';
+import Footer from '../../components/layout/Footer';
 import FindPositionNoSSR from '../../components/map/FindPositionNoSSR';
 import { selectCategories } from '../../store/categorySlice';
 import { showError } from '../../store/errorSlice';
@@ -174,6 +175,7 @@ const NewFeature = () => {
                 )}
             </Formik>
             <FindPositionNoSSR position={position} setPosition={setPosition} />
+            <Footer />
         </div>
     );
 };
