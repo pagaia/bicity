@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { chooseCategory, selectCategories } from '../../store/categorySlice';
 import { fetchFeaturesByBbox, fetchMultiFeatures } from '../../store/featureSlice';
+import { fetchOSMAmenities } from '../../store/osmSlice';
 import SwitchField from '../form/SwitchField';
 import Modal from '../Modal';
 
@@ -23,7 +24,6 @@ const CategorySelection = ({ show, setOpen }) => {
         setOpen(false);
         // dispatch(fetchMultiFeatures({ bbox }));
         // dispatch(fetchFeaturesByBbox({ bbox, categories: cat }));
-
     };
     return (
         <Modal show={show}>
@@ -42,11 +42,10 @@ const CategorySelection = ({ show, setOpen }) => {
                         <div className="modal-header">
                             <h5 className="modal-title">Choose your categories</h5>
                             <button
-                                type="button"
+                                type="submit"
                                 className="btn-close"
                                 data-bs-dismiss="modal"
-                                aria-label="Close"
-                                onClick={() => setOpen(false)}></button>
+                                aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             {categories?.map((category, idx) => {
@@ -63,17 +62,10 @@ const CategorySelection = ({ show, setOpen }) => {
                         </div>
                         <div className="modal-footer">
                             <button
-                                type="button"
-                                className="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                                onClick={() => setOpen(false)}>
-                                Close
-                            </button>
-                            <button
                                 type="submit"
                                 disabled={isSubmitting}
                                 className="btn btn-primary">
-                                Save changes
+                                Close
                             </button>
                         </div>
                     </Form>
