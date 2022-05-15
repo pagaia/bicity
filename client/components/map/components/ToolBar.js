@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectChoosenCategories, showModal } from '../../../store/categorySlice';
 import {
     fetchFeaturesByBbox,
-    fetchMultiFeatures
+    fetchMultiFeatures,
+    selectDatabases,
 } from '../../../store/featureSlice';
 import { fetchOSMAmenities } from '../../../store/osmSlice';
-import { MIN_ZOOM } from '../../../utils/constants';
+import { DATABASES, MIN_ZOOM } from '../../../utils/constants';
 import ButtonToolbar from './ButtonToolbar';
 
 const Toolbar = () => {
@@ -18,6 +19,7 @@ const Toolbar = () => {
     };
 
     const categories = useSelector(selectChoosenCategories).map((cat) => cat.name);
+    const databases = useSelector(selectDatabases);
 
     console.log({ selectChoosenCategories: categories.join('|') });
 
@@ -31,16 +33,18 @@ const Toolbar = () => {
     };
 
     const update = (categories) => {
-        const position = map.getCenter();
         const bbox = map.getBounds();
         const zoom = map.getZoom();
         if (zoom < MIN_ZOOM) {
             alert('Please increase the zoom to reduce the number of results');
         } else {
-            dispatch(fetchMultiFeatures({ bbox }));
-            console.log({ update: categories });
-            dispatch(fetchFeaturesByBbox({ bbox, categories, throttle: 10000 }));
-            fetchAmenity();
+            if (databases.find((db) => db.name === DATABASES.BICITY)?.selected) {
+                dispatch(fetchMultiFeatures({ bbox }));
+                dispatch(fetchFeaturesByBbox({ bbox, categories, throttle: 10000 }));
+            }
+            if (databases.find((db) => db.name === DATABASES.OSM)?.selected) {
+                fetchAmenity();
+            }
         }
     };
 

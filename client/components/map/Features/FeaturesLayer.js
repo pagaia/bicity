@@ -2,9 +2,11 @@ import L from 'leaflet';
 import { useContext } from 'react';
 import { LayersControl, Marker } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
-import { featureSelected } from '../../../store/featureSlice';
+import { featureSelected, selectDatabases } from '../../../store/featureSlice';
+import { DATABASES } from '../../../utils/constants';
+import buildIcon from '../../categories/CategoryIcon';
 
 const fontAwesomeIcon = L.divIcon({
     html: '<i class="fas fa-map-pin fa-2x"></i>',
@@ -14,6 +16,8 @@ const fontAwesomeIcon = L.divIcon({
 
 const FeaturesLayer = (props) => {
     const { data, position } = useContext(FeatureContext);
+    const showLayer =
+        useSelector(selectDatabases)?.find((db) => db.name === DATABASES.BICITY)?.selected === true;
 
     const filteredData = data?.features;
 
@@ -22,25 +26,28 @@ const FeaturesLayer = (props) => {
     const onClick = (e, id) => {
         dispatch(featureSelected({ local: id }));
     };
-    if (!filteredData || !filteredData.length) {
+
+    if (!filteredData || !filteredData.length || !showLayer) {
         return null;
     }
 
     return (
-        <LayersControl.Overlay name="BiCity DB" checked={filteredData.length}>
-            <MarkerClusterGroup>
-                {filteredData.map((item) => {
-                    const lat = item.geometry.coordinates[1];
-                    const long = item.geometry.coordinates[0];
-                    const { properties } = item;
+        <MarkerClusterGroup>
+            {filteredData.map((item) => {
+                const lat = item.geometry.coordinates[1];
+                const long = item.geometry.coordinates[0];
+                const { properties } = item;
 
-                    return (
-                        <Marker
-                            position={[lat, long]}
-                            key={item._id}
-                            eventHandlers={{ click: (e) => onClick(e, item._id) }}
-                            icon={fontAwesomeIcon}>
-                            {/* <Popup>
+                return (
+                    <Marker
+                        position={[lat, long]}
+                        key={item._id}
+                        eventHandlers={{ click: (e) => onClick(e, item._id) }}
+                        icon={buildIcon({
+                            category: properties?.category,
+                            className: 'local-icon',
+                        })}>
+                        {/* <Popup>
                                     <div>
                                         <label className="fw-bold">Name:</label>
                                         <span className="txt">{item?.properties?.name}</span>
@@ -61,11 +68,10 @@ const FeaturesLayer = (props) => {
                                         </Link>
                                     </div>
                                 </Popup> */}
-                        </Marker>
-                    );
-                })}
-            </MarkerClusterGroup>
-        </LayersControl.Overlay>
+                    </Marker>
+                );
+            })}
+        </MarkerClusterGroup>
     );
 };
 

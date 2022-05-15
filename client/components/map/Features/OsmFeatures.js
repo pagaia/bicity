@@ -1,44 +1,43 @@
-import { LayerGroup, LayersControl, Marker } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import { selectAmenities } from '../../../store/osmSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { featureSelected } from '../../../store/featureSlice';
-
-const fontAwesomeIcon = L.divIcon({
-    html: '<i class="fas fa-map-pin fa-2x"></i>',
-    iconSize: [20, 20],
-    className: 'osm-icon',
-});
+import { featureSelected, selectDatabases } from '../../../store/featureSlice';
+import { selectAmenities } from '../../../store/osmSlice';
+import { DATABASES } from '../../../utils/constants';
+import buildIcon from '../../categories/CategoryIcon';
 
 const OsmFeaturesLayer = (props) => {
     const data = useSelector(selectAmenities);
     const dispatch = useDispatch();
+    const showLayer =
+        useSelector(selectDatabases)?.find((db) => db.name === DATABASES.OSM)?.selected === true;
 
     const filteredData = data ?? [];
 
     const onClick = (e, id) => {
         dispatch(featureSelected({ osm: id }));
     };
-    if (!filteredData || !filteredData.length) {
+    if (!filteredData || !filteredData.length || !showLayer) {
         return null;
     }
 
     return (
-        <LayersControl.Overlay name="OSM DB" checked={filteredData.length} >
-            <LayerGroup>
-                <MarkerClusterGroup>
-                    {filteredData.map((item) => {
-                        const lat = item.lat;
-                        const long = item.lon;
-                        const { tags } = item;
+        <MarkerClusterGroup>
+            {filteredData.map((item) => {
+                const lat = item.lat;
+                const long = item.lon;
+                const { tags } = item;
 
-                        return (
-                            <Marker
-                                position={[lat, long]}
-                                key={item.id}
-                                eventHandlers={{ click: (e) => onClick(e, item.id) }}
-                                icon={fontAwesomeIcon}>
-                                {/* <Popup>
+                return (
+                    <Marker
+                        position={[lat, long]}
+                        key={item.id}
+                        eventHandlers={{ click: (e) => onClick(e, item.id) }}
+                        icon={buildIcon({
+                            category: item?.tags?.amenity,
+                            className: 'osm-icon',
+                        })}>
+                        {/* <Popup>
                                     <dl className="row">
                                         <dt className="col-sm-3">Name:</dt>
                                         <dd className="col-sm-9">{tags.amenity}</dd>
@@ -60,12 +59,10 @@ const OsmFeaturesLayer = (props) => {
                                         })}
                                     </dl>
                                 </Popup> */}
-                            </Marker>
-                        );
-                    })}
-                </MarkerClusterGroup>
-            </LayerGroup>
-        </LayersControl.Overlay>
+                    </Marker>
+                );
+            })}
+        </MarkerClusterGroup>
     );
 };
 

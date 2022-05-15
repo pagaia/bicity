@@ -7,6 +7,8 @@ import Spinner from '../ui/Spinner';
 import Vote from '../Vote';
 import { usePosition } from '../../hooks/usePosition';
 import Favorite from './Favorite';
+import Direction from './Direction';
+import Phone from './FeatureProps/Phone';
 
 const FeatureDetails = (props) => {
     const { featureId } = props;
@@ -62,14 +64,11 @@ const FeatureDetails = (props) => {
 
                                 if (key === 'phone') {
                                     return (
-                                        <Fragment key={key}>
-                                            <dt className="col-sm-3">{key}</dt>
-                                            <dd className="col-sm-9">
-                                                <a href={`tel:${feature?.properties[key]}`}>
-                                                    {feature?.properties[key]}
-                                                </a>
-                                            </dd>
-                                        </Fragment>
+                                        <Phone
+                                            key={key}
+                                            name={key}
+                                            value={feature?.properties[key]}
+                                        />
                                     );
                                 }
                                 return (
@@ -80,12 +79,7 @@ const FeatureDetails = (props) => {
                                 );
                             })}
 
-                            <div className="col-sm-12">
-                                <ExternalLink
-                                    url={`https://www.google.com/maps/dir/?api=1&origin=${position.latitude},${position.longitude}&destination=${lat},${long}&travelmode=bicycling`}>
-                                    Get directions
-                                </ExternalLink>
-                            </div>
+                            <Direction lat={lat} long={long} />
                             <Vote featureId={featureId} userId={userId} />
                         </dl>
                     </div>

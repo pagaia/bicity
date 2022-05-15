@@ -45,9 +45,8 @@ const MainMap = (props) => {
                 <ScaleControl position="bottomleft" />
                 <FeaturesManager>
                     <MyPosition />
-                    <LayersControl position="topright" eventHandlers={{ click: onClick }}>
-                        <FeaturesLayer />
-                        {/* {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
+                    <FeaturesLayer />
+                    {/* {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
                             return (
                                 <MultiLineFeaturesLayer
                                     category={MULTI_FEATURE_CATEGORY[key]}
@@ -55,8 +54,7 @@ const MainMap = (props) => {
                                 />
                             );
                         })} */}
-                        <OsmFeaturesLayer />
-                    </LayersControl>
+                    <OsmFeaturesLayer />
                     <ZoomCenter />
                     <Toolbar />
                     <TileLayer

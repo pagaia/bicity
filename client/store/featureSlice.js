@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { DATABASES } from '../utils/constants';
 
 // First, create the thunk
 export const fetchVote = createAsyncThunk(
@@ -92,10 +93,42 @@ export const addFeature = createAsyncThunk('addFeatureAction', async ({ feature 
 
 export const featureSlice = createSlice({
     name: 'feature',
-    initialState: { features: [], favorites: [], multiFeatures: [], votes: [], loading: 'idle' }, // loading: idle and pending
+    initialState: {
+        features: [],
+        favorites: [],
+        multiFeatures: [],
+        votes: [],
+        loading: 'idle',
+        databases: [],
+    },
     reducers: {
         featureSelected: (state, action) => {
             state.featureSelected = action.payload;
+        },
+        chooseDatabase: (state, action) => {
+            // set the database selected
+            state.databases = state.databases.map((database) => ({
+                ...database,
+                selected: !!action.payload[database.name],
+            }));
+        },
+        loadDatabases: (state, action) => {
+            const defaultDatabases = Object.values(DATABASES).map((database) => ({
+                name: database,
+                selected: true,
+            })); // by default both DBs are selected
+
+            // read database from localStorage or load the default ones
+            if (localStorage.getItem('databases')) {
+                const savedDatabases = JSON.parse(localStorage.getItem('databases') ?? '[]');
+
+                state.databases = defaultDatabases.map((database) => ({
+                    ...database,
+                    selected: savedDatabases?.[database.name],
+                }));
+            } else {
+                state.databases = defaultDatabases;
+            }
         },
         // increment: state => {
         //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -182,7 +215,13 @@ export const featureSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { fetchVoteAction, fetchFeaturesAction, featureSelected } = featureSlice.actions;
+export const {
+    fetchVoteAction,
+    fetchFeaturesAction,
+    featureSelected,
+    chooseDatabase,
+    loadDatabases,
+} = featureSlice.actions;
 
 // export selectors
 export const selectFeatureVote = (featureId) => (state) => state.featureReducer.votes[featureId];
@@ -192,5 +231,6 @@ export const selectMultiFeatures = (state) => state.featureReducer.multiFeatures
 export const selectAddedFeature = (state) => state.featureReducer.addedFeature;
 export const selectFeatureError = (state) => state.featureReducer.error;
 export const selectFavoritesFeatures = (state) => state.featureReducer.favorites;
+export const selectDatabases = (state) => state.featureReducer.databases;
 
 export default featureSlice.reducer;

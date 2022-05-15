@@ -11,6 +11,7 @@ import {
     selectMultiFeatures,
 } from '../../../store/featureSlice';
 import { fetchOSMAmenities } from '../../../store/osmSlice';
+import { updateGeoLocation } from '../../../store/userSlice';
 import { MIN_ZOOM } from '../../../utils/constants';
 
 const FeaturesManager = ({ children }) => {
@@ -30,41 +31,45 @@ const FeaturesManager = ({ children }) => {
 
     useEffect(() => {
         map.locate({ setView: true, maxZoom: 16 });
-        // map.locate({  maxZoom: 16 });
 
         map.on('locationfound', handleOnLocationFound);
         map.on('locationerror', handleOnLocationError);
-        // map.on('movestart', handleMoveEventStart);
-        // map.on('moveend', handleMoveEventEnd);
 
         return () => {
             map.off('locationfound', handleOnLocationFound);
             map.off('locationerror', handleOnLocationError);
-            // map.off('movestart', handleMoveEventStart);
-            // map.off('moveend', handleMoveEventEnd);
         };
     }, [map]);
 
     function handleOnLocationFound(e) {
-        console.log('handleOnLocationFound ', e)
+        console.log('handleOnLocationFound ', e);
         const { latlng } = e;
         const bbox = map.getBounds();
         const zoom = map.getZoom();
 
-        // map.flyTo(latlng, 15);
         if (latlng) {
-            console.log({ latlng });
+            const { _northEast, _southWest } = bbox;
+            const { lat: nelat, lng: nelng } = _northEast;
+            const { lat: swlat, lng: swlng } = _southWest;
+            const bboxSerialized = { nelat, nelng, swlat, swlng };
+            const serializedPosition = { lat: latlng.lat, lng: latlng.lng };
+          
+            dispatch(
+                updateGeoLocation({
+                    position: serializedPosition,
+                    bbox: bboxSerialized,
+                    zoom,
+                })
+            );
+
             setPosition(latlng);
-            // const circle = L.marker(latlng, 20);
-            // circle.addTo(map);
-            // fetchFeatures(latlng);
-            console.log({ position });
+
             if (zoom < MIN_ZOOM) {
                 alert('Please increase the zoom to reduce the number of results');
             } else {
                 dispatch(fetchFeaturesByBbox({ bbox, categories }));
                 const amenities = categories?.join('|');
-                // dispatch(fetchFeatures({ position: latlng }));
+
                 dispatch(fetchMultiFeatures({ bbox }));
                 dispatch(
                     fetchOSMAmenities({
@@ -81,8 +86,6 @@ const FeaturesManager = ({ children }) => {
     function handleOnLocationError(e) {
         console.log({ handleOnLocationError: e });
     }
-
-  
 
     return (
         <FeatureContext.Provider value={{ data: { features, multiFeatures }, position }}>

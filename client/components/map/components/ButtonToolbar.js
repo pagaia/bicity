@@ -7,7 +7,7 @@ const ButtonToolbar = ({
     title,
     map,
     position = 'topleft',
-    defaultContainerClassName = 'leaflet-bar leaflet-control-fa-button',
+    defaultContainerClassName = 'leaflet-bar leaflet-control-fa-button custom-toolbar',
     containerClassName = '',
     defaultIconClassName = 'fas',
     buttons,

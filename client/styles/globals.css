@@ -168,12 +168,12 @@ ul.vote-lnk li {
     margin-right: 1em;
 }
 
-.element h1 {
-    font-size: medium;
-}
 
 .element .feature-icon {
     margin-right: 1em;
+}
+.feature-prop {
+    word-break: break-all;
 }
 
 .checked {
@@ -347,6 +347,7 @@ table tbody tr:nth-child(odd) {
 a.favorite {
     color: red;
     transition: all 0.3s ease;
+    float: right;
 }
 
 a:hover.favorite i {
@@ -374,4 +375,37 @@ a:hover.favorite i {
     100% {
         box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
     }
+}
+
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a,
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a:first-child,
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a:last-child {
+    margin: 1em;
+    border-radius: 50px;
+    padding: 1em;
+    width: 45px;
+    height: 45px;
+    padding-top: 7px;
+    border: 2px solid gray;
+}
+
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i {
+    font-size: 16px;
+}
+
+.leaflet-bar.leaflet-control-fa-button.custom-toolbar.leaflet-control {
+    border: 0;
+    margin: 50px 0 0 0;
+}
+@media (orientation: landscape) {
+    .leaflet-bar.leaflet-control-fa-button.custom-toolbar.leaflet-control {
+        border: 0;
+        margin: 10px 0 0 0;
+    }
+}
+
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a:hover,
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a:focus,
+.leaflet-control-zoom.leaflet-bar.leaflet-control > a:hover {
+    background: orange;
 }

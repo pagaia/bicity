@@ -1,32 +1,78 @@
 import { Form, Formik } from 'formik';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { chooseCategory, selectCategories } from '../../store/categorySlice';
-import { fetchFeaturesByBbox, fetchMultiFeatures } from '../../store/featureSlice';
-import { fetchOSMAmenities } from '../../store/osmSlice';
+import {
+    chooseDatabase, selectDatabases
+} from '../../store/featureSlice';
+import { MAP_TAB_SETTINGS } from '../../utils/constants';
 import SwitchField from '../form/SwitchField';
 import Modal from '../Modal';
 
 const CategorySelection = ({ show, setOpen }) => {
     const categories = useSelector(selectCategories);
+    const databases = useSelector(selectDatabases);
     const dispatch = useDispatch();
 
-    const initialValues = {};
+    const initialValues = {
+        categories: {},
+        databases: {},
+    };
     categories?.forEach((category) => {
-        initialValues[category._id] = !!category.selected;
+        initialValues.categories[category._id] = !!category.selected;
     });
-    
+
+    databases?.forEach((database) => {
+        initialValues.databases[database.name] = !!database.selected;
+    });
+
+    const [showTab, toggleTab] = useState(MAP_TAB_SETTINGS.CATEGORIES);
+
     const handleSave = (values) => {
-        // update localstorage with selected categories
-        localStorage.setItem('categories', JSON.stringify(values));
+        // update localstorage with selected categories and databases
+        const { categories, databases } = values;
+        localStorage.setItem('categories', JSON.stringify(categories));
+        localStorage.setItem('databases', JSON.stringify(databases));
 
         // update redux store
-        dispatch(chooseCategory(values));
+        dispatch(chooseCategory(categories));
+        dispatch(chooseDatabase(databases));
+
         setOpen(false);
         // dispatch(fetchMultiFeatures({ bbox }));
         // dispatch(fetchFeaturesByBbox({ bbox, categories: cat }));
     };
+
     return (
         <Modal show={show}>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button
+                        class={`nav-link ${
+                            showTab === MAP_TAB_SETTINGS.CATEGORIES ? 'active' : ''
+                        }`}
+                        id="categories-tab"
+                        type="button"
+                        role="tab"
+                        aria-controls="categories"
+                        aria-selected={showTab === MAP_TAB_SETTINGS.CATEGORIES}
+                        onClick={() => toggleTab(MAP_TAB_SETTINGS.CATEGORIES)}>
+                        Categories
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button
+                        class={`nav-link ${showTab === MAP_TAB_SETTINGS.DATABASES ? 'active' : ''}`}
+                        id="databases-tab"
+                        type="button"
+                        role="tab"
+                        aria-controls="databases"
+                        aria-selected={showTab === MAP_TAB_SETTINGS.DATABASES}
+                        onClick={() => toggleTab(MAP_TAB_SETTINGS.DATABASES)}>
+                        Databases
+                    </button>
+                </li>
+            </ul>
             <Formik
                 initialValues={initialValues}
                 validate={(values) => {
@@ -40,7 +86,6 @@ const CategorySelection = ({ show, setOpen }) => {
                 {({ isSubmitting, errors, touched, values }) => (
                     <Form className={`mb-4`}>
                         <div className="modal-header">
-                            <h5 className="modal-title">Choose your categories</h5>
                             <button
                                 type="submit"
                                 className="btn-close"
@@ -48,17 +93,39 @@ const CategorySelection = ({ show, setOpen }) => {
                                 aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            {categories?.map((category, idx) => {
-                                return (
+                            {showTab === MAP_TAB_SETTINGS.CATEGORIES && (
+                                <>
+                                    <h5 className="modal-title">Choose your categories</h5>
+                                    {categories?.map((category, idx) => {
+                                        return (
+                                            <SwitchField
+                                                description={category?.name}
+                                                key={category?._id}
+                                                id={category?._id}
+                                                name={`categories.${category?._id}`}
+                                                // category={category}
+                                            />
+                                        );
+                                    })}
+                                </>
+                            )}
+
+                            {showTab === MAP_TAB_SETTINGS.DATABASES && (
+                                <>
+                                    <h5 className="modal-title">Choose the database</h5>
+
                                     <SwitchField
-                                        description={category?.name}
-                                        key={category?._id}
-                                        id={category?._id}
-                                        name={category?._id}
-                                        category={category}
+                                        description="BiCity"
+                                        id="bicity"
+                                        name="databases.bicity"
                                     />
-                                );
-                            })}
+                                    <SwitchField
+                                        description="Open Street Map"
+                                        id="osm"
+                                        name="databases.osm"
+                                    />
+                                </>
+                            )}
                         </div>
                         <div className="modal-footer">
                             <button

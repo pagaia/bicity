@@ -22,6 +22,22 @@ export const AMENITIES = {
 };
 
 /**
- * minimum zoom to use to run a search 
+ * minimum zoom to use to run a search
  */
 export const MIN_ZOOM = 11;
+
+/**
+ * tab name for map settings
+ */
+export const MAP_TAB_SETTINGS = {
+    CATEGORIES: 'CATEGORIES',
+    DATABASES: 'DATABASES',
+};
+
+/**
+ * DB used for selection in map settings
+ */
+export const DATABASES = {
+    BICITY: 'bicity',
+    OSM: 'osm',
+};

@@ -21,7 +21,13 @@ export const revokeToken = createAsyncThunk('users/revokeToken', async ({}, thun
 export const userSlice = createSlice({
     name: 'users',
     initialState: {}, // loading: idle and pending
-    reducers: {},
+    reducers: {
+        updateGeoLocation: (state, action) => {
+            state.position = action.payload?.position;
+            state.bbox = action.payload?.bbox;
+            state.zoom = action.payload?.zoom;
+        },
+    },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
         builder.addCase(refreshToken.fulfilled, (state, action) => {
@@ -40,9 +46,10 @@ export const userSlice = createSlice({
 });
 
 // action creator
-// export const { showError, removeError } = userSlice.actions;
+export const { updateGeoLocation } = userSlice.actions;
 
 // export selectors
 export const selectUser = (state) => state.usersReducer.user;
+export const selectPosition = (state) => state.usersReducer.position;
 
 export default userSlice.reducer;

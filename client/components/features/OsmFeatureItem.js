@@ -1,5 +1,11 @@
 import { Fragment } from 'react';
 import RandomPicture from '../ui/RandomPicture';
+import Direction from './Direction';
+import Phone from './FeatureProps/Phone';
+import Website from './FeatureProps/Website';
+
+const PHONE_REG = /phone/;
+const WEBSITE_REG = /website/;
 
 const OsmFeatureItem = ({ item, onClick }) => {
     if (!item) {
@@ -9,11 +15,7 @@ const OsmFeatureItem = ({ item, onClick }) => {
     const { lat, lon } = item;
 
     return (
-        <div
-            className="element shadow-sm p-3 mb-3 bg-body rounded"
-            id={item.id}
-            // onClick={() => onClick({ coordinates: [lon, lat] })}
-            key={item.id}>
+        <div className="element shadow-sm p-3 mb-3 bg-body rounded" id={item.id} key={item.id}>
             <RandomPicture />
 
             <dl className="row">
@@ -25,6 +27,14 @@ const OsmFeatureItem = ({ item, onClick }) => {
                         return null;
                     }
                     const value = tags?.[tag];
+
+                    if (PHONE_REG.test(tag)) {
+                        return <Phone value={value} />;
+                    }
+                    if (WEBSITE_REG.test(tag)) {
+                        return <Website value={value} />;
+                    }
+
                     return (
                         <Fragment key={idx}>
                             <dt className="col-sm-3">{tag}</dt>
@@ -32,12 +42,8 @@ const OsmFeatureItem = ({ item, onClick }) => {
                         </Fragment>
                     );
                 })}
-                {/* <div className="col-sm-12">
-                    <ExternalLink
-                        url={`https://www.google.com/maps/dir/?api=1&origin=${position?.latitude},${position?.longitude}&destination=${lat},${lon}&travelmode=bicycling`}>
-                        Get directions
-                    </ExternalLink>
-                </div> */}
+
+                <Direction lat={lat} long={lon} />
             </dl>
         </div>
     );
