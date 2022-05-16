@@ -11,7 +11,7 @@ const Direction = ({ lat, long }) => {
     }
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${long}&travelmode=bicycling`;
     if (position) {
-        url += '&origin=${position?.lat},${position?.lng}';
+        url += `&origin=${position?.lat},${position?.lng}`;
     }
 
     return (
