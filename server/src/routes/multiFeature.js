@@ -38,7 +38,6 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/multifeature',
-        // preValidation: [fastify.authenticate],
         handler: multiFeatureController.getMultiFeatures(fastify),
         schema: {
             description: 'Get multi features in the provided bounding box',
@@ -64,13 +63,15 @@ const routes = (fastify) => [
                 400: {
                     description: 'Invalid tag value',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
                 401: {
                     description: 'Authorization error',
                     type: 'object',
                     properties: {
-                        error: { type: 'string' },
+                        message: { type: 'string' },
                     },
                 },
             },
@@ -85,7 +86,6 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/multifeature/:id',
-        // preValidation: [fastify.authenticate],
         handler: multiFeatureController.getMultiFeatureById(fastify),
         schema: {
             description: 'Get Multi Feature details',
@@ -106,13 +106,15 @@ const routes = (fastify) => [
                 400: {
                     description: 'Invalid tag value',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
                 401: {
                     description: 'Authorization error',
                     type: 'object',
                     properties: {
-                        error: { type: 'string' },
+                        message: { type: 'string' },
                     },
                 },
                 404: {
@@ -133,7 +135,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/multifeature',
-        preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: multiFeatureController.addMultiFeature(fastify),
         schema: {
             description: 'Create a new multi feature',
@@ -153,7 +155,9 @@ const routes = (fastify) => [
                 default: {
                     description: 'Unexpected error',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },

@@ -9,7 +9,7 @@ const CONST = require('../utility/constants');
 // Get all categories
 exports.getCategories = (fastify) => async (req, reply) => {
     try {
-        const categories = await Category.find();
+        const categories = await Category.find({});
         return categories;
     } catch (err) {
         throw boom.boomify(err);
@@ -17,7 +17,7 @@ exports.getCategories = (fastify) => async (req, reply) => {
 };
 
 // Get single Category by ID
-exports.getCategortById = (fastify) => async (req, reply) => {
+exports.getCategoryById = (fastify) => async (req, reply) => {
     try {
         const id = req.params.id;
         const category = await Category.findById(id);
@@ -45,7 +45,7 @@ exports.addCategory = (fastify) => async (req, reply) => {
             return reply
                 .code(409)
                 .type('application/json')
-                .send({ error: 'Duplicate Object. Please check you data' });
+                .send({ message: CONST.ERROR_MESSAGES.DUPLICATE });
         }
 
         boom.boomify(err);

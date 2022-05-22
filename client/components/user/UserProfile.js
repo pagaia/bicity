@@ -1,9 +1,13 @@
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import { getAllUsers } from '../../store/userSlice';
 import Favorites from '../features/Favorites';
 
 const UserProfile = ({ user, signOut }) => {
     const { profile } = user;
     console.log({ user });
+    const dispatch = useDispatch();
+
     return (
         <div className="text-center card-box">
             <div className="member-card pt-2 pb-2">
@@ -27,6 +31,9 @@ const UserProfile = ({ user, signOut }) => {
                         </span>
                     </p>
                 </div>
+                {/* <button onClick={() => dispatch(getAllUsers())} className="btn btn-primary">
+                    fetch users
+                </button> */}
                 {/* <ul className="social-links list-inline">
                     <li className="list-inline-item">
                         <a

@@ -15,7 +15,6 @@ const MultiLineFeaturesLayer = ({ category }) => {
         element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
     };
 
-    console.log({ category });
     if (!filteredData || !filteredData.length) {
         return null;
     }

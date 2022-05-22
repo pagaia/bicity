@@ -6,6 +6,7 @@
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js ./src/server.js",
     "test": "tap --reporter=list --watch",
+    "test-cov": "tap --coverage-report=lcov",
     "format": "prettier --write '**/*.js'"
   },
   "keywords": [
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "fastify-plugin": "^3.0.0",
+    "migrate-mongo": "^9.0.0",
     "mongo-clean": "^2.0.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.5.1",

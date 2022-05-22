@@ -15,7 +15,7 @@ exports.getFavoritesFeatures = (fastify) => async (req, reply) => {
         const favorites = await Favorite.findOne({ user: userId });
 
         if (!favorites) {
-            reply.code(404).type('application/json').send({ error: 'User Not Found' });
+            reply.code(404).type('application/json').send({ message: 'User Not Found' });
             return;
         }
         await favorites.populate({ path: 'features', model: 'feature' });
@@ -33,13 +33,13 @@ exports.addFavorite = (fastify) => async (req, reply) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            reply.code(404).type('application/json').send({ error: 'User Not Found' });
+            reply.code(404).type('application/json').send({ message: 'User Not Found' });
             return;
         }
 
         const feature = await Feature.findById(featureId);
         if (!feature) {
-            reply.code(404).type('application/json').send({ error: 'Feature Not Found' });
+            reply.code(404).type('application/json').send({ message: 'Feature Not Found' });
             return;
         }
 
@@ -81,7 +81,7 @@ exports.removeFavorite = (fastify) => async (req, reply) => {
         });
 
         if (!favorite) {
-            reply.code(404).type('application/json').send({ error: 'User Not Found for favorite' });
+            reply.code(404).type('application/json').send({ message: 'User Not Found for favorite' });
             return;
         }
 

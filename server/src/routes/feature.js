@@ -1,6 +1,6 @@
 // Import our Controllers
 const featureController = require('../controllers/featureController');
-const { ERROR_MESSAGES } = require('../utility/constants');
+
 
 const featureProperties = {
     _id: { type: 'string' },
@@ -43,7 +43,6 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/feature/nearme',
-        // preValidation: [fastify.authenticate],
         handler: featureController.getFeatureNearMe(fastify),
         schema: {
             description: 'Get list of feature near me around 500mt',
@@ -67,7 +66,9 @@ const routes = (fastify) => [
                 400: {
                     description: 'Invalid tag value',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -82,7 +83,8 @@ const routes = (fastify) => [
         url: '/api/feature/bbox',
         handler: featureController.getFeaturesByBox(fastify),
         schema: {
-            description: 'Get list of features in the bbox made by the up-left and bottom-right points',
+            description:
+                'Get list of features in the bbox made by the up-left and bottom-right points',
             tags: ['feature'],
             summary: 'Get list of features in the bbox made by the up-left and bottom-right points',
             querystring: {
@@ -104,39 +106,10 @@ const routes = (fastify) => [
                 400: {
                     description: 'Invalid tag value',
                     type: 'object',
-                    content: {},
-                },
-            },
-        },
-        security: [
-            {
-                apiKey: [],
-            },
-        ],
-    },
-    {
-        method: 'GET',
-        url: '/api/feature',
-        // preValidation: [fastify.authenticate],
-        handler: featureController.getAllFeatures(fastify),
-        schema: {
-            description: 'Get list of Features',
-            tags: ['feature'],
-            summary: 'Returns list of Features',
-            response: {
-                200: {
-                    description: 'Successful response',
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: featureProperties,
+                    properties: {
+                        message: { type: 'string' },
                     },
                 },
-                400: {
-                    description: 'Invalid tag value',
-                    type: 'object',
-                    content: {},
-                },
             },
         },
         security: [
@@ -145,10 +118,42 @@ const routes = (fastify) => [
             },
         ],
     },
+    // {
+    //     method: 'GET',
+    //     url: '/api/feature',
+    //     preHandler: [fastify.authenticate, authorize(roles.Admin)],
+    //     handler: featureController.getAllFeatures(fastify),
+    //     schema: {
+    //         description: 'Get list of Features',
+    //         tags: ['feature'],
+    //         summary: 'Returns list of Features',
+    //         response: {
+    //             200: {
+    //                 description: 'Successful response',
+    //                 type: 'array',
+    //                 items: {
+    //                     type: 'object',
+    //                     properties: featureProperties,
+    //                 },
+    //             },
+    //             400: {
+    //                 description: 'Invalid tag value',
+    //                 type: 'object',
+    //                 properties: {
+    //                     message: { type: 'string' },
+    //                 },
+    //             },
+    //         },
+    //     },
+    //     security: [
+    //         {
+    //             apiKey: [],
+    //         },
+    //     ],
+    // },
     {
         method: 'GET',
         url: '/api/feature/:id',
-        // preValidation: [fastify.authenticate],
         handler: featureController.getFeatureById(fastify),
         schema: {
             description: 'Get Feature details',
@@ -169,13 +174,15 @@ const routes = (fastify) => [
                 400: {
                     description: 'Invalid tag value',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
                 404: {
                     description: 'Feature not found',
                     type: 'object',
-                    content: {
-                        message: "The feature is not here. It's around riding a bike :)",
+                    properties: {
+                        message: { type: 'string' },
                     },
                 },
             },
@@ -189,7 +196,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/feature',
-        preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: featureController.addFeature(fastify),
         schema: {
             description: 'Create a new feature',
@@ -209,7 +216,7 @@ const routes = (fastify) => [
                     description: 'Authorization error',
                     type: 'object',
                     properties: {
-                        error: { type: 'string' },
+                        message: { type: 'string' },
                     },
                 },
             },

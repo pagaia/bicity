@@ -45,7 +45,7 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/favorite/:userId',
-        preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: favoriteController.getFavoritesFeatures(fastify),
         schema: {
             description: 'Get list of favorite features per given user',
@@ -69,13 +69,13 @@ const routes = (fastify) => [
                 404: {
                     description: 'User not found.',
                     type: 'object',
-                    properties: { error: { type: 'string' } },
+                    properties: { message: { type: 'string' } },
                 },
                 401: {
                     description: 'Authorization error',
                     type: 'object',
                     properties: {
-                        error: { type: 'string' },
+                        message: { type: 'string' },
                     },
                 },
             },
@@ -89,7 +89,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/favorite/:userId/:featureId',
-        preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: favoriteController.addFavorite(fastify),
         schema: {
             description: 'Add a given feature as favorite for the given user',
@@ -111,13 +111,13 @@ const routes = (fastify) => [
                 404: {
                     description: 'User or Feature not found',
                     type: 'object',
-                    properties: { error: { type: 'string' } },
+                    properties: { message: { type: 'string' } },
                 },
                 401: {
                     description: 'Authorization error',
                     type: 'object',
                     properties: {
-                        error: { type: 'string' },
+                        message: { type: 'string' },
                     },
                 },
             },
@@ -131,7 +131,7 @@ const routes = (fastify) => [
     {
         method: 'DELETE',
         url: '/api/favorite/:userId/:featureId',
-        preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: favoriteController.removeFavorite(fastify),
         schema: {
             description: 'Remove a given feature as favorite for the given user',
@@ -153,13 +153,13 @@ const routes = (fastify) => [
                 404: {
                     description: 'User or Feature not found.',
                     type: 'object',
-                    properties: { error: { type: 'string' } },
+                    properties: { message: { type: 'string' } },
                 },
                 401: {
                     description: 'Authorization error',
                     type: 'object',
                     properties: {
-                        error: { type: 'string' },
+                        message: { type: 'string' },
                     },
                 },
             },

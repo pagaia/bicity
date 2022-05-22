@@ -12,10 +12,9 @@ exports.getVoteByUserPerFeature = (fastify) => async (req, reply) => {
     try {
         const { featureId, userId } = req.params;
 
-        const vote = await Vote.findOne({ user: userId, feature: featureId })
-            .lean();
+        const vote = await Vote.findOne({ user: userId, feature: featureId }).lean();
         if (!vote) {
-            reply.code(404).type('application/json').send({ error: 'Not Found' });
+            reply.code(404).type('application/json').send({ message: 'Not Found' });
         }
         return vote;
     } catch (err) {
@@ -35,9 +34,12 @@ exports.getAvgVotePerFeature = (fastify) => async (req, reply) => {
             .group({ _id: '$feature', average: { $avg: '$vote' } });
 
         if (!vote.length) {
-            reply.code(404).type('application/json').send({ error: 'Not Found' });
+            reply
+                .code(404)
+                .type('application/json')
+                .send({ message: CONST.ERROR_MESSAGES.ENTITY_NOT_FOUND });
         }
-        vote[0].average = vote?.[0]?.average?.toFixed(1)
+        vote[0].average = vote?.[0]?.average?.toFixed(1);
         return vote?.[0];
     } catch (err) {
         throw boom.boomify(err);
@@ -70,7 +72,7 @@ exports.addVote = (fastify) => async (req, reply) => {
             return reply
                 .code(409)
                 .type('application/json')
-                .send({ error: 'Duplicate Object. Please check you data' });
+                .send({ message: CONST.ERROR_MESSAGES.DUPLICATE });
         }
 
         boom.boomify(err);

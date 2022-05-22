@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 const validateCategory = require('./validation');
 
-
 const pointSchema = new mongoose.Schema({
     type: {
         type: String,

@@ -12,6 +12,7 @@ const userSchema = new Schema(
         locale: { type: String },
         picture: { type: String },
         passwordHash: { type: String },
+        role: { type: String, default: 'User' },
     },
     { timestamps: true }
 );

@@ -7,11 +7,12 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const CONST = require('../utility/constants');
 const security = require('../utility/security');
+const roles = require('../plugins/roles');
 
 // Get all users
-exports.getUsers = () => async () => {
+exports.getUsers = (fastify) => async (req, reply) => {
     try {
-        const users = await User.find();
+        const users = await User.find({});
         return users;
     } catch (err) {
         throw boom.boomify(err);
@@ -22,6 +23,13 @@ exports.getUsers = () => async () => {
 exports.getUserById = (fastify) => async (req, reply) => {
     try {
         const id = req.params.id;
+        // if not user or not Admin return an error
+        if (id !== req.user.user._id && req.user.user.role !== roles.Admin) {
+            return reply
+                .code(403)
+                .type('application/json')
+                .send({ message: CONST.ERROR_MESSAGES.FORBIDDEN });
+        }
         const user = await User.findById(id);
         if (!user) {
             return fastify.notFound(req, reply);
@@ -39,9 +47,7 @@ exports.verifyUser = (fastify) => async (req, reply) => {
         const user = await User.findOne({ username: username });
 
         if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
-            return reply
-                .code(401)
-                .send({ error: 'Unauthorized', message: 'Username or password is incorrect' });
+            return reply.code(401).send({ message: 'Username or password is incorrect' });
         }
 
         const { jwtToken, refreshToken, ...userInfo } = await security.generateTokens(
@@ -65,14 +71,13 @@ exports.verifyUser = (fastify) => async (req, reply) => {
 // verify refresh token and refresh access token and refreshToken
 exports.refreshToken = (fastify) => async (req, reply) => {
     try {
-        console.log({ cookies: req.cookies });
         if (!req.cookies[CONST.COOKIE_REFRESH_TOKEN]) {
-            return reply.code(401).send({ message: 'Missing cookie' });
+            return reply.code(400).send({ message: CONST.ERROR_MESSAGES.COOKIE_TOKEN_MISSING });
         }
         const result = reply.unsignCookie(req.cookies[CONST.COOKIE_REFRESH_TOKEN]);
-        console.log({ result });
+
         if (!result.valid) {
-            return reply.code(401).send({ message: 'Cookie invalid' });
+            return reply.code(400).send({ message: CONST.ERROR_MESSAGES.COOKIE_TOKEN_INVALID });
         }
         const token = result.value;
 
@@ -100,17 +105,15 @@ exports.refreshToken = (fastify) => async (req, reply) => {
 // revoke Token - normally when the user wants to log out from the app
 exports.revokeToken = (fastify) => async (req, reply) => {
     try {
-        console.log({ cookies: req.cookies });
-
         // cookie is missing
         if (!req.cookies[CONST.COOKIE_REFRESH_TOKEN]) {
-            return reply.code(400).send({ message: 'Token is required' });
+            return reply.code(400).send({ message: CONST.ERROR_MESSAGES.COOKIE_TOKEN_MISSING });
         }
 
         const result = reply.unsignCookie(req.cookies[CONST.COOKIE_REFRESH_TOKEN]);
-        console.log({ result });
+
         if (!result.valid) {
-            return reply.code(400).send({ message: 'Token is NOT valid' });
+            return reply.code(400).send({ message: CONST.ERROR_MESSAGES.COOKIE_TOKEN_INVALID });
         }
         const token = result.value;
 
@@ -153,7 +156,7 @@ exports.addUser = (fastify) => async (req, reply) => {
             return reply
                 .code(409)
                 .type('application/json')
-                .send({ error: 'Duplicate Object. Please check you data' });
+                .send({ message: CONST.ERROR_MESSAGES.DUPLICATE });
         }
 
         boom.boomify(err);
@@ -171,6 +174,15 @@ exports.updateUser = (fastify) => async (req, reply) => {
         if (!foundUser) {
             return fastify.notFound(req, reply);
         }
+        // if you are here you are Admin or owner
+        // check if you are the owner
+
+        if (req.user.user.role !== roles.Admin && foundUser._id !== req.user.user._id) {
+            return reply
+                .code(403)
+                .type('application/json')
+                .send({ message: CONST.ERROR_MESSAGES.FORBIDDEN });
+        }
         const updatedUser = await User.findOneAndUpdate(userId, updateData, {
             new: true,
         });
@@ -182,7 +194,7 @@ exports.updateUser = (fastify) => async (req, reply) => {
             return reply
                 .code(409)
                 .type('application/json')
-                .send({ error: 'Duplicate Object. Please check you data' });
+                .send({ message: CONST.ERROR_MESSAGES.DUPLICATE });
         }
         boom.boomify(err);
         fastify.errorHandler(err, req, reply);

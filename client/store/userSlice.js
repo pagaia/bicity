@@ -18,6 +18,13 @@ export const revokeToken = createAsyncThunk('users/revokeToken', async ({}, thun
     return data;
 });
 
+export const getAllUsers = createAsyncThunk('users/getAll', async ({}, thunkAPI) => {
+    const response = await axios.get(`/api/users`);
+    // get the users list  from the body
+    const { data } = response;
+    return data;
+});
+
 export const userSlice = createSlice({
     name: 'users',
     initialState: {}, // loading: idle and pending
@@ -41,6 +48,12 @@ export const userSlice = createSlice({
         });
         builder.addCase(revokeToken.rejected, (state, action) => {
             state.errorRevokeToken = action.payload;
+        });  
+        builder.addCase(getAllUsers.fulfilled, (state, action) => {
+            state.usersList = action.payload;
+        });
+        builder.addCase(getAllUsers.rejected, (state, action) => {
+            state.error = action.payload;
         });
     },
 });
