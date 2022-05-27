@@ -29,7 +29,7 @@ const validateNewUser = (values) => {
         errors.password2 = 'Passwords do not match';
     }
 
-    console.log(errors);
+    console.debug(errors);
 
     return errors;
 };

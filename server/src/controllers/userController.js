@@ -125,7 +125,7 @@ exports.revokeToken = (fastify) => async (req, reply) => {
         // token revoke
         return reply.send({ message: 'Token revoked' });
     } catch (err) {
-        console.log(err);
+        console.debug(err);
         throw boom.boomify(err);
     }
 };

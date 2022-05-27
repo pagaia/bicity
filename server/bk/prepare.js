@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 const { initiliseDB } = require('./initialise.db.js');
 
 function clearCollections() {
-    console.log('Delete all collections');
+    console.debug('Delete all collections');
     for (let collection in mongoose.connection.collections) {
         mongoose.connection.collections[collection].deleteMany({});
     }
@@ -29,7 +29,7 @@ before(async function () {
         await mongoose.connect(dbUrl);
         client = mongoose.connection;
     }
-    console.log({ before: client.readyState });
+    console.debug({ before: client.readyState });
     await initiliseDB();
 });
 
@@ -44,7 +44,7 @@ beforeEach(async function () {
 // teardown(async function () {
 //   // if connection/client is ready (open) clear all collections and close it
 //   if (client && client.readyState) {
-//     console.log("Close DB connection");
+//     console.debug("Close DB connection");
 //     clearCollections();
 //     await client.close();
 //     client = null;
@@ -77,11 +77,11 @@ function build(t) {
     // tear down our app after we are done
     // t.teardown(app.close.bind(app));
     t.teardown(async () => {
-        console.log('teardown');
+        console.debug('teardown');
         clearCollections();
         await clean(app.mongo.client.db('test'));
         await app.close();
-        console.log('COLSE');
+        console.debug('COLSE');
     });
 
     return app;

@@ -11,7 +11,7 @@ async function importEmergency() {
   });
 
   emergencies.forEach(async (emergency, idx) => {
-    console.log({ emergency });
+    console.debug({ emergency });
 
     axios
       .post(endPoint, emergency, {
@@ -22,8 +22,8 @@ async function importEmergency() {
         }
       })
       .then((res) => {
-        console.log(`statusCode: ${res.statusCode}`);
-        console.log(res);
+        console.debug(`statusCode: ${res.statusCode}`);
+        console.debug(res);
       })
       .catch((error) => {
         console.error(error);

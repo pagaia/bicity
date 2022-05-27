@@ -19,7 +19,7 @@ const validateNewUser = (values) => {
         errors.password = 'Required';
     }
 
-    console.log(errors);
+    console.debug(errors);
 
     return errors;
 };

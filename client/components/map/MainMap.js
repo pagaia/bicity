@@ -18,12 +18,10 @@ import OsmFeaturesLayer from './Features/OsmFeatures';
 import ModalFeature from '../features/ModalFeature';
 import MyPositionIcon from './icons/MyPositionIcon';
 import MyPosition from './icons/MyPositionIcon';
+import FavoritesLayer from './Features/FavoritesLayer';
 
 const MainMap = (props) => {
-    const onClick = (e) => {
-        console.log('Control clicked, ', e);
-    };
-
+   
     const [map, setMap] = useState(null);
     const dispatch = useDispatch();
     const viewModal = useSelector(selectShowModal);
@@ -46,6 +44,7 @@ const MainMap = (props) => {
                 <FeaturesManager>
                     <MyPosition />
                     <FeaturesLayer />
+                    <FavoritesLayer/>
                     {/* {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
                             return (
                                 <MultiLineFeaturesLayer

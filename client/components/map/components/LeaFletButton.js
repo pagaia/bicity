@@ -17,7 +17,7 @@ const LeaFletButton = ({ title, map, action }) => {
                 controlElement.innerHTML = title;
 
                 controlElement.addEventListener('click', () => {
-                    console.log(map.getCenter());
+                    console.debug(map.getCenter());
                     action();
                 });
 
@@ -26,7 +26,7 @@ const LeaFletButton = ({ title, map, action }) => {
                 return controlElement;
             },
             onRemove: (map) => {
-                console.log(`Removing leaflet button ${title}`);
+                console.debug(`Removing leaflet button ${title}`);
                 helpDiv.remove()
             },
         });

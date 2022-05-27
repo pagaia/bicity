@@ -4,11 +4,11 @@ export const throttle =
     (next) =>
     (action) => {
         const time = action?.meta?.arg?.throttle;
-        console.log({time})
+        console.debug({time})
         if (!time) return next(action);
 
         if (throttled[action.type]) {
-            console.log({Throttled: time})
+            console.debug({Throttled: time})
             return;
         }
         throttled[action.type] = true;

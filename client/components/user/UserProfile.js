@@ -1,12 +1,16 @@
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
-import { getAllUsers } from '../../store/userSlice';
-import Favorites from '../features/Favorites';
+import { resetFavorites } from '../../store/featureSlice';
 
 const UserProfile = ({ user, signOut }) => {
     const { profile } = user;
-    console.log({ user });
+    console.debug({ user });
     const dispatch = useDispatch();
+
+    const handleLogOut = () => {
+        signOut();
+        dispatch(resetFavorites());
+    };
 
     return (
         <div className="text-center card-box">
@@ -71,7 +75,7 @@ const UserProfile = ({ user, signOut }) => {
                 </ul> */}
                 <button
                     type="button"
-                    onClick={signOut}
+                    onClick={handleLogOut}
                     className="btn btn-danger mt-3 btn-rounded waves-effect w-md waves-light">
                     Logout
                 </button>
@@ -86,7 +90,6 @@ const UserProfile = ({ user, signOut }) => {
                             <div className="mt-3">
                                 <h4>2563</h4>
                                 <p className="mb-0 text-muted">Wallets Balance</p>
-                                <Favorites userId={profile._id} />
                             </div>
                         </div>
                         <div className="col-4">

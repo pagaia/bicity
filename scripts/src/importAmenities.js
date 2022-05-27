@@ -8,7 +8,7 @@ async function importAmenities() {
   const amenities = await readAmenities();
 
   amenities.forEach(async (amenity, idx) => {
-    console.log({ amenity });
+    console.debug({ amenity });
 
     axios
       .post(endPoint, amenity, {
@@ -19,8 +19,8 @@ async function importAmenities() {
         }
       })
       .then((res) => {
-        console.log(`statusCode: ${res.statusCode}`);
-        console.log(res);
+        console.debug(`statusCode: ${res.statusCode}`);
+        console.debug(res);
       })
       .catch((error) => {
         console.error(error);

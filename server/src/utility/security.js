@@ -3,7 +3,7 @@ const Boom = require('boom');
 const User = require('../models/user');
 const crypto = require('crypto');
 const RefreshToken = require('../models/refresh-token');
-const { ONE_WEEK_MILLISECONDS } = require('./constants');
+const { ONE_WEEK_MILLISECONDS, ERROR_MESSAGES } = require('./constants');
 
 const encryptPassword = async (password) => {
     try {
@@ -21,8 +21,8 @@ const validateToken = async (req, reply, done) => {
     let tokenHost = req.headers.origin;
     let userId = req.params.id;
     let api_key = req.headers['x-api-token']; //version 3 using a header
-    console.log({ headers: req.headers });
-    console.log({ tokenHost, api_key });
+    console.debug({ headers: req.headers });
+    console.debug({ tokenHost, api_key });
 
     try {
         const user = await User.findOne({
@@ -30,22 +30,25 @@ const validateToken = async (req, reply, done) => {
         }).exec();
 
         if (!user) {
-            return reply.code(404).type('application/json').send({ error: 'Not Found' });
+            return reply
+                .code(404)
+                .type('application/json')
+                .send({ error: ERROR_MESSAGES.ENTITY_NOT_FOUND });
         }
 
         const isMatch = await user.compareToken(api_key);
 
         // check only the token without matching the host
         if (isMatch) {
-            console.log('API key match');
-            console.log('tokenHost match');
+            console.debug('API key match');
+            console.debug('tokenHost match');
         } else {
             //reply.code(401).send({ error: "Unauthorized" });
             done({ error: 'Unauthorized' });
             return;
         }
-        console.log({ isMatch });
-        console.log({ userToken: user.tokenHost, tokenHost });
+        console.debug({ isMatch });
+        console.debug({ userToken: user.tokenHost, tokenHost });
         // no error should be returned is fine then
         done();
     } catch (err) {

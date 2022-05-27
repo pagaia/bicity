@@ -5,14 +5,14 @@ const build = require('../src/app');
 // configure mongoose connection
 const dbUrl = 'mongodb://localhost/test';
 const mongoose = require('mongoose');
-const { ERROR_MESSAGES, COOKIE_REFRESH_TOKEN } = require('../src/utility/constants');
+const { ERROR_MESSAGES } = require('../src/utility/constants');
 const { initiliseDB } = require('../bk/initialise.db');
 
 const clearCollections = async (client) => {
-    console.log('Delete all collections');
+    console.debug('Delete all collections');
 
     for (let collection in client.collections) {
-        console.log('Deleting ', collection);
+        console.debug('Deleting ', collection);
         await client.collections[collection].deleteMany({});
     }
 };
@@ -54,7 +54,7 @@ test('test APIs', async (t) => {
 
     // close fastify after each test
     t.teardown(async () => {
-        console.log('Close app');
+        console.debug('Close app');
 
         await app.close();
         // without the process exit the application remains pending
@@ -845,6 +845,25 @@ test('test APIs', async (t) => {
         t.end();
     });
 
+    t.test('GET total favorites features', async (t) => {
+        const url = `/api/favorite/${user._id}/totalNumber`;
+
+        const response = await app.inject({
+            method: 'GET',
+            url,
+            headers: {
+                authorization,
+            },
+        });
+
+        const json = await response.json();
+        t.equal(response.statusCode, 200, ' - Get 200');
+        t.equal(json.favorites, 2, '- get 2 features');
+
+        // end test
+        t.end();
+    });
+
     // test GET favorite features for fake user
     t.test('GET favorites feature 404', async (t) => {
         const url = `/api/favorite/6269b7a1c76f7d54c2314522`;
@@ -910,8 +929,6 @@ test('test APIs', async (t) => {
         });
 
         json = await response.json();
-
-        t.equal(response.statusCode, 200, ' - Get 200');
         t.equal(json.length, 1, '- get one feature');
 
         // end test

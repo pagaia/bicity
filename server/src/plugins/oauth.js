@@ -11,19 +11,19 @@ const getGoogleUserInfo = async (access_token) => {
             Authorization: `Bearer ${access_token}`,
         },
     });
-    console.log(data); // { id, email, given_name, family_name }
+    console.debug(data); // { id, email, given_name, family_name }
     return data;
 };
 
 const getFacebookUserInfo = async (access_token) => {
     const url = `https://graph.facebook.com/me?fields=first_name,last_name,picture,email,locale&access_token=${access_token}`;
-    console.log({ url });
+    console.debug({ url });
     try {
         const { data } = await axios({
             url,
             method: 'GET',
         });
-        console.log(data); // { id, email, given_name, family_name }
+        console.debug(data); // { id, email, given_name, family_name }
         return {
             ...data,
             given_name: data?.first_name,
@@ -39,7 +39,7 @@ module.exports = function (fastify, options, done) {
     const verifyUser = async (reply, profile, ipAddress) => {
         const email = profile.email;
 
-        console.log({ profile });
+        console.debug({ profile });
         // search the user in the DB with the email
         let user = await User.findOne({ email });
 
@@ -109,7 +109,7 @@ module.exports = function (fastify, options, done) {
             const code = request.headers.code;
             const provider = request.params.provider;
             const ipAddress = request.ip;
-            console.log({ code, provider });
+            console.debug({ code, provider });
             let profile =
                 provider === 'google-state-test'
                     ? await getGoogleUserInfo(code)

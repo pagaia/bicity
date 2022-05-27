@@ -69,10 +69,10 @@ const openSignInWindow = (url, name) => {
 const addAuthentication = (authorization) => {
     // Add a request interceptor
     axios.interceptors.request.use((req) => {
-        console.log({ authorization });
+        console.debug({ authorization });
 
         req.headers.authorization = authorization;
-        console.log({ req });
+        console.debug({ req });
         return req;
     });
 };
@@ -195,7 +195,7 @@ function useProvideAuth() {
     }, [hash]);
     const prevCode = usePrevious(code);
 
-    // add authorization
+    // add authorization on each axios call
     useEffect(() => {
         if (authorization && prevAuthorization !== authorization) {
             addAuthentication(authorization);

@@ -26,7 +26,7 @@ const FeaturesManager = ({ children }) => {
     const categories = useSelector(selectChoosenCategories).map((cat) => cat.name);
 
     useEffect(() => {
-        return () => console.log('Unmounted FeaturesManager');
+        return () => console.debug('Unmounted FeaturesManager');
     }, []);
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const FeaturesManager = ({ children }) => {
     }, [map]);
 
     function handleOnLocationFound(e) {
-        console.log('handleOnLocationFound ', e);
+        console.debug('handleOnLocationFound ', e);
         const { latlng } = e;
         const bbox = map.getBounds();
         const zoom = map.getZoom();
@@ -84,7 +84,7 @@ const FeaturesManager = ({ children }) => {
     }
 
     function handleOnLocationError(e) {
-        console.log({ handleOnLocationError: e });
+        console.debug({ handleOnLocationError: e });
     }
 
     return (

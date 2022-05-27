@@ -16,7 +16,6 @@ const GeoCoding = ({ map }) => {
 
         autocomplete.on('select', (location) => {
             // check selected location here
-            console.log({ location });
             if (!location) {
                 return;
             }
@@ -38,9 +37,9 @@ const GeoCoding = ({ map }) => {
                     [lng, lat] = location?.geometry?.coordinates;
                     break;
             }
-            console.log({ lng, lat });
+            console.debug({ lng, lat });
             if (marker) {
-                console.log({ marker });
+                console.debug({ marker });
                 var newLatLng = new L.LatLng(lat, lng);
                 marker.setLatLng(newLatLng);
             } else {
@@ -53,7 +52,7 @@ const GeoCoding = ({ map }) => {
 
         autocomplete.on('suggestions', (suggestions) => {
             // process suggestions here
-            console.log({ suggestions });
+            console.debug({ suggestions });
         });
     }, []);
     return <div id="autocomplete" className="autocomplete-container"></div>;

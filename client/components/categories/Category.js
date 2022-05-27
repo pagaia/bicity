@@ -14,7 +14,7 @@ const Category = () => {
         dispatch(fetchCategories());
     }, []);
 
-    console.log({ categories });
+    console.debug({ categories });
     return null;
 };
 

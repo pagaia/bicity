@@ -10,14 +10,15 @@ const RefreshToken = () => {
 
     const user = useSelector(selectUser);
 
+    // send a refresh token to get the new JWT token for the user
+    useEffect(() => {
+        dispatch(refreshToken());
+    }, []);
+
+    // if the user from redux store changes, get the info and set into the Auth Context
     useEffect(() => {
         setUser(user);
     }, [user]);
-
-    // check if the user is logged in and retrieve the information
-    useEffect( () => {
-        dispatch(refreshToken());
-    }, []);
 
     return null;
 };

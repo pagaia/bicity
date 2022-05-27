@@ -33,7 +33,7 @@ export const categorySlice = createSlice({
             })
             .addCase(fetchCategories.fulfilled, (state, action) => {
                 const { requestId } = action.meta;
-                console.log({ action });
+                console.debug({ action });
 
                 const savedCategories = JSON.parse(localStorage.getItem('categories') ?? '[]');
                 if (state.loading === 'pending' && state.currentRequestId === requestId) {

@@ -33,7 +33,10 @@ export const setFavorite = createAsyncThunk(
 export const removeFavorite = createAsyncThunk(
     'feature/removeFavorite',
     async ({ userId, featureId }, thunkAPI) => {
-        const response = await axios.delete(`/api/favorite/${userId}/${featureId}`);
+        // first delete
+        let response = await axios.delete(`/api/favorite/${userId}/${featureId}`);
+        // once done fetch again the list of favorites
+        response = await axios(`/api/favorite/${userId}`);
         const { data } = response;
         return data;
     }
@@ -58,7 +61,7 @@ export const fetchMultiFeatures = createAsyncThunk(
         const { lat: nlat, lng: nlng } = _northEast;
         const { lat: slat, lng: slng } = _southWest;
         const query = `nlat=${nlat}&nlng=${nlng}&slat=${slat}&slng=${slng}`;
-        console.log({ query });
+        console.debug({ query });
 
         const response = await axios(`/api/multifeature?${query}`);
         const { data } = response;
@@ -75,7 +78,7 @@ export const fetchFeaturesByBbox = createAsyncThunk(
         const query = `nlat=${nlat}&nlng=${nlng}&slat=${slat}&slng=${slng}&categories=${categories?.join(
             ','
         )}`;
-        console.log({ query });
+        console.debug({ query });
 
         const response = await axios(`/api/feature/bbox?${query}`);
         const { data } = response;
@@ -96,6 +99,7 @@ export const featureSlice = createSlice({
     initialState: {
         features: [],
         favorites: [],
+        showFavorites: false,
         multiFeatures: [],
         votes: [],
         loading: 'idle',
@@ -111,6 +115,13 @@ export const featureSlice = createSlice({
                 ...database,
                 selected: !!action.payload[database.name],
             }));
+        },
+        toggleFavorites: (state, action) => {
+            state.showFavorites = !state.showFavorites;
+        },
+        resetFavorites: (state, action) => {
+            state.showFavorites = false;
+            state.favorites = [];
         },
         loadDatabases: (state, action) => {
             const defaultDatabases = Object.values(DATABASES).map((database) => ({
@@ -130,19 +141,6 @@ export const featureSlice = createSlice({
                 state.databases = defaultDatabases;
             }
         },
-        // increment: state => {
-        //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
-        //   // doesn't actually mutate the state because it uses the Immer library,
-        //   // which detects changes to a "draft state" and produces a brand new
-        //   // immutable state based off those changes
-        //   state.value += 1
-        // },
-        // decrement: state => {
-        //   state.value -= 1
-        // },
-        // incrementByAmount: (state, action) => {
-        //   state.value += action.payload
-        // }
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
@@ -152,28 +150,24 @@ export const featureSlice = createSlice({
         });
         builder.addCase(fetchVote.rejected, (state, action) => {
             const { featureId } = action?.meta?.arg;
-            console.log({ action });
             state.votes[featureId] = action.payload;
         });
         builder.addCase(fetchFavorites.fulfilled, (state, action) => {
             state.favorites = action.payload;
         });
         builder.addCase(fetchFavorites.rejected, (state, action) => {
-            console.log({ action });
             state.error = action.payload;
         });
         builder.addCase(setFavorite.fulfilled, (state, action) => {
-            state.favorites = action.payload;
+            state.favorites = action.payload?.features;
         });
         builder.addCase(setFavorite.rejected, (state, action) => {
-            console.log({ action });
             state.error = action.payload;
         });
         builder.addCase(removeFavorite.fulfilled, (state, action) => {
             state.favorites = action.payload;
         });
         builder.addCase(removeFavorite.rejected, (state, action) => {
-            console.log({ action });
             state.error = action.payload;
         });
 
@@ -187,28 +181,24 @@ export const featureSlice = createSlice({
             state.selectedCategories = categories;
         });
         builder.addCase(fetchFeaturesByBbox.rejected, (state, action) => {
-            console.log({ action });
             state.error = action.payload;
         });
         builder.addCase(fetchFeatures.fulfilled, (state, action) => {
             state.features = action.payload;
         });
         builder.addCase(fetchFeatures.rejected, (state, action) => {
-            console.log({ action });
             state.error = action.payload;
         });
         builder.addCase(fetchMultiFeatures.fulfilled, (state, action) => {
             state.multiFeatures = action.payload;
         });
         builder.addCase(fetchMultiFeatures.rejected, (state, action) => {
-            console.log({ action });
             state.error = action.payload;
         });
         builder.addCase(addFeature.fulfilled, (state, action) => {
             state.addedFeature = action.payload;
         });
         builder.addCase(addFeature.rejected, (state, action) => {
-            console.log({ action });
             state.error = action.payload;
         });
     },
@@ -221,6 +211,8 @@ export const {
     featureSelected,
     chooseDatabase,
     loadDatabases,
+    toggleFavorites,
+    resetFavorites
 } = featureSlice.actions;
 
 // export selectors
@@ -231,6 +223,7 @@ export const selectMultiFeatures = (state) => state.featureReducer.multiFeatures
 export const selectAddedFeature = (state) => state.featureReducer.addedFeature;
 export const selectFeatureError = (state) => state.featureReducer.error;
 export const selectFavoritesFeatures = (state) => state.featureReducer.favorites;
+export const selectShowFavorites = (state) => state.featureReducer.showFavorites;
 export const selectDatabases = (state) => state.featureReducer.databases;
 
 export default featureSlice.reducer;

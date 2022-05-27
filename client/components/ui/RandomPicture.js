@@ -9,7 +9,7 @@ function randomNumber(min, max) {
 const randomSearchString = () => {
     const topic = ['city night', 'city night aerial', 'landscape', 'travel'];
     const index = randomNumber(0, topic.length);
-    console.log({ index });
+    console.debug({ index });
     return topic[index];
 };
 

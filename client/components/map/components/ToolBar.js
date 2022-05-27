@@ -5,6 +5,9 @@ import {
     fetchFeaturesByBbox,
     fetchMultiFeatures,
     selectDatabases,
+    selectShowFavorites,
+    showFavorites,
+    toggleFavorites,
 } from '../../../store/featureSlice';
 import { fetchOSMAmenities } from '../../../store/osmSlice';
 import { DATABASES, MIN_ZOOM } from '../../../utils/constants';
@@ -14,14 +17,16 @@ const Toolbar = () => {
     const map = useMap();
 
     const dispatch = useDispatch();
+
     const setPosition = () => {
         map.locate({ setView: true, maxZoom: 16 });
     };
 
     const categories = useSelector(selectChoosenCategories).map((cat) => cat.name);
     const databases = useSelector(selectDatabases);
+    const showFavorites = useSelector(selectShowFavorites);
 
-    console.log({ selectChoosenCategories: categories.join('|') });
+    console.debug({ selectChoosenCategories: categories.join('|') });
 
     const fetchAmenity = () => {
         dispatch(
@@ -49,7 +54,7 @@ const Toolbar = () => {
     };
 
     const buildButtons = (categories) => {
-        console.log({ buildButtons: categories });
+        console.debug({ buildButtons: categories });
         return [
             {
                 iconClassName: 'fa-bullseye',
@@ -65,6 +70,12 @@ const Toolbar = () => {
                 iconClassName: 'fa-redo',
                 title: 'Search in this area',
                 action: () => update(categories),
+            },
+            {
+                defaultIconClassName: showFavorites ? 'fas' : 'far',
+                iconClassName: 'fa-heart favorite',
+                title: 'Show/hide favorites',
+                action: () => dispatch(toggleFavorites()),
             },
         ];
     };

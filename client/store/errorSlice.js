@@ -10,7 +10,7 @@ export const errorSlice = createSlice({
             state.errors.push(error);
         },
         removeError: (state, action) => {
-            console.log({ action });
+            console.debug({ action });
             state.errors = state.errors.filter((error) => error.id !== action.payload.id);
         },
     },

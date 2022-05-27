@@ -26,7 +26,7 @@ exports.compareCreatedAt = (a, b) => {
  * @returns {String}
  */
 exports.formatTimeZone = (date, tzString) => {
-    // console.log({ date, tzString });
+    // console.debug({ date, tzString });
     if (!date) {
         return null;
     }
@@ -44,7 +44,7 @@ exports.getLastDayPreviousMonth = () => {
 exports.generateJWT = (fastify) => async (req, reply) => {
     try {
         const token = fastify.jwt.sign({ message: 'Welcome' }, { expiresIn: '15m' });
-        console.log({ token });
+        console.debug({ token });
         return reply.send({ token });
     } catch (err) {
         throw boom.boomify(err);

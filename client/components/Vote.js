@@ -8,7 +8,7 @@ const Vote = ({ featureId, userId }) => {
     const dispatch = useDispatch();
     const avgVote = useSelector(selectFeatureVote(featureId));
 
-    console.log({ avgVote });
+    console.debug({ avgVote });
     // fetch the average vote
     useEffect(() => {
         // updateAvgVote(featureId);
@@ -20,7 +20,7 @@ const Vote = ({ featureId, userId }) => {
     // fetch vote per user
     useEffect(() => {
         const fetchVote = async () => {
-            console.log({ featureId, userId });
+            console.debug({ featureId, userId });
             if (featureId && userId) {
                 const response = await axios(`/api/vote/${featureId}/${userId}`);
                 const { data } = response;
@@ -45,7 +45,7 @@ const Vote = ({ featureId, userId }) => {
         }
     };
 
-    console.log({ userVote });
+    console.debug({ userVote });
     const votesLinks = [...Array(MAX_VOTE_FEATURE).keys()].map((vote, idx) => {
         const voted = idx + 1 <= avgVote ? 'checked' : 'unchecked';
         return (

@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import Category from '../components/categories/Category';
 import ErrorMessage from '../components/ErrorMessage';
 import DatabaseLoad from '../components/features/Database';
+import Favorites from '../components/features/Favorites';
 import BetaVersion from '../components/layout/BetaVersion';
 import Layout from '../components/layout/Layout';
 import RefreshToken from '../components/user/RefreshToken';
@@ -25,7 +26,9 @@ function MyApp({ Component, pageProps }) {
                     <BetaVersion />
                     <RefreshToken />
                     <Category />
-                    <DatabaseLoad/>
+                    <DatabaseLoad />
+                    <Favorites />
+
                     <Layout>
                         <ErrorMessage />
                         <Component {...pageProps} />
