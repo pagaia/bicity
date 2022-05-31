@@ -55,7 +55,7 @@ const FeatureDetails = (props) => {
                 <div className="card-body">
                     <h5 className="card-title">{feature?.properties?.name}</h5>
                     <Favorite featureId={featureId} userId={userId} />
-                    <div className="card-text">
+                    <div className="card-text element">
                         <dl className="row">
                             {Object.keys(feature?.properties)?.map((key) => {
                                 if (key === 'name') {

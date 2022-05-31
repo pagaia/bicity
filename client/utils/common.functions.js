@@ -56,3 +56,9 @@ export const refreshUserToken = async () => {
     // store user google profile and JWT for future calls
     return { profile, authorization };
 };
+
+export const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator?.userAgent
+    );
+};

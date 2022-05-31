@@ -30,6 +30,15 @@ export const fetchTotalFavorites = createAsyncThunk(
     }
 );
 
+export const fetchTotalVotes = createAsyncThunk(
+    'feature/votes/total',
+    async ({ userId }, thunkAPI) => {
+        const response = await axios(`/api/vote/${userId}/totalNumber`);
+        const { data } = response;
+        return data;
+    }
+);
+
 export const setFavorite = createAsyncThunk(
     'feature/setFavorite',
     async ({ userId, featureId }, thunkAPI) => {
@@ -132,6 +141,9 @@ export const featureSlice = createSlice({
             state.showFavorites = false;
             state.favorites = [];
         },
+        resetFeatures: (state, action) => {
+            state.features = [];
+        },
         loadDatabases: (state, action) => {
             const defaultDatabases = Object.values(DATABASES).map((database) => ({
                 name: database,
@@ -172,6 +184,12 @@ export const featureSlice = createSlice({
             state.totalFavorites = action.payload.favorites;
         });
         builder.addCase(fetchTotalFavorites.rejected, (state, action) => {
+            state.error = action.payload;
+        });
+        builder.addCase(fetchTotalVotes.fulfilled, (state, action) => {
+            state.totalVotes = action.payload.votes;
+        });
+        builder.addCase(fetchTotalVotes.rejected, (state, action) => {
             state.error = action.payload;
         });
         builder.addCase(setFavorite.fulfilled, (state, action) => {
@@ -229,6 +247,7 @@ export const {
     loadDatabases,
     toggleFavorites,
     resetFavorites,
+    resetFeatures,
 } = featureSlice.actions;
 
 // export selectors
@@ -240,6 +259,7 @@ export const selectAddedFeature = (state) => state.featureReducer.addedFeature;
 export const selectFeatureError = (state) => state.featureReducer.error;
 export const selectFavoritesFeatures = (state) => state.featureReducer.favorites;
 export const selectTotalFavorites = (state) => state.featureReducer.totalFavorites;
+export const selectTotalVotes = (state) => state.featureReducer.totalVotes;
 export const selectShowFavorites = (state) => state.featureReducer.showFavorites;
 export const selectDatabases = (state) => state.featureReducer.databases;
 

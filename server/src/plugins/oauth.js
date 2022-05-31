@@ -28,7 +28,7 @@ const getFacebookUserInfo = async (access_token) => {
             ...data,
             given_name: data?.first_name,
             family_name: data?.last_name,
-            picture: data?.picture?.data?.url,
+            picture: `https://api.multiavatar.com/${data?.first_name} ${data?.last_name}.png`,
         };
     } catch (error) {
         console.error(error);

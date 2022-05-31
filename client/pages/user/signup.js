@@ -1,10 +1,9 @@
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import InputField from '../../components/form/InputField';
 import Link from 'next/link';
-import { ROUTES } from '../../utils/routes';
+import { useState } from 'react';
+import InputField from '../../components/form/InputField';
 import Footer from '../../components/layout/Footer';
+import { ROUTES } from '../../utils/routes';
 
 const validateNewUser = (values) => {
     const errors = {};
@@ -58,7 +57,27 @@ const SignUp = () => {
     };
 
     if (submitted) {
-        return <div>Well done!!</div>;
+        return (
+            <div className="container">
+                <h1>You have created your new account!</h1>
+                <div className="alert alert-success" role="alert">
+                    <h2 className="alert-heading">Well done!</h2>
+                    <p>You have just registered your account in BiCity</p>
+                    <hr />
+                    <p className="mb-0">
+                        <ul>
+                            <li>You can logging in now with your credentials.</li>
+                            <li>Insert new points of interest.</li>
+                            <li>Select your favorites.</li>
+                            <li>Add your vote for the existing ones.</li>
+                        </ul>
+                        <Link href="/user">
+                            <a>Navigate to Login page</a>
+                        </Link>
+                    </p>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -72,7 +91,7 @@ const SignUp = () => {
                                     <h4 className="card-title mt-3 text-center">Create Account</h4>
 
                                     <Formik
-                                        initialValues={{ name: 'Hay Biker' }}
+                                        initialValues={{}}
                                         validate={validateNewUser}
                                         onSubmit={async (values, { setSubmitting }) => {
                                             setSubmitting(true);
@@ -161,8 +180,8 @@ const SignUp = () => {
                                                         Create Account
                                                     </button>
                                                 </div>
-                                                <p className="text-center">
-                                                    Have an account?
+                                                <p className="text-center mt-4">
+                                                    Have an account?{' '}
                                                     <Link href={ROUTES.USER}>
                                                         <a>Log In</a>
                                                     </Link>

@@ -85,6 +85,43 @@ const routes = (fastify) => [
         ],
     },
     {
+        method: 'GET',
+        url: '/api/vote/:userId/totalNumber',
+        // TODO add check for Admin role or owner
+        preHandler: [fastify.authenticate],
+        handler: voteController.getTotalVotesPerUser(fastify),
+        schema: {
+            description: 'Get total number of votes per User',
+            tags: ['vote'],
+            summary: 'Get total number of votes per User',
+            params: {
+                type: 'object',
+                properties: {
+                    userId: { type: 'string' },
+                },
+            },
+            response: {
+                200: {
+                    description: 'Successful response',
+                    type: 'object',
+                    properties: {
+                        votes: { type: 'number' },
+                    },
+                },
+                404: {
+                    description: 'User not found',
+                    type: 'object',
+                    properties: { message: { type: 'string' } },
+                },
+            },
+        },
+        security: [
+            {
+                apiKey: [],
+            },
+        ],
+    },
+    {
         method: 'POST',
         url: '/api/vote/:featureId/:userId',
         // TODO : verify logged user can update only its own votes

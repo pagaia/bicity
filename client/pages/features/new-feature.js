@@ -1,5 +1,5 @@
 import { Form, Formik } from 'formik';
-import Link from 'next/link';
+import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InputField from '../../components/form/InputField';
@@ -54,6 +54,12 @@ const NewFeature = () => {
         }
     }, [featureError]);
 
+    useEffect(() => {
+        if (addedFeature) {
+            Router.push(`/features/${addedFeature._id}`);
+        }
+    }, [addedFeature]);
+
     const submit = async (values) => {
         const feature = {
             type: 'Feature',
@@ -81,46 +87,20 @@ const NewFeature = () => {
             });
     };
 
-    if (addedFeature) {
-        return (
-            <div className="container">
-                <h1>Any place in your app!</h1>
-                <div className="alert alert-success" role="alert">
-                    <h4 className="alert-heading">Well done!</h4>
-                    <p>
-                        You have just submitted a new place! We will review and share with the
-                        community
-                    </p>
-                    <hr />
-                    <p className="mb-0">
-                        You can go now in the home page and search for this new point of interest.
-                        Or you can view all details at the following link{' '}
-                        <Link href={`/features/${addedFeature._id}`}>
-                            <a>{addedFeature?.properties?.name}</a>
-                        </Link>
-                    </p>
-
-                    <pre>{JSON.stringify(addedFeature)}</pre>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className="container">
-            <h1>Let's the community know</h1>
-            <p>Do you have a new place to share? Fill in the form and give your biCity</p>
+            <h1>Add your new point of interest</h1>
+            <p>
+                Do you have a new place to share? Fill in the form and contribute to the BiCity
+                project. You will help other cyclists to know more about your city.
+            </p>
             <Formik
-                initialValues={{ name: 'Hay Biker' }}
+                initialValues={{}}
                 validate={validateNewFeature}
                 onSubmit={async (values, { setSubmitting }) => {
                     setWasValidated?.(true);
                     await submit(values);
                     setSubmitting(false);
-                    // setTimeout(() => {
-                    //   alert(JSON.stringify(values, null, 2));
-                    //   setSubmitting(false);
-                    // }, 400);
                 }}>
                 {({ isSubmitting, errors, touched, values }) => (
                     <Form className={`mb-4 ${wasValidated ? 'was-validated' : ''}`}>

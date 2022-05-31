@@ -52,11 +52,11 @@ const Login = () => {
                                 <h4 className="card-title mt-3 text-center">Login</h4>
                                 <p className="text-center">Get started with your free account</p>
                                 <p className="d-flex flex-column ">
-                                    <button
+                                    {/* <button
                                         onClick={oauthTwitterSignIn}
                                         className="btn btn-block btn-info login-button">
                                         <i className="fab fa-twitter me-2"></i>Login via Twitter
-                                    </button>
+                                    </button> */}
                                     <button
                                         onClick={googleSignIn}
                                         className="btn btn-block btn-warning login-button">
@@ -72,7 +72,7 @@ const Login = () => {
                                     <span>OR</span>
                                 </p>
                                 <Formik
-                                    initialValues={{ name: 'Hay Biker' }}
+                                    initialValues={{}}
                                     validate={validateNewUser}
                                     onSubmit={async (values, { setSubmitting }) => {
                                         setSubmitting(true);
@@ -121,8 +121,8 @@ const Login = () => {
                                                     Login
                                                 </button>
                                             </div>
-                                            <p className="text-center">
-                                                Don't have an account?
+                                            <p className="text-center mt-4">
+                                                Don't have an account?{' '}
                                                 <Link href={ROUTES.USER_SIGNUP}>
                                                     <a>Sign up</a>
                                                 </Link>

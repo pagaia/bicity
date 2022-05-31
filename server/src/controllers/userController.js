@@ -44,7 +44,7 @@ exports.getUserById = (fastify) => async (req, reply) => {
 exports.verifyUser = (fastify) => async (req, reply) => {
     try {
         const { username, password } = req.body;
-        const user = await User.findOne({ username: username });
+        const user = await User.findOne({ username });
 
         if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
             return reply.code(401).send({ message: 'Username or password is incorrect' });

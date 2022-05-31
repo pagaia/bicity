@@ -132,9 +132,6 @@ ul.vote-lnk li {
     z-index: 999;
 }
 
-.about {
-    margin: 5em 0;
-}
 
 @media (min-width: 600px) {
     .about {
@@ -142,14 +139,11 @@ ul.vote-lnk li {
     }
 }
 
-.about {
-    margin: 0;
-}
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .about {
-        margin: 4em 0;
+        margin: 3em 0;
     }
 }
 
@@ -275,7 +269,7 @@ a:hover i.unchecked {
 }
 
 .form-control {
-    padding: 0.129rem;
+    height: 38px;
 }
 
 .osm-icon {
@@ -417,4 +411,24 @@ a:hover.favorite i {
     position: relative;
     left: -3px;
     top: 3px;
+}
+
+.small-map .leaflet-bar.leaflet-control-fa-button.custom-toolbar.leaflet-control {
+    margin: 0;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+    top: 150px;
+}
+
+.small-map .leaflet-control-zoom.leaflet-bar.leaflet-control {
+    top: 0;
+}
+
+span.input-group-text {
+    height: 38px;
+}
+
+main > div.container {
+    margin-top: 3em;
 }

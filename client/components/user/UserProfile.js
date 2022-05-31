@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { resetFavorites } from '../../store/featureSlice';
 import TotalFavorites from '../features/TotalFavorites';
+import TotalVotes from '../features/TotalVotes';
 
 const UserProfile = ({ user, signOut }) => {
     const { profile } = user;
@@ -80,30 +81,29 @@ const UserProfile = ({ user, signOut }) => {
                     className="btn btn-danger mt-3 btn-rounded waves-effect w-md waves-light">
                     Logout
                 </button>
-                <button
+                {/* <button
                     type="button"
                     className="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light">
                     Message Now
-                </button>
+                </button> */}
                 <div className="mt-4">
                     <div className="row">
                         <div className="col-4">
                             <div className="mt-3">
-                               <TotalFavorites userId={profile?._id}/>
+                                <TotalFavorites userId={profile?._id} />
                             </div>
                         </div>
                         <div className="col-4">
                             <div className="mt-3">
-                                <h4>6952</h4>
-                                <p className="mb-0 text-muted">Income amounts</p>
+                                <TotalVotes userId={profile?._id} />
                             </div>
                         </div>
-                        <div className="col-4">
+                        {/* <div className="col-4">
                             <div className="mt-3">
                                 <h4>1125</h4>
                                 <p className="mb-0 text-muted">Total Transactions</p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

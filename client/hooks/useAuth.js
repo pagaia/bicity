@@ -11,6 +11,7 @@ const authContext = createContext();
 
 let windowObjectReference = null;
 let previousUrl = null;
+const BACKEND_API_REG = /^\/api/;
 
 const receiveMessage = (event) => {
     // Do we trust the sender of this message? (might be
@@ -66,15 +67,22 @@ const openSignInWindow = (url, name) => {
     previousUrl = url;
 };
 
+let axiosAuthentication;
+
 const addAuthentication = (authorization) => {
     // Add a request interceptor
-    axios.interceptors.request.use((req) => {
-        console.debug({ authorization });
+    axiosAuthentication = axios.interceptors.request.use((req) => {
+        // add token only for our Backend
+        if (BACKEND_API_REG.test(req.url)) {
+            req.headers.authorization = authorization;
+        }
 
-        req.headers.authorization = authorization;
-        console.debug({ req });
         return req;
     });
+};
+
+const removeAuthentication = () => {
+    axios.interceptors.request.eject(axiosAuthentication);
 };
 
 // Provider component that wraps your app and makes auth object ...
@@ -121,7 +129,7 @@ function oauthGoogleSignIn() {
  * Create form to request access token from Facebook OAuth  server.
  */
 function oauthFacebookSignIn() {
-    const oauth2Endpoint = 'https://www.facebook.com/v13.0/dialog/oauth';
+    const oauth2Endpoint = 'https://www.facebook.com/v14.0/dialog/oauth';
 
     // Parameters to pass to OAuth 2.0 endpoint.
     const params = {
@@ -197,8 +205,12 @@ function useProvideAuth() {
 
     // add authorization on each axios call
     useEffect(() => {
-        if (authorization && prevAuthorization !== authorization) {
-            addAuthentication(authorization);
+        if (prevAuthorization !== authorization) {
+            if (authorization) {
+                addAuthentication(authorization);
+            } else {
+                removeAuthentication();
+            }
         }
     }, [authorization, prevAuthorization]);
 

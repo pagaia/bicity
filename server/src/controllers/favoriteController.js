@@ -34,7 +34,7 @@ exports.getTotalFavorites = (fastify) => async (req, reply) => {
 
         const favorites = await Favorite.findOne({ user: userId });
 
-        return { favorites: favorites?.features?.length };
+        return { favorites: favorites?.features?.length ?? 0 };
     } catch (err) {
         throw boom.boomify(err);
     }

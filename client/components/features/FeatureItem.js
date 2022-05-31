@@ -20,7 +20,7 @@ const FeatureItem = ({ feature, onClick }) => {
     const userId = user?.profile?._id;
 
     return (
-        <div className="element shadow-sm p-3 mb-3 bg-body rounded" id={featureId}>
+        <div className="element shadow-sm mb-3 bg-body rounded" id={featureId}>
             <RandomPicture />
 
             <h1>{properties.name}</h1>

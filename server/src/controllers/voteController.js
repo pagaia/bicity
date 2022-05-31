@@ -22,6 +22,17 @@ exports.getVoteByUserPerFeature = (fastify) => async (req, reply) => {
     }
 };
 
+// Get number of votes per user
+exports.getTotalVotesPerUser = (fastify) => async (req, reply) => {
+    try {
+        const { userId } = req.params;
+        const votes = await Vote.count({ user: userId });
+        return { votes };
+    } catch (err) {
+        throw boom.boomify(err);
+    }
+};
+
 // Get average vote per feature
 // https://masteringjs.io/tutorials/mongoose/aggregate
 // https://github.com/Automattic/mongoose/issues/1399

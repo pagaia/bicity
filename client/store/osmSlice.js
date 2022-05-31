@@ -30,7 +30,7 @@ export const fetchOSMAmenities = createAsyncThunk(
 
 export const osmSlice = createSlice({
     name: 'amenities',
-    initialState: { loading: 'idle' }, // loading: idle and pending
+    initialState: { loading: 'idle', amenities: [] }, // loading: idle and pending
     reducers: {
         // increment: state => {
         //   // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -42,9 +42,9 @@ export const osmSlice = createSlice({
         // decrement: state => {
         //   state.value -= 1
         // },
-        // incrementByAmount: (state, action) => {
-        //   state.value += action.payload
-        // }
+        resetAmenities: (state, action) => {
+            state.amenities = [];
+        },
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
@@ -55,7 +55,7 @@ export const osmSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-// export const { increment, decrement, incrementByAmount } = osmSlice.actions;
+export const { resetAmenities } = osmSlice.actions;
 
 // export selectors
 export const selectAmenity = (amenity) => (state) => state.osmReducer[amenity];

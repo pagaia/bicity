@@ -636,6 +636,36 @@ test('test APIs', async (t) => {
         t.end();
     });
 
+    t.test('GET total number of votes per user', async (t) => {
+        // add first a second vote
+        await app.inject({
+            method: 'POST',
+            url: `/api/vote/${feature2._id}/${user._id}`,
+            payload: { vote: 5 },
+            headers: {
+                authorization,
+            },
+        });
+
+        const url = `/api/vote/${user._id}/totalNumber`;
+
+        const response = await app.inject({
+            method: 'GET',
+            url,
+            headers: {
+                authorization,
+            },
+        });
+
+        const json = await response.json();
+
+        t.equal(response.statusCode, 200, ' - Get 200');
+        t.same(json.votes, 2, '- get 2 votes ');
+
+        // end test
+        t.end();
+    });
+
     t.test('POST a new favorite feature', async (t) => {
         const url = `/api/favorite/${user._id}/${feature._id}`;
 
@@ -958,6 +988,7 @@ test('test APIs', async (t) => {
         });
 
         const json = await response.json();
+        console.log({json})
         feature = json;
         t.equal(response.statusCode, 200, ' - Get 200');
         t.same(json.length, 1, '- get 1 point');

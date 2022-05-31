@@ -1,7 +1,7 @@
 import { useMap } from 'react-leaflet';
 import ButtonToolbar from './ButtonToolbar';
 
-const LocateButton = () => {
+const LocateButton = ({ className }) => {
     const map = useMap();
 
     const setPosition = () => {
@@ -17,7 +17,7 @@ const LocateButton = () => {
             },
         ];
     };
-    return <ButtonToolbar buttons={buildButtons()} />;
+    return <ButtonToolbar buttons={buildButtons()} defaultContainerClassName={className} />;
 };
 
 export default LocateButton;

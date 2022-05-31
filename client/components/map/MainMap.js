@@ -2,26 +2,23 @@ import 'leaflet-defaulticon-compatibility';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet/dist/leaflet.css';
 import { useMemo, useState } from 'react';
-import { LayersControl, MapContainer, Marker, ScaleControl, TileLayer } from 'react-leaflet';
+import { MapContainer, ScaleControl, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowModal, showModal } from '../../store/categorySlice';
-import { MULTI_FEATURE_CATEGORY, ROME_POSITION } from '../../utils/constants';
-import FeaturesList from '../features/FeaturesList';
+import { isMobile } from '../../utils/common.functions';
+import { ROME_POSITION } from '../../utils/constants';
 import CategorySelection from '../categories/CategorySelection';
+import ModalFeature from '../features/ModalFeature';
 import GeoCoding from './components/GeoCoding';
 import Toolbar from './components/ToolBar';
 import ZoomCenter from './components/ZoomCenter';
+import FavoritesLayer from './Features/FavoritesLayer';
 import FeaturesLayer from './Features/FeaturesLayer';
 import FeaturesManager from './Features/FeaturesManager';
-import MultiLineFeaturesLayer from './Features/MultiLineFeaturesLayer';
 import OsmFeaturesLayer from './Features/OsmFeatures';
-import ModalFeature from '../features/ModalFeature';
-import MyPositionIcon from './icons/MyPositionIcon';
 import MyPosition from './icons/MyPositionIcon';
-import FavoritesLayer from './Features/FavoritesLayer';
 
 const MainMap = (props) => {
-   
     const [map, setMap] = useState(null);
     const dispatch = useDispatch();
     const viewModal = useSelector(selectShowModal);
@@ -30,6 +27,8 @@ const MainMap = (props) => {
         dispatch(showModal(toggle));
     };
 
+    const height = isMobile() ? 'calc(100vh - 110px)' : 'calc(100vh - 50px)';
+
     const displayMap = useMemo(
         () => (
             <MapContainer
@@ -37,14 +36,14 @@ const MainMap = (props) => {
                 zoom={14}
                 maxZoom={18}
                 scrollWheelZoom
-                style={{ height: 'calc(100vh - 110px)', width: '100%' }}
+                style={{ height, width: '100%' }}
                 whenCreated={setMap}
                 id="mapContainer">
                 <ScaleControl position="bottomleft" />
                 <FeaturesManager>
                     <MyPosition />
                     <FeaturesLayer />
-                    <FavoritesLayer/>
+                    <FavoritesLayer />
                     {/* {Object.keys(MULTI_FEATURE_CATEGORY).map((key) => {
                             return (
                                 <MultiLineFeaturesLayer

@@ -15,7 +15,7 @@ const OsmFeatureItem = ({ item, onClick }) => {
     const { lat, lon } = item;
 
     return (
-        <div className="element shadow-sm p-3 mb-3 bg-body rounded" id={item.id} key={item.id}>
+        <div className="element shadow-sm mb-3 bg-body rounded" id={item.id} key={item.id}>
             <RandomPicture />
 
             <dl className="row">

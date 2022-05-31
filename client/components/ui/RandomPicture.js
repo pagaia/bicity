@@ -7,7 +7,40 @@ function randomNumber(min, max) {
 }
 
 const randomSearchString = () => {
-    const topic = ['city night', 'city night aerial', 'landscape', 'travel'];
+    const topic = [
+        'city night',
+        'city night aerial',
+        'landscape',
+        'travel',
+        'red',
+        'blue',
+        'yellow',
+        'white',
+        'black',
+        'orange',
+        'turquoise',
+        'violet',
+        'pink',
+        'brown',
+        'white',
+        'Sea Life',
+        'By The Sea',
+        'Stay At Home',
+        'Seascape',
+        'Sea',
+        'Maximalism',
+        'Monochrome',
+        'Background',
+        'Colorful',
+        'Colorful Background',
+        'Fruity',
+        'Pc Wallpapers',
+        'Space Wallpaper',
+        'Space',
+        'Phone Wallpaper',
+        'Iphone Wallpaper',
+        'Ride your bicyle',
+    ];
     const index = randomNumber(0, topic.length);
     console.debug({ index });
     return topic[index];
@@ -18,7 +51,7 @@ const RandomPicture = () => {
     const [error, setError] = useState(null);
     const [fetching, setFetching] = useState(true);
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchImage = async () => {
             const response = await fetch(
                 `https://api.pexels.com/v1/search?per_page=1&query=${randomSearchString()}`,

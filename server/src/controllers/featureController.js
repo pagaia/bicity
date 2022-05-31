@@ -61,6 +61,8 @@ exports.getFeaturesByBox = (fastify) => async (req, reply) => {
             },
         };
 
+        // TODO to be fixed to return all features when no categories is provided
+        // if (!categories?.length) {
         if (categories) {
             payload['properties.category'] = { $in: categories };
         }

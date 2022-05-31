@@ -7,7 +7,9 @@ const TotalFavorites = ({ userId }) => {
     const favorites = useSelector(selectTotalFavorites);
 
     useEffect(() => {
-        dispatch(fetchTotalFavorites({ userId }));
+        setTimeout(() => {
+            dispatch(fetchTotalFavorites({ userId }));
+        }, 2000);
     }, []);
 
     if (!userId) {
@@ -16,7 +18,7 @@ const TotalFavorites = ({ userId }) => {
     return (
         <>
             <h4>{favorites}</h4>
-            <p className="mb-0 text-muted">Total number of favorites</p>
+            <p className="mb-0 text-muted">Total favorites</p>
         </>
     );
 };

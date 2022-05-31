@@ -4,12 +4,11 @@ import { selectChoosenCategories, showModal } from '../../../store/categorySlice
 import {
     fetchFeaturesByBbox,
     fetchMultiFeatures,
+    resetFeatures,
     selectDatabases,
-    selectShowFavorites,
-    showFavorites,
-    toggleFavorites,
+    selectShowFavorites, toggleFavorites
 } from '../../../store/featureSlice';
-import { fetchOSMAmenities } from '../../../store/osmSlice';
+import { fetchOSMAmenities, resetAmenities } from '../../../store/osmSlice';
 import { DATABASES, MIN_ZOOM } from '../../../utils/constants';
 import ButtonToolbar from './ButtonToolbar';
 
@@ -46,9 +45,13 @@ const Toolbar = () => {
             if (databases.find((db) => db.name === DATABASES.BICITY)?.selected) {
                 dispatch(fetchMultiFeatures({ bbox }));
                 dispatch(fetchFeaturesByBbox({ bbox, categories, throttle: 10000 }));
+            } else {
+                dispatch(resetFeatures());
             }
             if (databases.find((db) => db.name === DATABASES.OSM)?.selected) {
                 fetchAmenity();
+            } else {
+                dispatch(resetAmenities());
             }
         }
     };
