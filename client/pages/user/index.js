@@ -6,7 +6,7 @@ const { useAuth } = require('../../hooks/useAuth');
 
 const UserInfo = () => {
     const { user, signOut } = useAuth();
-    console.log({ user, signOut });
+    console.debug({ user, signOut });
 
     if (user) {
         return (

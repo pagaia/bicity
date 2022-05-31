@@ -33,7 +33,7 @@ const IconButton = ({
                 _button.href = '#';
 
                 _button.addEventListener('click', () => {
-                    console.log(map.getCenter());
+                    console.debug(map.getCenter());
                     action();
                 });
 
@@ -44,7 +44,7 @@ const IconButton = ({
                 return _container;
             },
             onRemove: (map) => {
-                console.log(`Removing leaflet button ${title}`);
+                console.debug(`Removing leaflet button ${title}`);
                 helpDiv.remove();
             },
         });

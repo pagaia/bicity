@@ -9,12 +9,11 @@ const ButtonToolbar = ({
     position = 'topleft',
     defaultContainerClassName = 'leaflet-bar leaflet-control-fa-button custom-toolbar',
     containerClassName = '',
-    defaultIconClassName = 'fas',
     buttons,
 }) => {
     let helpDiv = null;
 
-    const addButton = (container, iconClassName, title, action) => {
+    const addButton = (container, defaultIconClassName = 'fas', iconClassName, title, action) => {
         const _button = L.DomUtil.create('a', '', container);
 
         _button.title = title;
@@ -29,6 +28,7 @@ const ButtonToolbar = ({
             action();
         });
 
+        console.debug({ defaultIconClassName });
         //Add the icon
         L.DomUtil.create('i', defaultIconClassName + ' ' + iconClassName, _button);
     };
@@ -42,7 +42,8 @@ const ButtonToolbar = ({
                 );
 
                 buttons.forEach((button) => {
-                    addButton(_container, button.iconClassName, button.title, button.action);
+                    const { defaultIconClassName, iconClassName, title, action } = button;
+                    addButton(_container, defaultIconClassName, iconClassName, title, action);
                 });
                 L.DomEvent.disableClickPropagation(_container);
 
@@ -50,7 +51,7 @@ const ButtonToolbar = ({
                 return _container;
             },
             onRemove: (map) => {
-                console.log(`Removing leaflet button ${title}`);
+                console.debug(`Removing leaflet button ${title}`);
                 helpDiv.remove();
             },
         });

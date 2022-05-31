@@ -69,7 +69,7 @@ exports.addMultiFeature = (fastify) => async (req, reply) => {
             reply
                 .code(409)
                 .type('application/json')
-                .send({ error: 'Duplicate Object. Please check you data' });
+                .send({ message: CONST.ERROR_MESSAGES.DUPLICATE });
         } else {
             throw boom.boomify(err);
         }

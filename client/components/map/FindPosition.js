@@ -13,11 +13,10 @@ const FindPosition = ({ position, setPosition }) => {
     // fly to position when position changes
     useEffect(() => {
         if (lat && lng) {
-            console.log({ position });
             map?.setView({ lat, lng }, 15);
         }
         return () => {
-            console.log('UnMounting ');
+            console.debug('UnMounting ');
         };
     }, [lat, lng]);
 
@@ -27,7 +26,6 @@ const FindPosition = ({ position, setPosition }) => {
                 const marker = markerRef.current;
                 if (marker != null) {
                     const pos = marker.getLatLng();
-                    console.log({ pos });
                     setPosition(pos);
                 }
             },

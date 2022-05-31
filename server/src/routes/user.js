@@ -1,5 +1,7 @@
 // Import our Controllers
 const userController = require('../controllers/userController');
+const authorize = require('../plugins/authorisation');
+const roles = require('../plugins/roles');
 
 const userProperties = {
     _id: { type: 'string' },
@@ -9,6 +11,7 @@ const userProperties = {
     username: { type: 'string' },
     locale: { type: 'string' },
     picture: { type: 'string' },
+    role: { type: 'string' },
     created_at: { type: 'string' },
     updated_at: { type: 'string' },
 };
@@ -17,7 +20,7 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/users/:id',
-        // preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: userController.getUserById(fastify),
         schema: {
             description: 'Get user details',
@@ -35,10 +38,19 @@ const routes = (fastify) => [
                     type: 'object',
                     properties: userProperties,
                 },
+                401: {
+                    description: 'Authorization error',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
+                    },
+                },
                 404: {
                     description: 'User not found.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -73,7 +85,9 @@ const routes = (fastify) => [
                 400: {
                     description: 'Bad request.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -88,7 +102,7 @@ const routes = (fastify) => [
         url: '/api/users/refresh-token',
         handler: userController.refreshToken(fastify),
         schema: {
-            description: 'Api to refresh the user token and geta new jwt token',
+            description: 'Api to refresh the user token and get a new jwt token',
             tags: ['user'],
             summary: 'Api to refresh the user token and geta new jwt token',
             response: {
@@ -100,12 +114,16 @@ const routes = (fastify) => [
                 400: {
                     description: 'Bad request.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
                 404: {
                     description: 'Token not found or expired',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -118,6 +136,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/users/revoke-token',
+        preHandler: [fastify.authenticate],
         handler: userController.revokeToken(fastify),
         schema: {
             description: 'Api to revoke the user token, normally when the user wants to logout',
@@ -138,6 +157,13 @@ const routes = (fastify) => [
                         message: { type: 'string', example: 'Cookie not found' },
                     },
                 },
+                401: {
+                    description: 'Authorization error',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
+                    },
+                },
             },
         },
         security: [
@@ -149,7 +175,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/users',
-        // preValidation: [fastify.authenticate],
+        // any user can create its own account
         handler: userController.addUser(fastify),
         schema: {
             description: 'Create a new user',
@@ -175,7 +201,9 @@ const routes = (fastify) => [
                 400: {
                     description: 'Bad request.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -188,7 +216,7 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/users',
-        // preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate, authorize(roles.Admin)],
         handler: userController.getUsers(fastify),
         schema: {
             description: 'Returns the list of users',
@@ -201,6 +229,13 @@ const routes = (fastify) => [
                     items: {
                         type: 'object',
                         properties: userProperties,
+                    },
+                },
+                401: {
+                    description: 'Authorization error',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
                     },
                 },
             },
@@ -217,7 +252,7 @@ const routes = (fastify) => [
     {
         method: 'PUT',
         url: '/api/users/:id',
-        // preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: userController.updateUser(fastify),
         schema: {
             description: 'Update selected user',
@@ -235,10 +270,19 @@ const routes = (fastify) => [
                     type: 'object',
                     properties: userProperties,
                 },
+                401: {
+                    description: 'Authorization error',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
+                    },
+                },
                 404: {
                     description: 'User not found.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -251,7 +295,7 @@ const routes = (fastify) => [
     {
         method: 'DELETE',
         url: '/api/users/:id',
-        // preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate, authorize(roles.Admin)],
         handler: userController.deleteUser(fastify),
         schema: {
             description: 'Delete user by ID',
@@ -267,12 +311,23 @@ const routes = (fastify) => [
                 200: {
                     description: 'Successful response',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
+                },
+                401: {
+                    description: 'Authorization error',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
                 404: {
                     description: 'User not found.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },

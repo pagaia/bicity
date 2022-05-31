@@ -76,7 +76,7 @@ const CategorySelection = ({ show, setOpen }) => {
             <Formik
                 initialValues={initialValues}
                 validate={(values) => {
-                    console.log(values);
+                    console.debug(values);
                 }}
                 onSubmit={async (values, { setSubmitting }) => {
                     setSubmitting(true);

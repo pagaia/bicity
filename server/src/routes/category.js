@@ -12,7 +12,6 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/categories',
-        // preValidation: [fastify.authenticate],
         handler: categoryController.getCategories(fastify),
         schema: {
             description: 'Get all category list',
@@ -37,9 +36,8 @@ const routes = (fastify) => [
     },
     {
         method: 'GET',
-        url: '/api/categories/:categoryId',
-        // preValidation: [fastify.authenticate],
-        handler: categoryController.getCategortById(fastify),
+        url: '/api/categories/:id',
+        handler: categoryController.getCategoryById(fastify),
         schema: {
             description: 'Get details of category',
             tags: ['category'],
@@ -47,7 +45,7 @@ const routes = (fastify) => [
             params: {
                 type: 'object',
                 properties: {
-                    categoryId: { type: 'string' },
+                    id: { type: 'string' },
                 },
             },
             response: {
@@ -59,7 +57,9 @@ const routes = (fastify) => [
                 404: {
                     description: 'Category  not found',
                     type: 'object',
-                    content: { message: 'Category not found' },
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -72,7 +72,7 @@ const routes = (fastify) => [
     {
         method: 'POST',
         url: '/api/categories',
-        preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: categoryController.addCategory(fastify),
         schema: {
             description: 'Add a new category',
@@ -95,13 +95,15 @@ const routes = (fastify) => [
                 400: {
                     description: 'Bad request.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
                 401: {
                     description: 'Authorization error',
                     type: 'object',
                     properties: {
-                        error: { type: 'string' },
+                        message: { type: 'string' },
                     },
                 },
             },

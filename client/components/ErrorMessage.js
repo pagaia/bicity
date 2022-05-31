@@ -8,7 +8,7 @@ const ErrorMessage = () => {
     if (!errors?.length) {
         return null;
     }
-    console.log({ errors });
+    console.debug({ errors });
     const listErrors = errors.map((error) => {
         return (
             <div

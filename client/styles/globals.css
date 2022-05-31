@@ -168,7 +168,6 @@ ul.vote-lnk li {
     margin-right: 1em;
 }
 
-
 .element .feature-icon {
     margin-right: 1em;
 }
@@ -392,6 +391,9 @@ a:hover.favorite i {
 .leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i {
     font-size: 16px;
 }
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i.favorite {
+    font-size: 23px;
+}
 
 .leaflet-bar.leaflet-control-fa-button.custom-toolbar.leaflet-control {
     border: 0;
@@ -408,4 +410,11 @@ a:hover.favorite i {
 .leaflet-bar.leaflet-control-fa-button.leaflet-control > a:focus,
 .leaflet-control-zoom.leaflet-bar.leaflet-control > a:hover {
     background: orange;
+}
+
+.fa-heart.favorite {
+    color: red;
+    position: relative;
+    left: -3px;
+    top: 3px;
 }

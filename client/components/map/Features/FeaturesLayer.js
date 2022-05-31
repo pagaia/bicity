@@ -1,22 +1,18 @@
-import L from 'leaflet';
 import { useContext } from 'react';
-import { LayersControl, Marker } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
-import { featureSelected, selectDatabases } from '../../../store/featureSlice';
+import { featureSelected, selectDatabases, selectShowFavorites } from '../../../store/featureSlice';
 import { DATABASES } from '../../../utils/constants';
 import buildIcon from '../../categories/CategoryIcon';
 
-const fontAwesomeIcon = L.divIcon({
-    html: '<i class="fas fa-map-pin fa-2x"></i>',
-    iconSize: [20, 20],
-    className: 'local-icon',
-});
 
 const FeaturesLayer = (props) => {
     const { data, position } = useContext(FeatureContext);
+    
     const showLayer =
+        !useSelector(selectShowFavorites) ?? // if favorite is displayed then hide this layer
         useSelector(selectDatabases)?.find((db) => db.name === DATABASES.BICITY)?.selected === true;
 
     const filteredData = data?.features;

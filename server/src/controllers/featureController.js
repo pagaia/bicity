@@ -12,7 +12,6 @@ exports.getFeatureNearMe = (fastify) => async (req, reply) => {
         const lng = req.query.lng || CONST.DEFAULT_LOCATION.LONG;
         const categories = req.query.categories?.split(',');
         const maxDistance = req.query.maxDistance || 1000;
-        console.log({ lat, lng, categories, maxDistance });
 
         let payload = {
             geometry: {
@@ -29,7 +28,6 @@ exports.getFeatureNearMe = (fastify) => async (req, reply) => {
             payload['properties.category'] = { $in: categories };
         }
 
-        console.log({ payload: JSON.stringify(payload) });
         const feature = await Feature.find(payload);
         return feature;
     } catch (err) {
@@ -110,7 +108,7 @@ exports.addFeature = (fastify) => async (req, reply) => {
             reply
                 .code(409)
                 .type('application/json')
-                .send({ error: 'Duplicate Object. Please check you data' });
+                .send({ message: CONST.ERROR_MESSAGES.DUPLICATE });
         } else {
             throw boom.boomify(err);
         }

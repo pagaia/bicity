@@ -12,21 +12,22 @@ const userSchema = new Schema(
         locale: { type: String },
         picture: { type: String },
         passwordHash: { type: String },
+        role: { type: String, default: 'User' },
     },
     { timestamps: true }
 );
 
 userSchema.methods.compareToken = function compareToken(providedToken) {
     return new Promise((resolve, reject) => {
-        // console.log({providedToken, accessToken: this.accessToken})
+        // console.debug({providedToken, accessToken: this.accessToken})
         resolve(providedToken === this.accessToken);
         // bcrypt.compare(providedToken, this.accessToken, (err, isMatch) => {
         //   if (err) {
         //     Boom.boomify(err);
         //     reject(err);
         //   }
-        //   console.log({ providedToken, accessToken: this.accessToken });
-        //   console.log({ isMatch });
+        //   console.debug({ providedToken, accessToken: this.accessToken });
+        //   console.debug({ isMatch });
         //   resolve(isMatch);
         // });
     });

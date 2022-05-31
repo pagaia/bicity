@@ -10,8 +10,8 @@ const mongoose = require('mongoose');
 // Connect to DB
 mongoose
     .connect(config.db.url, config.db.options)
-    .then(() => console.log('MongoDB connected…'))
-    .catch((err) => console.log(err));
+    .then(() => console.debug('MongoDB connected…'))
+    .catch((err) => console.debug(err));
 
 const server = require('./app')({
     config,

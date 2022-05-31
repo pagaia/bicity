@@ -13,7 +13,6 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/vote/feature/:featureId',
-        // preValidation: [fastify.authenticate],
         handler: voteController.getAvgVotePerFeature(fastify),
         schema: {
             description: 'Get average vote per feature',
@@ -37,7 +36,9 @@ const routes = (fastify) => [
                 404: {
                     description: 'Feature not found.',
                     type: 'object',
-                    content: { message: 'Feature not found or vote not available' },
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },
@@ -50,7 +51,8 @@ const routes = (fastify) => [
     {
         method: 'GET',
         url: '/api/vote/:featureId/:userId',
-        preValidation: [fastify.authenticate],
+        // TODO add check for Admin role or owner
+        preHandler: [fastify.authenticate],
         handler: voteController.getVoteByUserPerFeature(fastify),
         schema: {
             description: 'Get vote per feature per User',
@@ -72,7 +74,7 @@ const routes = (fastify) => [
                 404: {
                     description: 'Feature or user not found',
                     type: 'object',
-                    content: { message: 'Feature or user not found' },
+                    properties: { message: { type: 'string' } },
                 },
             },
         },
@@ -86,7 +88,7 @@ const routes = (fastify) => [
         method: 'POST',
         url: '/api/vote/:featureId/:userId',
         // TODO : verify logged user can update only its own votes
-        preValidation: [fastify.authenticate],
+        preHandler: [fastify.authenticate],
         handler: voteController.addVote(fastify),
         schema: {
             description: 'Add a vote per feature by the user',
@@ -115,7 +117,9 @@ const routes = (fastify) => [
                 400: {
                     description: 'Bad request.',
                     type: 'object',
-                    content: {},
+                    properties: {
+                        message: { type: 'string' },
+                    },
                 },
             },
         },

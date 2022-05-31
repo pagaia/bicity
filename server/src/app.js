@@ -10,6 +10,7 @@ const favoriteRoutes = require('./routes/favorite');
 // Import Swagger Options
 const swagger = require('./config/swagger');
 const { validateToken } = require('./utility/security');
+const { ERROR_MESSAGES } = require('./utility/constants');
 
 function build(opts = {}) {
     // Require the framework and instantiate it
@@ -43,7 +44,7 @@ function build(opts = {}) {
     fastify.register(require('fastify-swagger'), swagger.options);
 
     fastify.decorate('notFound', (request, reply) => {
-        reply.code(404).type('application/json').send({ error: 'Not Found' });
+        reply.code(404).type('application/json').send({ message: ERROR_MESSAGES.ENTITY_NOT_FOUND });
     });
 
     fastify.setNotFoundHandler(fastify.notFound);
@@ -63,7 +64,7 @@ function build(opts = {}) {
         // Log error
         this.log.error(error);
         // Send error response
-        reply.status(500).send({ error: 'Server Error', message: error });
+        reply.status(500).send({ message: error });
     });
 
     // function to declare all routes at the end after registration

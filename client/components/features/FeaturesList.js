@@ -13,9 +13,9 @@ const FeaturesList = ({ map }) => {
     }
 
     const moveTo = (position) => {
-        console.log({ position });
+        console.debug({ position });
         const [lng, lat] = position?.coordinates;
-        console.log({ lat, lng });
+        console.debug({ lat, lng });
         map?.setView({ lat, lng }, 18);
     };
 

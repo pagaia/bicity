@@ -1,9 +1,18 @@
 import Image from 'next/image';
-import Favorites from '../features/Favorites';
+import { useDispatch } from 'react-redux';
+import { resetFavorites } from '../../store/featureSlice';
+import TotalFavorites from '../features/TotalFavorites';
 
 const UserProfile = ({ user, signOut }) => {
     const { profile } = user;
-    console.log({ user });
+    console.debug({ user });
+    const dispatch = useDispatch();
+
+    const handleLogOut = () => {
+        signOut();
+        dispatch(resetFavorites());
+    };
+
     return (
         <div className="text-center card-box">
             <div className="member-card pt-2 pb-2">
@@ -27,6 +36,9 @@ const UserProfile = ({ user, signOut }) => {
                         </span>
                     </p>
                 </div>
+                {/* <button onClick={() => dispatch(getAllUsers())} className="btn btn-primary">
+                    fetch users
+                </button> */}
                 {/* <ul className="social-links list-inline">
                     <li className="list-inline-item">
                         <a
@@ -64,7 +76,7 @@ const UserProfile = ({ user, signOut }) => {
                 </ul> */}
                 <button
                     type="button"
-                    onClick={signOut}
+                    onClick={handleLogOut}
                     className="btn btn-danger mt-3 btn-rounded waves-effect w-md waves-light">
                     Logout
                 </button>
@@ -77,9 +89,7 @@ const UserProfile = ({ user, signOut }) => {
                     <div className="row">
                         <div className="col-4">
                             <div className="mt-3">
-                                <h4>2563</h4>
-                                <p className="mb-0 text-muted">Wallets Balance</p>
-                                <Favorites userId={profile._id} />
+                               <TotalFavorites userId={profile?._id}/>
                             </div>
                         </div>
                         <div className="col-4">

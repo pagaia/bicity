@@ -34,7 +34,7 @@ const validateNewFeature = (values) => {
     if (!category?.trim()) {
         errors.category = 'Required';
     }
-    console.log(errors);
+    console.debug(errors);
 
     return errors;
 };

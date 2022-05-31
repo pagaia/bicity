@@ -18,6 +18,10 @@ const ZoomCenter = (props) => {
         map.on('zoomend', handleZoomEventEnd);
     }, [map]);
 
+    if (process.env.NODE_ENV === 'production') {
+        return null;
+    }
+
     return (
         <div className="leaflet-bottom leaflet-left">
             <div className="bg-light ms-5">

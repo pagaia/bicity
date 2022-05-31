@@ -6,8 +6,9 @@ const boom = require('boom');
 const Favorite = require('../models/favorite');
 const Feature = require('../models/feature');
 const User = require('../models/user');
+const { ERROR_MESSAGES } = require('../utility/constants');
 
-// Get the list of favorite features per user
+// Get the list of favorite features per user and bbox
 exports.getFavoritesFeatures = (fastify) => async (req, reply) => {
     try {
         const { userId } = req.params;
@@ -15,12 +16,25 @@ exports.getFavoritesFeatures = (fastify) => async (req, reply) => {
         const favorites = await Favorite.findOne({ user: userId });
 
         if (!favorites) {
-            reply.code(404).type('application/json').send({ error: 'User Not Found' });
+            reply.code(404).type('application/json').send({ message: 'User Not Found' });
             return;
         }
         await favorites.populate({ path: 'features', model: 'feature' });
 
         return favorites.features;
+    } catch (err) {
+        throw boom.boomify(err);
+    }
+};
+
+// Get total number of favorite features per user
+exports.getTotalFavorites = (fastify) => async (req, reply) => {
+    try {
+        const { userId } = req.params;
+
+        const favorites = await Favorite.findOne({ user: userId });
+
+        return { favorites: favorites?.features?.length };
     } catch (err) {
         throw boom.boomify(err);
     }
@@ -33,13 +47,13 @@ exports.addFavorite = (fastify) => async (req, reply) => {
 
         const user = await User.findById(userId);
         if (!user) {
-            reply.code(404).type('application/json').send({ error: 'User Not Found' });
+            reply.code(404).type('application/json').send({ message: 'User Not Found' });
             return;
         }
 
         const feature = await Feature.findById(featureId);
         if (!feature) {
-            reply.code(404).type('application/json').send({ error: 'Feature Not Found' });
+            reply.code(404).type('application/json').send({ message: 'Feature Not Found' });
             return;
         }
 
@@ -81,7 +95,10 @@ exports.removeFavorite = (fastify) => async (req, reply) => {
         });
 
         if (!favorite) {
-            reply.code(404).type('application/json').send({ error: 'User Not Found for favorite' });
+            reply
+                .code(404)
+                .type('application/json')
+                .send({ message: ERROR_MESSAGES.ENTITY_NOT_FOUND });
             return;
         }
 

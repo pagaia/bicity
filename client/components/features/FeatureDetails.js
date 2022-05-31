@@ -20,10 +20,10 @@ const FeatureDetails = (props) => {
     const [fetching, setFetching] = useState(true);
     const { position } = usePosition();
 
-    console.log({ position, user });
+    console.debug({ position, user });
     useEffect(() => {
         const fetchFeatureDetails = async () => {
-            console.log({ featureId });
+            console.debug({ featureId });
             if (featureId) {
                 const response = await axios(`/api/feature/${featureId}`);
                 const { data } = response;

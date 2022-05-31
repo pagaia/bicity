@@ -8,10 +8,10 @@ const getCurrentPosition = () => {
     function success(pos) {
         var crd = pos.coords;
 
-        console.log('Your current position is:');
-        console.log(`Latitude : ${crd.latitude}`);
-        console.log(`Longitude: ${crd.longitude}`);
-        console.log(`More or less ${crd.accuracy} meters.`);
+        console.debug('Your current position is:');
+        console.debug(`Latitude : ${crd.latitude}`);
+        console.debug(`Longitude: ${crd.longitude}`);
+        console.debug(`More or less ${crd.accuracy} meters.`);
     }
 
     function error(err) {

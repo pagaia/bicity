@@ -33,15 +33,25 @@ export const categorySlice = createSlice({
             })
             .addCase(fetchCategories.fulfilled, (state, action) => {
                 const { requestId } = action.meta;
-                console.log({ action });
+                console.debug({ action });
 
                 const savedCategories = JSON.parse(localStorage.getItem('categories') ?? '[]');
                 if (state.loading === 'pending' && state.currentRequestId === requestId) {
                     state.loading = 'idle';
-                    state.list = action.payload.map((category) => ({
+                    const sorted = action.payload.map((category) => ({
                         ...category,
                         selected: savedCategories?.[category._id],
                     }));
+                    sorted?.sort((a, b) => {
+                        if (a.name < b.name) {
+                            return -1;
+                        }
+                        if (a.name > b.name) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    state.list = sorted;
                     state.currentRequestId = undefined;
                 }
             })

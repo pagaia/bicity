@@ -1,7 +1,7 @@
 import { Marker } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { useDispatch, useSelector } from 'react-redux';
-import { featureSelected, selectDatabases } from '../../../store/featureSlice';
+import { featureSelected, selectDatabases, selectShowFavorites } from '../../../store/featureSlice';
 import { selectAmenities } from '../../../store/osmSlice';
 import { DATABASES } from '../../../utils/constants';
 import buildIcon from '../../categories/CategoryIcon';
@@ -10,6 +10,7 @@ const OsmFeaturesLayer = (props) => {
     const data = useSelector(selectAmenities);
     const dispatch = useDispatch();
     const showLayer =
+        !useSelector(selectShowFavorites) ?? // if favorite is displayed then hide this layer
         useSelector(selectDatabases)?.find((db) => db.name === DATABASES.OSM)?.selected === true;
 
     const filteredData = data ?? [];
