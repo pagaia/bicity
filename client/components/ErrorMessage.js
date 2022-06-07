@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { removeError, selectErrors } from '../store/errorSlice';
+import ReactTimeAgo from 'react-time-ago';
 
 const ErrorMessage = () => {
     const errors = useSelector(selectErrors);
@@ -12,20 +13,24 @@ const ErrorMessage = () => {
     const listErrors = errors.map((error) => {
         return (
             <div
-                key={error.id}
-                className="alert alert-danger alert-dismissible fade show"
-                role="alert">
-                <h4 className="alert-heading">Ops something when wrong!</h4>
-                <p>Please check the error message:</p>
-                <hr />
-                <p className="mb-0">{JSON.stringify(error)}</p>
-                <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="alert"
-                    aria-label="Close"
-                    onClick={() => dispatch(removeError({ id: error.id }))}
-                />
+                className="toast show"
+                role="alert"
+                aria-live="assertive"
+                aria-atomic="true"
+                key={error.id}>
+                <div className="toast-header">
+                    <strong className="me-auto">Error</strong>
+                    <small>
+                        <ReactTimeAgo date={new Date(error.time)} locale="en-US" />
+                    </small>
+                    <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="toast"
+                        aria-label="Close"
+                        onClick={() => dispatch(removeError({ id: error.id }))}></button>
+                </div>
+                <div className="toast-body">{error.message}</div>
             </div>
         );
     });

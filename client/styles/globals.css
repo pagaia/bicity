@@ -127,18 +127,19 @@ ul.vote-lnk li {
 
 #error-message {
     position: fixed;
-    bottom: 50px;
-    right: 50px;
-    z-index: 999;
+    bottom: 70px;
+    right: 5px;
+    z-index: 1090; /* over model*/
 }
-
 
 @media (min-width: 600px) {
     .about {
         margin: 0;
     }
+    #error-message {
+        right: 50px;
+    }
 }
-
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
@@ -312,13 +313,6 @@ table th {
 
 table tbody tr:nth-child(odd) {
     background-color: rgba(237, 242, 247, 1);
-}
-
-.screen-size {
-    position: fixed;
-    z-index: 9999;
-    background: darkgray;
-    padding: 5px;
 }
 
 .beta-version {

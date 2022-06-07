@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { ROUTES } from '../../utils/routes';
-import { ScreenSize } from './ScreenSize';
 
 const Header = (props) => {
     return (
@@ -9,8 +8,7 @@ const Header = (props) => {
             <Head>
                 <title>BiCity - city for cyclists</title>
             </Head>
-            <div className="">
-                <ScreenSize/>
+            <div>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-bottom  menu">
                     <div className="container">
                         <Link href={ROUTES.HOME} className="navbar-brand">
@@ -48,7 +46,7 @@ const Header = (props) => {
                         {/* <Link href={ROUTES.SETTINGS}>
                             <a>
                                 <div>
-                                    <i class="fas fa-cog  fa-1-5x"></i>
+                                    <i className="fas fa-cog  fa-1-5x"></i>
                                 </div>
                                 <div className="menu-txt">Settings</div>
                             </a>

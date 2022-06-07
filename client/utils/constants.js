@@ -41,3 +41,7 @@ export const DATABASES = {
     BICITY: 'bicity',
     OSM: 'osm',
 };
+
+export const ERROR_MESSAGE = {
+    LOGIN_FIRST: 'Please login first in order to use this feature',
+};

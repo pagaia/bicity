@@ -182,11 +182,42 @@ test('test APIs', async (t) => {
         t.end();
     });
 
+      // login user - get JWT token
+      t.test('Login user - without remember me', async (t) => {
+        const payload = {
+            username: 'bikers@bicity.eu',
+            password: 'mypassword',
+        };
+
+        const response = await app.inject({
+            method: 'POST',
+            url: '/api/users/login',
+            payload,
+        });
+
+        const cookies = response.cookies;
+        t.equal(cookies.length, 0, ' - Set 0 cookie');
+      
+        // save JWT
+        authorization = response.headers?.authorization;
+        t.match(authorization, /Bearer .*\..*\..*/, '- JWT found');
+
+        const json = await response.json();
+        user = json;
+        t.equal(response.statusCode, 200, ' - Logged in');
+        t.same(json.username, payload.username, '- get username');
+
+        // end test
+        t.end();
+    });
+
+
     // login user - get JWT token
     t.test('Login user', async (t) => {
         const payload = {
             username: 'bikers@bicity.eu',
             password: 'mypassword',
+            rememberme: true
         };
 
         const response = await app.inject({
@@ -988,7 +1019,6 @@ test('test APIs', async (t) => {
         });
 
         const json = await response.json();
-        console.log({json})
         feature = json;
         t.equal(response.statusCode, 200, ' - Get 200');
         t.same(json.length, 1, '- get 1 point');
@@ -1157,6 +1187,7 @@ test('test APIs', async (t) => {
         const payload = {
             username: 'admin',
             password: 'password',
+            rememberme: true
         };
 
         const response = await app.inject({

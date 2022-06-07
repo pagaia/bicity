@@ -29,8 +29,10 @@ const PrivacyPolicy = () => {
                 <h2 id="data-controller">Data controller </h2>
                 <p>
                     The data controller is <b>QBQUITY Sprl</b>
-                    (we/us). You can contact us here: Address: rue Général Molitor 14 - 1040
-                    Brussels (Brussels) Belgium Email: legal@bicity.info
+                    (we/us). You can contact us here: <br/>
+                    Address: rue Général Molitor 14 - 1040
+                    Brussels (Brussels) Belgium<br/> 
+                    Email: legal@bicity.info
                 </p>
                 <h2 id="processing">
                     Lawfulness of processing (why do we store and process personal data?)

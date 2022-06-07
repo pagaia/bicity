@@ -43,7 +43,7 @@ exports.getUserById = (fastify) => async (req, reply) => {
 // Verify User Login
 exports.verifyUser = (fastify) => async (req, reply) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, rememberme } = req.body;
         const user = await User.findOne({ username });
 
         if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
@@ -56,13 +56,18 @@ exports.verifyUser = (fastify) => async (req, reply) => {
             req.ip
         );
 
-        // send back User info, jwtToken in header, and refreshToken in the cookie
-        return reply
-            .header('Authorization', `Bearer ${jwtToken}`)
-            .setCookie(CONST.COOKIE_REFRESH_TOKEN, refreshToken, {
-                expires: new Date(Date.now() + CONST.ONE_WEEK_MILLISECONDS), // expires in 7 days
-            })
-            .send(userInfo);
+        // send back User info, jwtToken in header, and refreshToken in the cookie if rememberme is selected
+        if (rememberme) {
+            return reply
+                .header('Authorization', `Bearer ${jwtToken}`)
+                .setCookie(CONST.COOKIE_REFRESH_TOKEN, refreshToken, {
+                    expires: new Date(Date.now() + CONST.ONE_WEEK_MILLISECONDS), // expires in 7 days
+                })
+                .send(userInfo);
+        }
+
+        // send back authorisation only without cookie
+        return reply.header('Authorization', `Bearer ${jwtToken}`).send(userInfo);
     } catch (err) {
         throw boom.boomify(err);
     }

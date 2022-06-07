@@ -6,7 +6,7 @@ export const errorSlice = createSlice({
     initialState: { errors: [] }, // loading: idle and pending
     reducers: {
         showError: (state, action) => {
-            const error = { ...action.payload, id: nanoid(5) };
+            const error = { ...action.payload, time: new Date().toJSON(), id: nanoid(5) };
             state.errors.push(error);
         },
         removeError: (state, action) => {

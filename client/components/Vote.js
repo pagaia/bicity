@@ -2,7 +2,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MAX_VOTE_FEATURE } from '../../server/src/utility/constants';
+import { showError } from '../store/errorSlice';
 import { fetchVote, selectFeatureVote } from '../store/featureSlice';
+import { ERROR_MESSAGE } from '../utils/constants';
 
 const Vote = ({ featureId, userId }) => {
     const dispatch = useDispatch();
@@ -41,7 +43,7 @@ const Vote = ({ featureId, userId }) => {
             setUserVote(data);
             dispatch(fetchVote({ featureId }));
         } else {
-            alert('please login first');
+            dispatch(showError({ message: ERROR_MESSAGE.LOGIN_FIRST }));
         }
     };
 

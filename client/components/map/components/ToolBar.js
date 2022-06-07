@@ -1,20 +1,23 @@
 import { useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../../../hooks/useAuth';
 import { selectChoosenCategories, showModal } from '../../../store/categorySlice';
+import { showError } from '../../../store/errorSlice';
 import {
     fetchFeaturesByBbox,
     fetchMultiFeatures,
     resetFeatures,
     selectDatabases,
-    selectShowFavorites, toggleFavorites
+    selectShowFavorites,
+    toggleFavorites,
 } from '../../../store/featureSlice';
 import { fetchOSMAmenities, resetAmenities } from '../../../store/osmSlice';
-import { DATABASES, MIN_ZOOM } from '../../../utils/constants';
+import { DATABASES, ERROR_MESSAGE, MIN_ZOOM } from '../../../utils/constants';
 import ButtonToolbar from './ButtonToolbar';
 
 const Toolbar = () => {
     const map = useMap();
-
+    const { user } = useAuth();
     const dispatch = useDispatch();
 
     const setPosition = () => {
@@ -56,6 +59,15 @@ const Toolbar = () => {
         }
     };
 
+    const handleToggleFavorites = () => {
+        const userId = user?.profile?._id;
+        if (!userId) {
+            dispatch(showError({ message: ERROR_MESSAGE.LOGIN_FIRST }));
+        } else {
+            dispatch(toggleFavorites());
+        }
+    };
+    
     const buildButtons = (categories) => {
         console.debug({ buildButtons: categories });
         return [
@@ -78,7 +90,7 @@ const Toolbar = () => {
                 defaultIconClassName: showFavorites ? 'fas' : 'far',
                 iconClassName: 'fa-heart favorite',
                 title: 'Show/hide favorites',
-                action: () => dispatch(toggleFavorites()),
+                action: handleToggleFavorites,
             },
         ];
     };

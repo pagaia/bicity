@@ -3,9 +3,9 @@ import { ErrorMessage, Field } from 'formik';
 const InputField = ({ name, label, errors, touched, placeholder, type = 'text' }) => {
     const status = touched?.[name] ? (errors?.[name] ? 'is-invalid' : 'is-valid') : '';
     return (
-        <div className="form-outline mb-4">
+        <div className="form-outline mb-3">
             {label && (
-                <label className="form-label" htmlFor={name}>
+                <label className="" htmlFor={name}>
                     {label}
                 </label>
             )}

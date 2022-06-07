@@ -73,6 +73,7 @@ const routes = (fastify) => [
                 properties: {
                     username: { type: 'string' },
                     password: { type: 'string' },
+                    rememberme: { type: 'boolean' },
                 },
                 required: ['password', 'username'],
             },

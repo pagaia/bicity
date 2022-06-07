@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { DATABASES } from '../utils/constants';
 
-// First, create the thunk
 export const fetchVote = createAsyncThunk(
     'vote/fetchByFeatureId',
     async ({ featureId }, thunkAPI) => {

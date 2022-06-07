@@ -2,10 +2,10 @@
 import axios from 'axios';
 import Router from 'next/router';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { logOut, revokeToken } from '../store/userSlice';
 import { useHash, verifyUserLogin } from '../utils/common.functions';
 import usePrevious from './usePrevious';
-import { useDispatch } from 'react-redux';
-import { revokeToken } from '../store/userSlice';
 
 const authContext = createContext();
 
@@ -70,7 +70,11 @@ const openSignInWindow = (url, name) => {
 let axiosAuthentication;
 
 const addAuthentication = (authorization) => {
+    // first remove interceptor
+    removeAuthentication();
+
     // Add a request interceptor
+    console.debug({ addAuthentication: authorization });
     axiosAuthentication = axios.interceptors.request.use((req) => {
         // add token only for our Backend
         if (BACKEND_API_REG.test(req.url)) {
@@ -234,6 +238,7 @@ function useProvideAuth() {
 
     const signOut = () => {
         setUser(null);
+        dispatch(logOut());
         dispatch(revokeToken());
     };
 

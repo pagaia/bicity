@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { showError } from '../../store/errorSlice';
 import { selectFavoritesFeatures, setFavorite, removeFavorite } from '../../store/featureSlice';
+import { ERROR_MESSAGE } from '../../utils/constants';
 
 const Favorite = ({ userId, featureId }) => {
-    if (!userId || !featureId) {
+    if (!featureId) {
         return null;
     }
     const dispatch = useDispatch();
@@ -11,13 +13,17 @@ const Favorite = ({ userId, featureId }) => {
 
     const handleClick = (e) => {
         e?.preventDefault();
-        isFavorite
-            ? dispatch(removeFavorite({ userId, featureId }))
-            : dispatch(setFavorite({ userId, featureId }));
+        if (!userId) {
+            dispatch(showError({ message: ERROR_MESSAGE.LOGIN_FIRST }));
+        } else {
+            isFavorite
+                ? dispatch(removeFavorite({ userId, featureId }))
+                : dispatch(setFavorite({ userId, featureId }));
+        }
     };
     return (
         <a href="#likeit" onClick={handleClick} className="favorite">
-            {isFavorite ? <i class="fas fa-heart"></i> : <i class="far fa-heart"></i>}
+            {isFavorite ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}
         </a>
     );
 };

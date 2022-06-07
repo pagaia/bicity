@@ -16,6 +16,7 @@ exports.COOKIE_REFRESH_TOKEN = '__Host-refreshToken';
 exports.ERROR_MESSAGES = {
     UNAUTHORIZED: 'No Authorization was found in request.headers',
     TOKEN_INVALID: 'Authorization token is invalid: invalid token',
+    TOKEN_EXPIRED: 'Authorization token expired',
     FORBIDDEN: 'You are not allowed to access this information',
     COOKIE_TOKEN_MISSING: 'The cookie token is missing',
     COOKIE_TOKEN_INVALID: 'The cookie token is invalid',

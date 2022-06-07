@@ -1,3 +1,5 @@
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en.json';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import Category from '../components/categories/Category';
@@ -7,9 +9,17 @@ import Favorites from '../components/features/Favorites';
 import BetaVersion from '../components/layout/BetaVersion';
 import Layout from '../components/layout/Layout';
 import RefreshToken from '../components/user/RefreshToken';
+import Interceptors from '../hooks/Interceptors';
 import { ProvideAuth } from '../hooks/useAuth';
 import store from '../store/reducers';
 import '../styles/globals.css';
+
+
+// initialiase TimeAgo library
+TimeAgo.addDefaultLocale(en);
+
+// define interceptor for session expiration
+Interceptors(store);
 
 function MyApp({ Component, pageProps }) {
     return (
@@ -28,7 +38,6 @@ function MyApp({ Component, pageProps }) {
                     <Category />
                     <DatabaseLoad />
                     <Favorites />
-
                     <Layout>
                         <ErrorMessage />
                         <Component {...pageProps} />

@@ -17,7 +17,7 @@ const Direction = ({ lat, long }) => {
     return (
         <div className="feature-prop">
             <span className="feature-icon">
-                <i class="fas fa-directions"></i>
+                <i className="fas fa-directions"></i>
             </span>
             <span className="txt">
                 <ExternalLink url={url}>Get directions</ExternalLink>

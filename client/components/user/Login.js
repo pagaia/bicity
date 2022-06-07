@@ -1,11 +1,12 @@
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import InputField from '../form/InputField';
 import Link from 'next/link';
-import axios from 'axios';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../../hooks/useAuth';
+import { loginUser, selectUser } from '../../store/userSlice';
 import { ROUTES } from '../../utils/routes';
-import Footer from '../layout/Footer';
+import InputField from '../form/InputField';
+import SwitchField from '../form/SwitchField';
 
 const validateNewUser = (values) => {
     const errors = {};
@@ -28,18 +29,14 @@ const Login = () => {
     const [wasValidated, setWasValidated] = useState(false);
     const { googleSignIn, oauthFacebookSignIn, oauthTwitterSignIn, setUser } = useAuth();
 
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+    if (user) {
+        setUser(user);
+    }
+
     const submit = async (values) => {
-        const body = JSON.stringify(values);
-        const headers = { 'Content-Type': 'application/json' };
-        const response = await axios.post('/api/users/login', body, { headers });
-
-        // get the authorization from the header
-        const { authorization } = response.headers;
-        // get the user profile from the body
-        const { data } = response;
-
-        // store user profile and JWT for future calls
-        setUser({ profile: data, authorization });
+        dispatch(loginUser({ values }));
     };
 
     return (
@@ -74,10 +71,11 @@ const Login = () => {
                                 <Formik
                                     initialValues={{}}
                                     validate={validateNewUser}
-                                    onSubmit={async (values, { setSubmitting }) => {
+                                    onSubmit={async (values, { setSubmitting, resetForm }) => {
                                         setSubmitting(true);
                                         setWasValidated?.(true);
                                         await submit(values);
+                                        resetForm();
                                         setSubmitting(false);
                                     }}>
                                     {({ isSubmitting, errors, touched, values }) => (
@@ -112,6 +110,12 @@ const Login = () => {
                                                     placeholder="Password"
                                                 />
                                             </div>
+
+                                            <SwitchField
+                                                description="Remember me"
+                                                name="rememberme"
+                                                className="text-start mb-3"
+                                            />
 
                                             <div className="form-group">
                                                 <button

@@ -45,10 +45,10 @@ const CategorySelection = ({ show, setOpen }) => {
 
     return (
         <Modal show={show}>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+                <li className="nav-item" role="presentation">
                     <button
-                        class={`nav-link ${
+                        className={`nav-link ${
                             showTab === MAP_TAB_SETTINGS.CATEGORIES ? 'active' : ''
                         }`}
                         id="categories-tab"
@@ -60,9 +60,9 @@ const CategorySelection = ({ show, setOpen }) => {
                         Categories
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li className="nav-item" role="presentation">
                     <button
-                        class={`nav-link ${showTab === MAP_TAB_SETTINGS.DATABASES ? 'active' : ''}`}
+                        className={`nav-link ${showTab === MAP_TAB_SETTINGS.DATABASES ? 'active' : ''}`}
                         id="databases-tab"
                         type="button"
                         role="tab"

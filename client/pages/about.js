@@ -22,7 +22,10 @@ const About = () => {
                             city.
                         </p>
                         <p>You can save your favorites places and show all together in the map.</p>
-                        <p>Don't forget to give your vote for each place. Other cyclists will know about it.</p>
+                        <p>
+                            Don't forget to give your vote for each place. Other cyclists will know
+                            about it.
+                        </p>
                     </div>
                 </div>
             </div>
