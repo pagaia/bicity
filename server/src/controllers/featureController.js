@@ -100,8 +100,8 @@ exports.getAllFeatures = (fastify) => async (req, reply) => {
 // Add a new feature
 exports.addFeature = (fastify) => async (req, reply) => {
     try {
-        const feature = new Feature(req.body);
-
+        const payload = { ...req.body, updatedBy: req.user.user._id };
+        const feature = new Feature(payload);
         const result = await feature.save();
 
         reply.code(201).send(result);
@@ -114,5 +114,17 @@ exports.addFeature = (fastify) => async (req, reply) => {
         } else {
             throw boom.boomify(err);
         }
+    }
+};
+
+exports.getTotalFeatureCreated = (fastify) => async (req, reply) => {
+    try {
+        const { userId } = req.params;
+
+        const features = await Feature.countDocuments({ updatedBy: userId });
+
+        return { features };
+    } catch (err) {
+        throw boom.boomify(err);
     }
 };

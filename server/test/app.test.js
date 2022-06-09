@@ -182,8 +182,8 @@ test('test APIs', async (t) => {
         t.end();
     });
 
-      // login user - get JWT token
-      t.test('Login user - without remember me', async (t) => {
+    // login user - get JWT token
+    t.test('Login user - without remember me', async (t) => {
         const payload = {
             username: 'bikers@bicity.eu',
             password: 'mypassword',
@@ -197,7 +197,7 @@ test('test APIs', async (t) => {
 
         const cookies = response.cookies;
         t.equal(cookies.length, 0, ' - Set 0 cookie');
-      
+
         // save JWT
         authorization = response.headers?.authorization;
         t.match(authorization, /Bearer .*\..*\..*/, '- JWT found');
@@ -211,13 +211,12 @@ test('test APIs', async (t) => {
         t.end();
     });
 
-
     // login user - get JWT token
     t.test('Login user', async (t) => {
         const payload = {
             username: 'bikers@bicity.eu',
             password: 'mypassword',
-            rememberme: true
+            rememberme: true,
         };
 
         const response = await app.inject({
@@ -439,6 +438,11 @@ test('test APIs', async (t) => {
                 category: 'bar',
                 capacity: 10,
                 description: 'simple description',
+                tpl: 'Metro B Roma-Lido linee superficie',
+                space_for_disables: 20,
+                total: 962,
+                hours: '05.15 - 00.15 D - G e 05.15 - 00.15 V - S',
+                rate: '1,50 12h -  2,50 16h',
             },
             geometry: {
                 type: 'Point',
@@ -461,6 +465,11 @@ test('test APIs', async (t) => {
         // verify properties
         t.same(json.properties, payload.properties, '- get properties');
         t.same(json.geometry, payload.geometry, '- get geometry');
+        t.same(json.tpl, payload.tpl, '- get tpl');
+        t.same(json.space_for_disables, payload.space_for_disables, '- get space_for_disables');
+        t.same(json.total, payload.total, '- get total');
+        t.same(json.hours, payload.hours, '- get hours');
+        t.same(json.rate, payload.rate, '- get rate');
 
         // end test
         t.end();
@@ -813,6 +822,26 @@ test('test APIs', async (t) => {
         t.end();
     });
 
+    t.test('GET Total feature added by User', async (t) => {
+        const url = `/api/feature/${user._id}/totalNumber`;
+
+        const response = await app.inject({
+            method: 'GET',
+            url,
+            headers: {
+                authorization,
+            },
+        });
+
+        const json = await response.json();
+
+        t.equal(response.statusCode, 200, ' - Get 200');
+        t.same(json.features, 2, '- get 2 features');
+
+        // end test
+        t.end();
+    });
+
     // test add a favorite feature for fake feature
     t.test('POST a new favorite feature - fake feature', async (t) => {
         const url = `/api/favorite/${user._id}/6269b7a1c76f7d54c2314522`;
@@ -828,6 +857,7 @@ test('test APIs', async (t) => {
         const json = await response.json();
 
         t.equal(response.statusCode, 404, ' - Get 404');
+
         t.same(json.message, 'Feature Not Found', '- get error');
 
         // end test
@@ -1187,7 +1217,7 @@ test('test APIs', async (t) => {
         const payload = {
             username: 'admin',
             password: 'password',
-            rememberme: true
+            rememberme: true,
         };
 
         const response = await app.inject({

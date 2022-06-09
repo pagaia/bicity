@@ -27,7 +27,7 @@ const MainMap = (props) => {
         dispatch(showModal(toggle));
     };
 
-    const height = isMobile() ? 'calc(100vh - 110px)' : 'calc(100vh - 50px)';
+    const height = isMobile() ? 'calc(100vh - 110px)' : 'calc(100vh - 60px)';
 
     const displayMap = useMemo(
         () => (

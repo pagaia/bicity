@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { resetFavorites } from '../../store/featureSlice';
 import TotalFavorites from '../features/TotalFavorites';
+import TotalFeatures from '../features/TotalFeatures';
 import TotalVotes from '../features/TotalVotes';
 
 const UserProfile = ({ user, signOut }) => {
@@ -88,6 +89,11 @@ const UserProfile = ({ user, signOut }) => {
                 </button> */}
                 <div className="mt-4">
                     <div className="row">
+                        <div className="col-4">
+                            <div className="mt-3">
+                                <TotalFeatures userId={profile?._id} />
+                            </div>
+                        </div>
                         <div className="col-4">
                             <div className="mt-3">
                                 <TotalFavorites userId={profile?._id} />

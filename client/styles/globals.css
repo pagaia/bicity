@@ -163,7 +163,8 @@ ul.vote-lnk li {
     margin-right: 1em;
 }
 
-.element .feature-icon {
+.element .feature-icon,
+.card .feature-icon {
     margin-right: 1em;
 }
 .feature-prop {

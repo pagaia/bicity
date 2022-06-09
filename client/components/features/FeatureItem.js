@@ -3,6 +3,7 @@ import RandomPicture from '../ui/RandomPicture';
 import Vote from '../Vote';
 import Direction from './Direction';
 import Favorite from './Favorite';
+import FeatureProp from './FeatureProps/Hours';
 import Phone from './FeatureProps/Phone';
 import Website from './FeatureProps/Website';
 
@@ -20,7 +21,7 @@ const FeatureItem = ({ feature, onClick }) => {
     const userId = user?.profile?._id;
 
     return (
-        <div className="element shadow-sm mb-3 bg-body rounded" id={featureId}>
+        <div className="card element shadow-sm mb-3 bg-body rounded" id={featureId}>
             <RandomPicture />
 
             <h1>{properties.name}</h1>
@@ -28,38 +29,25 @@ const FeatureItem = ({ feature, onClick }) => {
 
             <Vote featureId={featureId} userId={userId} />
 
-            {(properties.address || properties.city || properties.country) && (
-                <div className="feature-prop">
-                    <span className="feature-icon">
-                        <i className="fas fa-globe-africa"></i>
-                    </span>
-                    <span className="txt">
-                        {properties.address} {properties.city} {properties.country}
-                    </span>
-                </div>
-            )}
+            <FeatureProp
+                value={`${properties.address ?? ''} ${properties.city ?? ''} ${
+                    properties.country ?? ''
+                }`}
+                iconClass="fas fa-globe-africa"
+            />
 
-            {properties.phone && <Phone value={properties.phone} />}
+            <Phone value={properties.phone} />
 
-            {properties.url && <Website value={properties.url} />}
+            <Website value={properties.url} />
 
-            {properties.description && (
-                <div className="feature-prop">
-                    <span className="feature-icon">
-                        <i className="fas fa-prescription-bottle"></i>
-                    </span>
-                    <span className="txt">{properties.description}</span>
-                </div>
-            )}
+            <FeatureProp value={properties.description} iconClass="fas fa-prescription-bottle" />
 
-            {properties.category && (
-                <div className="feature-prop">
-                    <span className="feature-icon">
-                        <i className="fas fa-clipboard-list"></i>{' '}
-                    </span>
-                    <span className="txt">{properties.category}</span>
-                </div>
-            )}
+            <FeatureProp value={properties.category} iconClass="fas fa-clipboard-list" />
+            <FeatureProp value={properties.hours} iconClass="fas fa-clock" />
+            <FeatureProp value={properties.rate} iconClass="fas fa-money-bill" />
+            <FeatureProp value={properties.space_for_disables} iconClass="fas fa-wheelchair" />
+            <FeatureProp value={properties.total} iconClass="fas fa-table" />
+            <FeatureProp value={properties.tpl} iconClass="fas fa-bus" />
 
             <Direction lat={lat} long={long} />
         </div>

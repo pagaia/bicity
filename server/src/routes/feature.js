@@ -1,7 +1,6 @@
 // Import our Controllers
 const featureController = require('../controllers/featureController');
 
-
 const featureProperties = {
     _id: { type: 'string' },
     type: { type: 'string' },
@@ -17,13 +16,12 @@ const featureProperties = {
             category: { type: 'string' },
             description: { type: 'string' },
             capacity: { type: 'number' },
-            hours: {
-                type: 'object',
-                properties: {
-                    start: { type: 'string' },
-                    end: { type: 'string' },
-                },
-            },
+            additionalProperties: { type: 'string' },
+            tpl: { type: 'string' },
+            space_for_disables: { type: 'number' },
+            total: { type: 'number' },
+            hours: { type: 'string' },
+            rate: { type: 'string' },
         },
     },
     geometry: {
@@ -211,6 +209,50 @@ const routes = (fastify) => [
                     description: 'Successful response',
                     type: 'object',
                     properties: featureProperties,
+                },
+                401: {
+                    description: 'Authorization error',
+                    type: 'object',
+                    properties: {
+                        message: { type: 'string' },
+                    },
+                },
+            },
+        },
+        security: [
+            {
+                apiKey: [],
+            },
+        ],
+    },
+    {
+        method: 'GET',
+        url: '/api/feature/:userId/totalNumber',
+        // check owner or ADMIN
+        preHandler: [fastify.authenticate],
+        handler: featureController.getTotalFeatureCreated(fastify),
+        schema: {
+            description: 'Get total number of features created by given user',
+            tags: ['favorite'],
+            summary: 'Returns total number of features created by given user',
+            params: {
+                type: 'object',
+                properties: {
+                    userId: { type: 'string' },
+                },
+            },
+            response: {
+                200: {
+                    description: 'Successful response',
+                    type: 'object',
+                    properties: {
+                        features: { type: 'number' },
+                    },
+                },
+                404: {
+                    description: 'User not found.',
+                    type: 'object',
+                    properties: { message: { type: 'string' } },
                 },
                 401: {
                     description: 'Authorization error',

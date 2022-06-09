@@ -22,9 +22,11 @@ const Favorite = ({ userId, featureId }) => {
         }
     };
     return (
-        <a href="#likeit" onClick={handleClick} className="favorite">
-            {isFavorite ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}
-        </a>
+        <div>
+            <a href="#likeit" onClick={handleClick} className="favorite">
+                {isFavorite ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}
+            </a>
+        </div>
     );
 };
 

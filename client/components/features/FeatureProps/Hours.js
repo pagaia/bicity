@@ -1,17 +1,14 @@
 import PropTypes from 'prop-types';
 
-const Phone = ({ value }) => {
-    if (!value) {
+const FeatureProp = ({ value, iconClass }) => {
+    if (!value ?? (typeof value === 'string' && !value?.trim?.())) {
         return null;
     }
-
     return (
         <>
             <div className="feature-prop">
                 <span className="feature-icon">
-                    <a href={`tel:${value}`} title={`call number ${value}`}>
-                        <i className="fas fa-phone-alt"></i>
-                    </a>
+                    <i className={iconClass}></i>
                 </span>
                 <span className="txt">{value}</span>
             </div>
@@ -19,7 +16,7 @@ const Phone = ({ value }) => {
     );
 };
 
-Phone.propTypes = {
+FeatureProp.propTypes = {
     value: PropTypes.string,
 };
-export default Phone;
+export default FeatureProp;

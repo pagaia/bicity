@@ -38,6 +38,15 @@ export const fetchTotalVotes = createAsyncThunk(
     }
 );
 
+export const fetchTotalFeatures = createAsyncThunk(
+    'features/total',
+    async ({ userId }, thunkAPI) => {
+        const response = await axios(`/api/feature/${userId}/totalNumber`);
+        const { data } = response;
+        return data;
+    }
+);
+
 export const setFavorite = createAsyncThunk(
     'feature/setFavorite',
     async ({ userId, featureId }, thunkAPI) => {
@@ -185,6 +194,12 @@ export const featureSlice = createSlice({
         builder.addCase(fetchTotalFavorites.rejected, (state, action) => {
             state.error = action.payload;
         });
+        builder.addCase(fetchTotalFeatures.fulfilled, (state, action) => {
+            state.totalFeatures = action.payload.features;
+        });
+        builder.addCase(fetchTotalFeatures.rejected, (state, action) => {
+            state.error = action.payload;
+        });
         builder.addCase(fetchTotalVotes.fulfilled, (state, action) => {
             state.totalVotes = action.payload.votes;
         });
@@ -259,6 +274,7 @@ export const selectFeatureError = (state) => state.featureReducer.error;
 export const selectFavoritesFeatures = (state) => state.featureReducer.favorites;
 export const selectTotalFavorites = (state) => state.featureReducer.totalFavorites;
 export const selectTotalVotes = (state) => state.featureReducer.totalVotes;
+export const selectTotalFeatures = (state) => state.featureReducer.totalFeatures;
 export const selectShowFavorites = (state) => state.featureReducer.showFavorites;
 export const selectDatabases = (state) => state.featureReducer.databases;
 
