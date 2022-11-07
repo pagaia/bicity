@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
 import { featureSelected, selectDatabases, selectShowFavorites } from '../../../store/featureSlice';
 import { DATABASES } from '../../../utils/constants';
-import buildIcon from '../../categories/CategoryIcon';
+import buildIconMap from '../../categories/CategoryIcon';
 
 
 const FeaturesLayer = (props) => {
@@ -39,7 +39,7 @@ const FeaturesLayer = (props) => {
                         position={[lat, long]}
                         key={item._id}
                         eventHandlers={{ click: (e) => onClick(e, item._id) }}
-                        icon={buildIcon({
+                        icon={buildIconMap({
                             category: properties?.category,
                             className: 'local-icon',
                         })}>

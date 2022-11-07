@@ -22,7 +22,7 @@ const FeatureItem = ({ feature, onClick }) => {
 
     return (
         <div className="card element shadow-sm mb-3 bg-body rounded" id={featureId}>
-            <RandomPicture />
+            <RandomPicture category={properties?.category} />
 
             <h1>{properties.name}</h1>
             <Favorite featureId={featureId} userId={userId} />

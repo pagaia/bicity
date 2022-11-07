@@ -2,12 +2,11 @@ import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { chooseCategory, selectCategories } from '../../store/categorySlice';
-import {
-    chooseDatabase, selectDatabases
-} from '../../store/featureSlice';
+import { chooseDatabase, selectDatabases } from '../../store/featureSlice';
 import { MAP_TAB_SETTINGS } from '../../utils/constants';
 import SwitchField from '../form/SwitchField';
 import Modal from '../Modal';
+import CategoryIconSimple from './CategoryIconSimple';
 
 const CategorySelection = ({ show, setOpen }) => {
     const categories = useSelector(selectCategories);
@@ -62,7 +61,9 @@ const CategorySelection = ({ show, setOpen }) => {
                 </li>
                 <li className="nav-item" role="presentation">
                     <button
-                        className={`nav-link ${showTab === MAP_TAB_SETTINGS.DATABASES ? 'active' : ''}`}
+                        className={`nav-link ${
+                            showTab === MAP_TAB_SETTINGS.DATABASES ? 'active' : ''
+                        }`}
                         id="databases-tab"
                         type="button"
                         role="tab"
@@ -100,10 +101,11 @@ const CategorySelection = ({ show, setOpen }) => {
                                         return (
                                             <SwitchField
                                                 description={category?.name}
+                                                info={category?.description}
                                                 key={category?._id}
                                                 id={category?._id}
                                                 name={`categories.${category?._id}`}
-                                                // category={category}
+                                                icon={<CategoryIconSimple category={category?.name} />}
                                             />
                                         );
                                     })}

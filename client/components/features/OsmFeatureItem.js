@@ -16,7 +16,7 @@ const OsmFeatureItem = ({ item, onClick }) => {
 
     return (
         <div className="element shadow-sm mb-3 bg-body rounded" id={item.id} key={item.id}>
-            <RandomPicture />
+            <RandomPicture category={item?.tags?.amenity ?? item?.tags?.emergency} />
 
             <dl className="row">
                 <dt className="col-sm-3">Amenity:</dt>

@@ -11,7 +11,7 @@ const LocateButton = ({ className }) => {
     const buildButtons = () => {
         return [
             {
-                iconClassName: 'fa-bullseye',
+                iconClassName: 'fa-crosshairs',
                 title: 'Center map to your location',
                 action: setPosition,
             },

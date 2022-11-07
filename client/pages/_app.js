@@ -33,7 +33,6 @@ function MyApp({ Component, pageProps }) {
 
             <Provider store={store}>
                 <ProvideAuth>
-                    <BetaVersion />
                     <RefreshToken />
                     <Category />
                     <DatabaseLoad />

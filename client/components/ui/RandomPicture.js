@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import ExternalLink from '../ExternalLink';
+import PropTypes from 'prop-types';
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -46,15 +47,16 @@ const randomSearchString = () => {
     return topic[index];
 };
 
-const RandomPicture = () => {
+const RandomPicture = ({ category }) => {
     const [image, setImage] = useState(null);
     const [error, setError] = useState(null);
     const [fetching, setFetching] = useState(true);
 
+    const categoryText = category?.replace(/_/g, ' ');
     useEffect(() => {
         const fetchImage = async () => {
             const response = await fetch(
-                `https://api.pexels.com/v1/search?per_page=1&query=${randomSearchString()}`,
+                `https://api.pexels.com/v1/search?per_page=1&query=${categoryText}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -89,4 +91,7 @@ const RandomPicture = () => {
     );
 };
 
+RandomPicture.propTypes = {
+    category: PropTypes.string,
+};
 export default RandomPicture;

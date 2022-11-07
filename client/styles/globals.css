@@ -270,15 +270,16 @@ a:hover i.unchecked {
     font-size: 1.5em;
 }
 
-.form-control {
-    height: 38px;
-}
-
 .osm-icon {
     color: red;
 }
 .local-icon {
     color: deeppink;
+}
+
+.category {
+    color: red;
+    margin-right: 0.3em;
 }
 
 .logo {
@@ -380,8 +381,11 @@ a:hover.favorite i {
 .leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i {
     font-size: 16px;
 }
-.leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i.favorite {
+.leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i {
     font-size: 23px;
+    position: relative;
+    left: -3px;
+    top: 2px;
 }
 
 .leaflet-bar.leaflet-control-fa-button.custom-toolbar.leaflet-control {
@@ -421,9 +425,13 @@ a:hover.favorite i {
 }
 
 span.input-group-text {
-    height: 38px;
+    height: 47px;
 }
 
 main > div.container {
     margin-top: 3em;
+}
+
+dl.row {
+    overflow-wrap: break-word;
 }
