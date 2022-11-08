@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // First, create the thunk
-export const fetchCategories = createAsyncThunk('fetchCategories', async ({}, thunkAPI) => {
+export const fetchCategories = createAsyncThunk('fetchCategories', async (param, thunkAPI) => {
+   console.log("fetchCategories")
     const response = await axios(`/api/categories`);
     const { data } = response;
     return data;
@@ -56,6 +57,7 @@ export const categorySlice = createSlice({
                 }
             })
             .addCase(fetchCategories.rejected, (state, action) => {
+                console.log({action})
                 const { requestId } = action.meta;
                 if (state.loading === 'pending' && state.currentRequestId === requestId) {
                     state.loading = 'idle';

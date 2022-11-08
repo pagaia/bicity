@@ -29,9 +29,9 @@ const PrivacyPolicy = () => {
                 <h2 id="data-controller">Data controller </h2>
                 <p>
                     The data controller is <b>QBQUITY Sprl</b>
-                    (we/us). You can contact us here: <br/>
-                    Address: rue Général Molitor 14 - 1040
-                    Brussels (Brussels) Belgium<br/> 
+                    (we/us). You can contact us here: <br />
+                    Address: rue Général Molitor 14 - 1040 Brussels (Brussels) Belgium
+                    <br />
                     Email: legal@bicity.info
                 </p>
                 <h2 id="processing">
@@ -402,14 +402,8 @@ const PrivacyPolicy = () => {
                 <h2>Other Relevant Policies</h2>
                 <p>
                     As well as privacy issues, users and contributors must also be aware of the{' '}
-                    <Link href={ROUTES.TERMS_OF_SERVICE}>
-                        <a>BiCity Terms of Service</a>
-                    </Link>{' '}
-                    and the{' '}
-                    <Link href={ROUTES.COPYRIGHT_POLICY}>
-                        <a>BiCity Copyright Policy</a>
-                    </Link>
-                    .
+                    <Link href={ROUTES.TERMS_OF_SERVICE}>BiCity Terms of Service</Link> and the{' '}
+                    <Link href={ROUTES.COPYRIGHT_POLICY}>BiCity Copyright Policy</Link>.
                 </p>
             </div>
             <Footer />

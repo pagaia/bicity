@@ -271,14 +271,16 @@ a:hover i.unchecked {
 }
 
 .osm-icon {
-    color: red;
+    /* color: red; */
+    color: #ee8b00;
 }
 .local-icon {
     color: deeppink;
 }
 
 .category {
-    color: red;
+    /* color: red; */
+    color: #ee8b00;
     margin-right: 0.3em;
 }
 
@@ -382,10 +384,10 @@ a:hover.favorite i {
     font-size: 16px;
 }
 .leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i {
-    font-size: 23px;
+    font-size: 26px;
     position: relative;
-    left: -3px;
-    top: 2px;
+    left: -7px;
+    top: 1px;
 }
 
 .leaflet-bar.leaflet-control-fa-button.custom-toolbar.leaflet-control {

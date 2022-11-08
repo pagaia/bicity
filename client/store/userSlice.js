@@ -16,7 +16,7 @@ export const loginUser = createAsyncThunk('users/login', async ({ values }, thun
 });
 
 // First, create the thunk
-export const refreshToken = createAsyncThunk('users/refreshToken', async ({}, thunkAPI) => {
+export const refreshToken = createAsyncThunk('users/refreshToken', async (params, thunkAPI) => {
     const response = await axios.post(`/api/users/refresh-token`);
     // get the authorization from the header
     const { authorization } = response.headers;
@@ -25,14 +25,14 @@ export const refreshToken = createAsyncThunk('users/refreshToken', async ({}, th
     return { profile: data, authorization };
 });
 
-export const revokeToken = createAsyncThunk('users/revokeToken', async ({}, thunkAPI) => {
+export const revokeToken = createAsyncThunk('users/revokeToken', async (params, thunkAPI) => {
     const response = await axios.post(`/api/users/revoke-token`);
     // get the user profile from the body
     const { data } = response;
     return data;
 });
 
-export const getAllUsers = createAsyncThunk('users/getAll', async ({}, thunkAPI) => {
+export const getAllUsers = createAsyncThunk('users/getAll', async (params, thunkAPI) => {
     const response = await axios.get(`/api/users`);
     // get the users list  from the body
     const { data } = response;

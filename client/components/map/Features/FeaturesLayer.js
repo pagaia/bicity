@@ -1,16 +1,15 @@
 import { useContext } from 'react';
 import { Marker } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
+import MarkerClusterGroup from '@changey/react-leaflet-markercluster';
 import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
 import { featureSelected, selectDatabases, selectShowFavorites } from '../../../store/featureSlice';
 import { DATABASES } from '../../../utils/constants';
 import buildIconMap from '../../categories/CategoryIcon';
 
-
 const FeaturesLayer = (props) => {
     const { data, position } = useContext(FeatureContext);
-    
+
     const showLayer =
         !useSelector(selectShowFavorites) ?? // if favorite is displayed then hide this layer
         useSelector(selectDatabases)?.find((db) => db.name === DATABASES.BICITY)?.selected === true;
@@ -60,7 +59,7 @@ const FeaturesLayer = (props) => {
                                     </div>
                                     <div>
                                         <Link href={`/features/${item._id}`}>
-                                            <a>View details</a>
+                                        View details
                                         </Link>
                                     </div>
                                 </Popup> */}

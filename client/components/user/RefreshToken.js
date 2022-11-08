@@ -1,6 +1,6 @@
 const { useEffect } = require('react');
-const { useAuth } = require('../../hooks/useAuth');
 import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../../hooks/useAuth';
 import { refreshToken, selectUser } from '../../store/userSlice';
 
 const RefreshToken = () => {

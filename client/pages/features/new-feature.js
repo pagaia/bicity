@@ -94,6 +94,8 @@ const NewFeature = () => {
                 Do you have a new place to share? Fill in the form and contribute to the BiCity
                 project. You will help other cyclists to know more about your city.
             </p>
+            <FindPositionNoSSR position={position} setPosition={setPosition} />
+
             <Formik
                 initialValues={{}}
                 validate={validateNewFeature}
@@ -154,7 +156,6 @@ const NewFeature = () => {
                     </Form>
                 )}
             </Formik>
-            <FindPositionNoSSR position={position} setPosition={setPosition} />
             <Footer />
         </div>
     );

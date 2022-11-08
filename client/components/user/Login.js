@@ -127,9 +127,7 @@ const Login = () => {
                                             </div>
                                             <p className="text-center mt-4">
                                                 Don't have an account?{' '}
-                                                <Link href={ROUTES.USER_SIGNUP}>
-                                                    <a>Sign up</a>
-                                                </Link>
+                                                <Link href={ROUTES.USER_SIGNUP}>Sign up</Link>
                                             </p>
                                         </Form>
                                     )}

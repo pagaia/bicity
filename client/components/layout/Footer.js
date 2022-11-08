@@ -14,15 +14,9 @@ const Footer = (props) => {
                 </span>
             </ExternalLink>
 
-            <Link href={ROUTES.PRIVACY_POLICY}>
-                <a>Privacy policy</a>
-            </Link>
-            <Link href={ROUTES.COPYRIGHT_POLICY}>
-                <a>Copyright policy</a>
-            </Link>
-            <Link href={ROUTES.TERMS_OF_SERVICE}>
-                <a>Terms of service</a>
-            </Link>
+            <Link href={ROUTES.PRIVACY_POLICY}>Privacy policy</Link>
+            <Link href={ROUTES.COPYRIGHT_POLICY}>Copyright policy</Link>
+            <Link href={ROUTES.TERMS_OF_SERVICE}>Terms of service</Link>
         </footer>
     );
 };

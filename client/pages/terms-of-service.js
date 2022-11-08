@@ -80,10 +80,8 @@ const TermsOfService = () => {
                         </li>
                     </ul>
                     BiCity Project data available through these Services is available under our{' '}
-                    <Link href={ROUTES.COPYRIGHT_POLICY}>
-                        <a>Copyright and licensing policy</a>
-                    </Link>
-                    . Though we hope BiCity and its supporting projects will continue for the
+                    <Link href={ROUTES.COPYRIGHT_POLICY}>Copyright and licensing policy</Link>.
+                    Though we hope BiCity and its supporting projects will continue for the
                     foreseeable future, we reserve the right to suspend or end the Services at any
                     time, with or without cause, and with or without notice.
                 </p>
@@ -214,9 +212,7 @@ const TermsOfService = () => {
                     </ul>
                     For more details about how privacy/data protection issues are managed by BiCity
                     and QBQUITY, please see the{' '}
-                    <Link href={ROUTES.PRIVACY_POLICY}>
-                        <a>privacy policy</a>
-                    </Link>
+                    <Link href={ROUTES.PRIVACY_POLICY}>privacy policy</Link>
                 </p>
                 <h3 id="3.4.unauthorized-use-by-others">3.4. Unauthorized use by others</h3>
                 <p>

@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { Marker } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
+// import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     featureSelected,
@@ -29,7 +29,7 @@ const FavoritesLayer = (props) => {
     }
 
     return (
-        <MarkerClusterGroup>
+        <div>
             {favorites?.map((item) => {
                 const lat = item.geometry.coordinates[1];
                 const long = item.geometry.coordinates[0];
@@ -42,7 +42,7 @@ const FavoritesLayer = (props) => {
                         icon={fontAwesomeIcon}></Marker>
                 );
             })}
-        </MarkerClusterGroup>
+        </div>
     );
 };
 

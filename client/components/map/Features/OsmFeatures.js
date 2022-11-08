@@ -1,5 +1,5 @@
 import { Marker } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
+import MarkerClusterGroup from '@changey/react-leaflet-markercluster';
 import { useDispatch, useSelector } from 'react-redux';
 import { featureSelected, selectDatabases, selectShowFavorites } from '../../../store/featureSlice';
 import { selectAmenities } from '../../../store/osmSlice';

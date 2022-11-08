@@ -71,9 +71,7 @@ const SignUp = () => {
                             <li>Select your favorites.</li>
                             <li>Add your vote for the existing ones.</li>
                         </ul>
-                        <Link href="/user">
-                            <a>Navigate to Login page</a>
-                        </Link>
+                        <Link href="/user">Navigate to Login page</Link>
                     </p>
                 </div>
             </div>
@@ -182,9 +180,7 @@ const SignUp = () => {
                                                 </div>
                                                 <p className="text-center mt-4">
                                                     Have an account?{' '}
-                                                    <Link href={ROUTES.USER}>
-                                                        <a>Log In</a>
-                                                    </Link>
+                                                    <Link href={ROUTES.USER}>Log In</Link>
                                                 </p>
                                             </Form>
                                         )}

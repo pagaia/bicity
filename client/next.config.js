@@ -1,10 +1,8 @@
-const withPWA = require('next-pwa');
+const withPWA = require('next-pwa')({
+    dest: 'public',
+});
 
 module.exports = withPWA({
-    pwa: {
-        dest: 'public',
-    },
-    productionBrowserSourceMaps: true,
     async rewrites() {
         return [
             {
@@ -20,8 +18,5 @@ module.exports = withPWA({
             'api.multiavatar.com',
             'platform-lookaside.fbsbx.com',
         ],
-    },
-    pwa: {
-        dest: 'public',
     },
 });

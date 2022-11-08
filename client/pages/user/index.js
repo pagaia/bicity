@@ -1,8 +1,7 @@
 import Footer from '../../components/layout/Footer';
 import Login from '../../components/user/Login';
 import UserProfile from '../../components/user/UserProfile';
-
-const { useAuth } = require('../../hooks/useAuth');
+import { useAuth } from '../../hooks/useAuth';
 
 const UserInfo = () => {
     const { user, signOut } = useAuth();
