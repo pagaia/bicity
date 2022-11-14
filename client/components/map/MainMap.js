@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { MapContainer, ScaleControl, TileLayer } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectShowModal, showModal } from '../../store/categorySlice';
+import { selectPosition } from '../../store/userSlice';
 import { isMobile } from '../../utils/common.functions';
 import { ROME_POSITION } from '../../utils/constants';
 import CategorySelection from '../categories/CategorySelection';
@@ -22,6 +23,7 @@ const MainMap = (props) => {
     const [map, setMap] = useState(null);
     const dispatch = useDispatch();
     const viewModal = useSelector(selectShowModal);
+    const storedPosition = useSelector(selectPosition) ?? ROME_POSITION;
 
     const setModal = (toggle) => {
         dispatch(showModal(toggle));
@@ -32,7 +34,7 @@ const MainMap = (props) => {
     const displayMap = useMemo(
         () => (
             <MapContainer
-                center={[ROME_POSITION.lat, ROME_POSITION.lng]}
+                center={[storedPosition.lat, storedPosition.lng]}
                 zoom={14}
                 maxZoom={18}
                 scrollWheelZoom

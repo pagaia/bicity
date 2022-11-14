@@ -44,4 +44,5 @@ export const DATABASES = {
 
 export const ERROR_MESSAGE = {
     LOGIN_FIRST: 'Please login first in order to use this feature',
+    POSITION_ERROR: 'Unable to get the position. Please give the permission.',
 };

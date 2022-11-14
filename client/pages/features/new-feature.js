@@ -10,6 +10,7 @@ import FindPositionNoSSR from '../../components/map/FindPositionNoSSR';
 import { selectCategories } from '../../store/categorySlice';
 import { showError } from '../../store/errorSlice';
 import { addFeature, selectAddedFeature, selectFeatureError } from '../../store/featureSlice';
+import { selectPosition } from '../../store/userSlice';
 import { ROME_POSITION } from '../../utils/constants';
 
 const validateNewFeature = (values) => {
@@ -40,7 +41,9 @@ const validateNewFeature = (values) => {
 };
 
 const NewFeature = () => {
-    const [position, setPosition] = useState(ROME_POSITION);
+    const storedPosition = useSelector(selectPosition) ?? ROME_POSITION;
+
+    const [position, setPosition] = useState(storedPosition);
     const [wasValidated, setWasValidated] = useState(false);
 
     const dispatch = useDispatch();

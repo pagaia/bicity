@@ -3,6 +3,7 @@ import { useMap } from 'react-leaflet';
 import { useDispatch, useSelector } from 'react-redux';
 import { FeatureContext } from '../../../context/FeatureContext';
 import { selectChoosenCategories } from '../../../store/categorySlice';
+import { showError } from '../../../store/errorSlice';
 import {
     fetchFeatures,
     fetchFeaturesByBbox,
@@ -11,13 +12,14 @@ import {
     selectMultiFeatures,
 } from '../../../store/featureSlice';
 import { fetchOSMAmenities } from '../../../store/osmSlice';
-import { updateGeoLocation } from '../../../store/userSlice';
-import { MIN_ZOOM } from '../../../utils/constants';
+import { selectPosition, updateGeoLocation } from '../../../store/userSlice';
+import { ERROR_MESSAGE, MIN_ZOOM } from '../../../utils/constants';
 
 const FeaturesManager = ({ children }) => {
     const map = useMap();
 
-    const [position, setPosition] = useState(null);
+    const storedPosition = useSelector(selectPosition);
+    const [position, setPosition] = useState(storedPosition);
     const [prevCenter, setPrevCenter] = useState(null);
 
     const dispatch = useDispatch();
@@ -30,11 +32,12 @@ const FeaturesManager = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        map.locate({ setView: true, maxZoom: 16 });
+        if (!storedPosition) {
+            map.locate({ setView: true, maxZoom: 16 });
 
-        map.on('locationfound', handleOnLocationFound);
-        map.on('locationerror', handleOnLocationError);
-
+            map.on('locationfound', handleOnLocationFound);
+            map.on('locationerror', handleOnLocationError);
+        }
         return () => {
             map.off('locationfound', handleOnLocationFound);
             map.off('locationerror', handleOnLocationError);
@@ -53,7 +56,7 @@ const FeaturesManager = ({ children }) => {
             const { lat: swlat, lng: swlng } = _southWest;
             const bboxSerialized = { nelat, nelng, swlat, swlng };
             const serializedPosition = { lat: latlng.lat, lng: latlng.lng };
-          
+
             dispatch(
                 updateGeoLocation({
                     position: serializedPosition,
@@ -85,6 +88,7 @@ const FeaturesManager = ({ children }) => {
 
     function handleOnLocationError(e) {
         console.debug({ handleOnLocationError: e });
+        dispatch(showError({ message: ERROR_MESSAGE.POSITION_ERROR }));
     }
 
     return (

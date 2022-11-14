@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { ROME_POSITION } from '../../utils/constants';
 import LocateButton from './components/LocateButton';
-import FindPosition from './FindPosition';
+import ShowMyPosition from './ShowMyPosition';
 
 const FindMapContainer = ({ position = ROME_POSITION, setPosition }) => {
     return (
@@ -18,8 +18,8 @@ const FindMapContainer = ({ position = ROME_POSITION, setPosition }) => {
                 attribution='© <a href="https://bicity.info/copyright-policy" target="_blank">BiCity Project</a> | Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a> | © OpenStreetMap <a href="https://www.openstreetmap.org/copyright" target="_blank">contributors</a>'
                 url={`https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`}
             />
-            <FindPosition position={position} setPosition={setPosition} />
-            <LocateButton />
+            <ShowMyPosition position={position} setPosition={setPosition} />
+            <LocateButton updatePosition={setPosition} />
         </MapContainer>
     );
 };

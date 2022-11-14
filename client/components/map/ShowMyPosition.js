@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Marker, Popup, useMap } from 'react-leaflet';
 
-const FindPosition = ({ position, setPosition }) => {
+const ShowMyPosition = ({ position, setPosition }) => {
     const markerRef = useRef(null);
 
     const map = useMap();
@@ -45,4 +45,4 @@ const FindPosition = ({ position, setPosition }) => {
     );
 };
 
-export default React.memo(FindPosition);
+export default React.memo(ShowMyPosition);

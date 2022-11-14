@@ -17,6 +17,10 @@ a:hover {
     box-sizing: border-box;
 }
 
+h1 {
+    color: orange;
+}
+
 .image-container {
     width: 100%;
     height: 30vh;
@@ -384,10 +388,14 @@ a:hover.favorite i {
     font-size: 16px;
 }
 .leaflet-bar.leaflet-control-fa-button.leaflet-control > a > i {
-    font-size: 26px;
+    font-size: 20px;
     position: relative;
-    left: -7px;
+    left: -4px;
     top: 1px;
+}
+
+.menu a i {
+    color: orange;
 }
 
 .leaflet-bar.leaflet-control-fa-button.custom-toolbar.leaflet-control {

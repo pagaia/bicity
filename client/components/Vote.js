@@ -68,7 +68,7 @@ const Vote = ({ featureId, userId }) => {
         <div>
             <div>Average vote: {avgVote}</div>
             <ul className="me-3 vote-lnk">{votesLinks}</ul>
-            <div>your vote: {userVote?.vote}</div>
+            {userVote?.vote && <div>your vote: {userVote?.vote}</div>}
         </div>
     );
 };
